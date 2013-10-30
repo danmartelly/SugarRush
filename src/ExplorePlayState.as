@@ -13,10 +13,10 @@ package
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new Player();
-//			var spawner:EnemySpawner = new EnemySpawner(50,0,_enemies);
-//			_spawners.add(spawner);
-//			add(_spawners);
-//			add(_enemies);
+			var spawner:EnemySpawner = new EnemySpawner(50,0,_enemies);
+			_spawners.add(spawner);
+			add(_spawners);
+			add(_enemies);
 			add(_player);
 			add(new FlxText(0,0,100,"Explore State"));
 		}
