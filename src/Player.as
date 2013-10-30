@@ -4,7 +4,7 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		public function Player(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
+		public function Player(X:Number=10, Y:Number=10, SimpleGraphic:Class=null)
 		{
 			super(X, Y, SimpleGraphic);
 		}
