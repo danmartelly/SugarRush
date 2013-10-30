@@ -25,7 +25,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			_enemies.add(new Enemy());
+			_enemies.add(new Enemy(this.x, this.y));
 		}
 	}
 }
