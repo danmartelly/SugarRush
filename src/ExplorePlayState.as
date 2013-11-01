@@ -13,7 +13,7 @@ package
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new Player();
-			var spawner:EnemySpawner = new EnemySpawner(50,0,_enemies);
+			var spawner:EnemySpawner = new EnemySpawner(50,0,_enemies,_player);
 			_spawners.add(spawner);
 			add(_spawners);
 			add(_enemies);

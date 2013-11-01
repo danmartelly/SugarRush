@@ -1,21 +1,25 @@
 package
 {
 	import org.flixel.*;
+	import flash.geom.*;
 	
 	public class Enemy extends FlxSprite
 	{
 		
 		private var _timer:Number = 0;
 		private const changeWalkDirectionRate:Number = 5;
+		private var _player:Player;
 		
-		public function Enemy(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
+		public function Enemy(X:Number, Y:Number, player:Player)
 		{
-			super(X, Y, SimpleGraphic);
+			super(X, Y, null);
+			_player = player;
 			velocity.y = 5;
 		}
 		
 		override public function update():void {
 			//random behavior when the player is not close by
+			var distanceToPlayer:Number = 0;
 			_timer += FlxG.elapsed;
 			if (_timer > changeWalkDirectionRate) {
 				_timer = 0;
