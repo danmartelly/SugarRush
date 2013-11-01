@@ -13,6 +13,7 @@ package
 		{
 			_enemies = enemyGroup;
 			_timer = 0;
+			_player = player;
 			super(X, Y);
 			makeGraphic(10,12,0xffaa1111);
 		}
@@ -26,7 +27,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			_enemies.add(new Enemy(this.x, this.y, _player));
+			_enemies.add(new Enemy(this.x, this.y, _enemies, _player));
 		}
 	}
 }
