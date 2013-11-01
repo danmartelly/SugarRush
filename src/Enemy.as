@@ -6,7 +6,7 @@ package
 	{
 		
 		private var _timer:Number = 0;
-		const changeWalkDirectionRate:Number = 5;
+		private const changeWalkDirectionRate:Number = 5;
 		
 		public function Enemy(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
 		{
