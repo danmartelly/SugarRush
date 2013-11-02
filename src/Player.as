@@ -4,10 +4,10 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		[Embed(source="assets/player_back.png")] protected var playerBack:Class;
-		[Embed(source="assets/player_front.png")] protected var playerFront:Class;
-		[Embed(source="assets/player_left.png")] protected var playerLeft:Class;
-		[Embed(source="assets/player_right.png")] protected var playerRight:Class;
+		[Embed(source="../assets/player_back.png")] protected var playerBack:Class;
+		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
+		[Embed(source="../assets/player_left.png")] protected var playerLeft:Class;
+		[Embed(source="../assets/player_right.png")] protected var playerRight:Class;
 		
 		public function Player(X:Number=50, Y:Number=50)
 		{

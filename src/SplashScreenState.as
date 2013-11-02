@@ -4,31 +4,32 @@ package
 	
 	public class SplashScreenState extends FlxState
 	{
-		[Embed(source="assets/title.png")] protected var backgroundImg:Class;
+		[Embed(source="../assets/title.png")] protected var backgroundImg:Class;
 		
 		public var background:FlxSprite;
-		private var _timer:Number = 0;
-		private const switchScreenTime:Number = 4;
-		private const startFadeEffectTime:Number = switchScreenTime/2;
-		private var mFade:Number;
-		private var bFade:Number;
+		private var startText:FlxText;
 		
 		public function SplashScreenState()
 		{
-			mFade = 1/(startFadeEffectTime - switchScreenTime);
-			bFade = 0 - mFade*switchScreenTime;
 			background = new FlxSprite(0,0);
 			background.loadGraphic(backgroundImg);
 			add(background);
+			
+			startText = new FlxText((FlxG.width/2) - 85, (FlxG.height/2) + 10, FlxG.width, "Press 'S' to start!");
+			startText.size = 18;
+			startText.color = 0x01FFFFFF;
+			startText.shadow = 0x01000000;
+			add(startText);
 		}
 		
 		override public function update():void {
-			_timer += FlxG.elapsed;
-			if (_timer > switchScreenTime || FlxG.keys.any()) {
-				FlxG.switchState(new ExplorePlayState());
+			if (FlxG.keys.justPressed("S")) {
+				FlxG.fade(0x00000000, 1, startGame);
 			}
-			//fade the background after a certain amount of time to 0
-			background.alpha = Math.min(mFade*_timer+bFade,1);
+		}
+		
+		private function startGame():void {
+			FlxG.switchState(new ExplorePlayState());
 		}
 	}
 }
