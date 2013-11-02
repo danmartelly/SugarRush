@@ -6,7 +6,7 @@ package
 	{
 		public function SugarRush()
 		{
-			super(320, 240, BattlePlayState, 2);
+			super(640, 480, SplashScreenState, 1);
 		}
 	}
 }
