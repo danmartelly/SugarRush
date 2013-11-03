@@ -46,10 +46,10 @@ package
 			//background.width = background.height = 100;
 			
 			
-			background.makeGraphic(100,100,0x000000);
+			background.makeGraphic(100,100,0xff0000);
 			add(background);
 			background.visible = true;
-			logic.switchWeapon();
+			//logic.switchWeapon();
 		}
 		
 		private function runCallback():void{
