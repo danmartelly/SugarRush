@@ -13,8 +13,8 @@ package
 		{
 			super(X, Y);
 			makeGraphic(10, 12, 0xffaa11aa);
-			maxVelocity.x = 80;
-			maxVelocity.y = 80;
+			maxVelocity.x = 90;
+			maxVelocity.y = 90;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			loadGraphic(playerFront);
