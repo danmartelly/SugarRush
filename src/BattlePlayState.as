@@ -4,9 +4,11 @@ package
 	
 	public class BattlePlayState extends FlxState
 	{
+		var logic:BattleLogic = new BattleLogic();
+		
 		override public function create():void{
 			FlxG.bgColor = 0xffaaaaaa;
-			
+						
 			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
 			var x:int = FlxG.width /2 + 100;
 			var y:int = FlxG.height - 50;
@@ -24,19 +26,19 @@ package
 		}
 		
 		private function attackCallback():void{
-			
+			logic.useAttack();
 		}
 		
 		private function switchCallback():void{
-			
+			logic.switchWeapon();
 		}
 		
 		private function runCallback():void{
-			
+			logic.useRun();
 		}
 		
 		private function candyCallback():void{
-			
+			logic.useCandy();
 		}
 		
 		//enemy HP bar

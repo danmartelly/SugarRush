@@ -1,1 +1,4 @@
 /bin-debug/*
+/bin/
+/src/org
+sugar.launch
