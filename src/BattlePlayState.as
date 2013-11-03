@@ -8,17 +8,18 @@ package
 			FlxG.bgColor = 0xffaaaaaa;
 			
 			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
-			var attackButton:FlxButton = new FlxButton(0, 0, "Attack", attackCallback);
-			attackButton.width = 50;
-			var switchButton:FlxButton = new FlxButton(FlxG.width /2, FlxG.height + 25, "Switch Weapon", switchCallback);
-			var runButton:FlxButton = new FlxButton(FlxG.width / 2 + 10, FlxG.height, "Run", runCallback);
-			var candyButton:FlxButton = new FlxButton(FlxG.width / 2 + 10, FlxG.height + 25, "Eat Candy", candyCallback);
+			var x:int = FlxG.width /2 + 100;
+			var y:int = FlxG.height - 50;
+			var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
+			var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
+			var runButton:FlxButton = new FlxButton(x, y +85, "Run", runCallback);
+			//var candyButton:FlxButton = new FlxButton(FlxG.width / 2 + 10, FlxG.height + 25, "Eat Candy", candyCallback);
 			
 			add(title);
 			add(attackButton);
 			add(switchButton);
 			add(runButton);
-			add(candyButton);
+			//add(candyButton);
 			FlxG.mouse.show();
 		}
 		
