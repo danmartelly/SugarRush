@@ -7,6 +7,8 @@ package
 		override public function create():void{
 			FlxG.bgColor = 0xffaaaaaa;
 			
+			var logic:BattleLogic = new BattleLogic();
+			
 			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
 			var attackButton:FlxButton = new FlxButton(0, 0, "Attack", attackCallback);
 			attackButton.width = 50;
@@ -23,19 +25,19 @@ package
 		}
 		
 		private function attackCallback():void{
-			
+			logic.useAttack();
 		}
 		
 		private function switchCallback():void{
-			
+			logic.useSwitch();
 		}
 		
 		private function runCallback():void{
-			
+			logic.useRun();
 		}
 		
 		private function candyCallback():void{
-			
+			logic.useCandy();
 		}
 		
 		//enemy HP bar
