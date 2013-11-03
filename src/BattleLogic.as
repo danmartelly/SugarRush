@@ -7,16 +7,17 @@ package {
 		var turn:Number = 0;
 		var player:BattlePlayer = new BattlePlayer(10, 10);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
+		var isOver:Boolean = false;
 		
 		public function useRun():void {
 			
 		}
 		
 		public function useAttack():void {
-			
+			player.attack(enemy);
 		}
 		
-		// couldn't do just switch() because it's a reserved word
+		// couldn't name it just switch() because it's a reserved word
 		public function useSwitch():void {
 			
 		}
@@ -28,6 +29,13 @@ package {
 		
 		public function endTurn():void {
 			turn = (turn + 1) % 2;
+			if (player.isDead) {
+				// game over...
+			}
+			if (enemy.isDead) {
+				isOver = true;
+				// victory
+			}
 		}
 		
 		
