@@ -29,7 +29,7 @@ package
 		}
 		
 		private function switchCallback():void{
-			logic.useSwitch();
+			logic.switchWeapon();
 		}
 		
 		private function runCallback():void{

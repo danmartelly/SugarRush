@@ -18,7 +18,7 @@ package {
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
-		public function useSwitch():void {
+		public function switchWeapon():void {
 			
 		}
 		
