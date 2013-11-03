@@ -9,7 +9,8 @@ package
 	
 	public class BattlePlayState extends FlxState
 	{
-		var logic:BattleLogic = new BattleLogic();
+		var voidFn:Function = function():void {};
+		var logic:BattleLogic = new BattleLogic(voidFn,voidFn, voidFn, voidFn);
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
 		override public function create():void{
 			FlxG.debug = true;
