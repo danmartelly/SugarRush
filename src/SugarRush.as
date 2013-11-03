@@ -7,7 +7,7 @@ package
 	{
 		public function SugarRush()
 		{
-			super(1200, 800, SplashScreenState, 1);
+			super(1200, 800, BattlePlayState, 1);
 		}
 	}
 }

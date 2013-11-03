@@ -49,7 +49,7 @@ package
 			background.makeGraphic(100,100,0x000000);
 			add(background);
 			background.visible = true;
-			logic.switchWeapon();
+			logic.switchWeapon(new Weapon("n"));
 		}
 		
 		private function runCallback():void{
