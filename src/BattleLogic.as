@@ -5,6 +5,8 @@ package {
 	 
 	public class BattleLogic {
 		var turn:Number = 0;
+		var player:BattlePlayer = new BattlePlayer(10, 10);
+		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		
 		public function useRun():void {
 			
@@ -20,7 +22,8 @@ package {
 		}
 		
 		public function useCandy():void {
-			
+			player.heal(5);
+			endTurn();
 		}
 		
 		public function endTurn():void {

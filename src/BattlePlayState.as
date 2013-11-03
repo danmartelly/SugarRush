@@ -4,11 +4,11 @@ package
 	
 	public class BattlePlayState extends FlxState
 	{
+		var logic:BattleLogic = new BattleLogic();
+		
 		override public function create():void{
 			FlxG.bgColor = 0xffaaaaaa;
-			
-			var logic:BattleLogic = new BattleLogic();
-			
+						
 			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
 			var attackButton:FlxButton = new FlxButton(0, 0, "Attack", attackCallback);
 			attackButton.width = 50;
