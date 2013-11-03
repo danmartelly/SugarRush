@@ -26,6 +26,9 @@ package
 			if (FlxG.keys.justPressed("S")) {
 				FlxG.fade(0x00000000, 1, startGame);
 			}
+			if (FlxG.keys.justPressed("C")) { // for debugging
+				FlxG.switchState(new CraftingPlayState());
+			}
 		}
 		
 		private function startGame():void {
