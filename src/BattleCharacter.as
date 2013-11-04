@@ -33,6 +33,10 @@ package {
 			return this.defenseStat;
 		}
 		
+		public function getHealthAsPercent():Number {
+			return (currentHealth/maxHealth)*100;
+		}
+		
 		public function attack(opponent:BattleCharacter): Number {
 			var damageAmount:Number = (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
 							    	   Math.floor(Math.random()*2*opponent.getDefenseStat()));

@@ -26,8 +26,8 @@ package {
 		
 		public function useAttack():void {
 			player.attack(enemy);
-			
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
+			endTurn();
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
@@ -37,7 +37,7 @@ package {
 		
 		public function useCandy():void {
 			player.heal(5);
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
 			endTurn();
 		}
 		
