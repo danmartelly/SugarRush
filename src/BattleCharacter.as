@@ -48,11 +48,20 @@ package {
 			return false;
 		}
 		
+		public function tickBuffs():void {
+			for (var i:Object in this.buffs) {
+				i["turns"]--;
+			}
+			this.buffs.filter(function(obj) { return obj["turns"] > 0; });
+		}
+		
 		public function attack(opponent:BattleCharacter): Number {
-			var damageAmount:Number = (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-							    	   Math.floor(Math.random()*2*opponent.getDefenseStat()));
+			//var damageAmount:Number = (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
+			//				    	   Math.floor(Math.random()*2*opponent.getDefenseStat()));
+			var damageAmount:Number = 5;
 			opponent.hurt(damageAmount);
 			return damageAmount;
 		}
+		trace("!");
 	}
 }
