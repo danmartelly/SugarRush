@@ -10,7 +10,7 @@ package {
 		
 		public function Candy(color:String = COLOR_RED){
 			this.color = color;
-			
+			/*
 			switch (this.color){
 		
 				case 'red':
@@ -25,6 +25,7 @@ package {
 					trace('white candy');
 					break;
 			}
+			*/
 		}
 	}
 }
