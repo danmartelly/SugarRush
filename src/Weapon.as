@@ -9,6 +9,10 @@ package {
 
 		var special:Number = 0;
 		
+		//callback functions for applying buffs
+		var buffOnEquip:Function = function(source:BattleCharacter, target:BattleCharacter) { }
+		var buffOnHit:Function = function(source:BattleCharacter, target:BattleCharacter) { }
+		
 		public const NO_SPECIAL:int = 0;
 		public const RED_SPECIAL:int = 1;
 		public const BLUE_SPECIAL:int = 2;
@@ -20,11 +24,18 @@ package {
 		public const RW_SPECIAL:int = 8;
 		public const WB_SPECIAL:int = 9;
 
-		public function Weapon(name:String, attack:int=1, defense:int=0, special:Number = 0){
+		public function Weapon(name:String, attack:int=1, defense:int=0, special:Number = 0,
+							   buffs:Object = null){
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
 			this.special = special;
+			
+			if (buffs) {
+				//this weapon has special properties!
+				buffOnEquip = buffs["onEquip"];
+				buffOnHit = buffs["onHit"];
+			}
 		}
 	}
 }
