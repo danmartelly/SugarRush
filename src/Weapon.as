@@ -14,7 +14,7 @@ package {
 		public const FREEZE_SPECIAL:int = 2;
 		
 
-		public function Weapon(name:String, attack:int=1, defense:int=1, special:Number = 0){
+		public function Weapon(name:String, attack:int=1, defense:int=0, special:Number = 0){
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
