@@ -20,7 +20,7 @@ package {
 			var damageAmount = super.attack(opponent);
 			
 			if (currentWeapon) {
-				opponent.applyBuff(currentWeapon
+				//opponent.applyBuff(currentWeapon);
 			}
 			return damageAmount;
 		}
