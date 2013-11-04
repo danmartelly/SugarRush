@@ -4,7 +4,7 @@ package
 	
 	public class CraftingPlayState extends FlxState
 	{
-		//var logic:CraftLogic = new CraftLogic();
+		private var logic:CraftLogic = new CraftLogic();
 		private var candies:Array;
 		private var cauldronIndices:Array = new Array();
 		private var buttonHeight:int;
@@ -29,8 +29,8 @@ package
 			var candyButtons:Array = new Array(candies.length);
 			for (var i:int = 0; i < candies.length; i++)
 			{
-				var candy:String = candies[i];
-				var candyButton:FlxButton = new FlxButton(0, i * height, candy, selectCandy);
+				var candy:Candy = candies[i];
+				var candyButton:FlxButton = new FlxButton(0, i * height, candy.getColor(), selectCandy);
 				height = candyButton.height;
 				buttonHeight = height;
 				add(candyButton);
@@ -52,8 +52,8 @@ package
 				var display:Array = new Array();
 				for (var i:int = 0; i < cauldronIndices.length; i++)
 				{
-					var candy:String = candies[cauldronIndices[i]];
-					display.push(candy);
+					var candy:Candy = candies[cauldronIndices[i]];
+					display.push(candy.getColor());
 				}
 				cauldronText.text = "Cauldron:\n| " + display.join(" | ") + " |";
 				banner.text = "";
@@ -71,18 +71,19 @@ package
 				banner.text = "Mix, mix, swirl...";
 				var cauldron:Array = new Array();
 				for (var i:int = 0; i < cauldronIndices.length; i++) {
-					var candy:String = candies[cauldronIndices[i]];
+					var candy:Candy = candies[cauldronIndices[i]];
 					cauldron.push(candy);
 				}
+				// crafting function from craftLogic goes here, using the 3 candies in cauldron
+				
 				var tempCandies:Array = new Array();
-				for (var i:int = 0; i < candies.length; i++) {
+				for (i = 0; i < candies.length; i++) {
 					if (cauldronIndices.indexOf(i) < 0) {
 						tempCandies.push(candies[i]);
 					}
 				}
 				candies = tempCandies;
 				// need to update player inventory and redraw the current screen
-				// crafting function from craftLogic goes here, using the 3 candies in cauldron
 			}
 		}
 	}
