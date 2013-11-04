@@ -61,6 +61,5 @@ package {
 			opponent.hurt(damageAmount);
 			return damageAmount;
 		}
-		trace("!");
 	}
 }
