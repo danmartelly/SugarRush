@@ -19,7 +19,7 @@ package {
 		override public function attack(opponent:BattleCharacter): Number {
 			var damageAmount = super.attack(opponent);
 			
-			if (currentWeapon) {
+			if (currentWeapon && currentWeapon.special) {
 				//opponent.applyBuff(currentWeapon);
 			}
 			return damageAmount;
