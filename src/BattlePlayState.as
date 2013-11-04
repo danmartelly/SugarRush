@@ -42,14 +42,14 @@ package
 //			var o:FlxBasic = inventory.getFirstAlive();
 //			add(o);
 //			o.draw();
-			var background:FlxSprite = new FlxSprite(220, 140);
-			//background.loadGraphic(playerFront);
-			//background.width = background.height = 100;
-			
-			
-			background.makeGraphic(100,100,0xff0000);
-			add(background);
-			background.visible = true;
+//			var background:FlxSprite = new FlxSprite(220, 140);
+//			//background.loadGraphic(playerFront);
+//			//background.width = background.height = 100;
+//			
+//			
+//			background.makeGraphic(100,100,0xff111111);
+//			add(background);
+//			background.visible = true;
 			//logic.switchWeapon();
 		}
 		
