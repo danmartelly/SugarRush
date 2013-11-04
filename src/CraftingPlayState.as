@@ -6,7 +6,7 @@ package
 	{
 		//var logic:CraftLogic = new CraftLogic();
 		private var candies:Array;
-		private var cauldron:Array = new Array();
+		private var cauldronIndices:Array = new Array();
 		private var buttonHeight:int;
 		private var cauldronText:FlxText = new FlxText(100, 100, 500, "");
 		private var banner:FlxText = new FlxText(100, 300, 500, "");
@@ -15,10 +15,10 @@ package
 		{
 			FlxG.bgColor = 0xaaffaacc;
 			
-			this.candies = new Array("a", "b", "c", "b", "a"); // Need to pull this from the player's inventory
+			this.candies = new Array(new Candy(Candy.COLOR_RED), new Candy(Candy.COLOR_BLUE), new Candy(Candy.COLOR_WHITE), new Candy(Candy.COLOR_RED)); // Need to pull this from the player's inventory
 			
 			var title:FlxText = new FlxText(0, 0, 100, "Crafting state");
-			var craftButton = new FlxButton(100, 200, "COMBINE", combineCandy);
+			var craftButton:FlxButton = new FlxButton(100, 200, "COMBINE", combineCandy);
 			add(title);
 			add(craftButton);
 			add(this.cauldronText);
@@ -33,7 +33,6 @@ package
 				var candyButton:FlxButton = new FlxButton(0, i * height, candy, selectCandy);
 				height = candyButton.height;
 				buttonHeight = height;
-				candyButton.width = 50;
 				add(candyButton);
 			}
 			
@@ -43,17 +42,18 @@ package
 		private function selectCandy():void
 		{
 			var index:int = FlxG.mouse.y / this.buttonHeight; // index corresponding to the candy clicked
-			if (cauldron.indexOf(index) < 0)
+			if (cauldronIndices.indexOf(index) < 0)
 			{
-				cauldron.push(index);
-				if (cauldron.length > 3)
+				cauldronIndices.push(index);
+				if (cauldronIndices.length > 3)
 				{
-					cauldron = cauldron.slice(1);
+					cauldronIndices = cauldronIndices.slice(1);
 				}
 				var display:Array = new Array();
-				for (var i:int = 0; i < cauldron.length; i++)
+				for (var i:int = 0; i < cauldronIndices.length; i++)
 				{
-					display.push(candies[cauldron[i]]);
+					var candy:String = candies[cauldronIndices[i]];
+					display.push(candy);
 				}
 				cauldronText.text = "Cauldron:\n| " + display.join(" | ") + " |";
 				banner.text = "";
@@ -64,11 +64,24 @@ package
 		}
 		
 		private function combineCandy():void {
-			if (cauldron.length < 3) {
+			if (cauldronIndices.length < 3) {
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
 				banner.text = "Mix, mix, swirl...";
+				var cauldron:Array = new Array();
+				for (var i:int = 0; i < cauldronIndices.length; i++) {
+					var candy:String = candies[cauldronIndices[i]];
+					cauldron.push(candy);
+				}
+				var tempCandies:Array = new Array();
+				for (var i:int = 0; i < candies.length; i++) {
+					if (cauldronIndices.indexOf(i) < 0) {
+						tempCandies.push(candies[i]);
+					}
+				}
+				candies = tempCandies;
+				// need to update player inventory and redraw the current screen
 				// crafting function from craftLogic goes here, using the 3 candies in cauldron
 			}
 		}

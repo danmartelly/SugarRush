@@ -7,18 +7,14 @@ package {
 		var turn:int = 0;
 		var player:BattlePlayer = new BattlePlayer(10, 10);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
-		
+		var state:BattlePlayState;
 		var healthCallback:Function; // tell the battle ui when player/enemy health changes
 		var turnCallback:Function; // tell the battle ui when the turn changes
 		var attackCallback:Function; // tell the battle ui when the player or oppontent attacked
 		var endBattleCallback:Function; // tell the battle ui when the battle ends
 		
-		public function BattleLogic(healthCallback:Function, turnCallback:Function, 
-									attackCallback:Function, endBattleCallback:Function){
-			this.healthCallback = healthCallback;
-			this.turnCallback = turnCallback;
-			this.attackCallback = attackCallback;
-			this.endBattleCallback = endBattleCallback;
+		public function BattleLogic(state){
+			this.state = state;
 		}
 		
 		public function useRun():void {
@@ -27,7 +23,7 @@ package {
 		
 		public function useAttack():void {
 			player.attack(enemy);
-			healthCallback();
+			this.state.healthCallback();
 			endTurn();
 		}
 		
@@ -60,11 +56,12 @@ package {
 			}
 		}
 		
-		public function playerHealthpercent():Number {
+		// WALTER, USE THESE
+		public function playerHealthPercent():Number {
 			return player.getHealthAsPercent();
 		}
 		
-		public function enemyHealthpercent():Number {
+		public function enemyHealthPercent():Number {
 			return enemy.getHealthAsPercent();
 		}
 		
