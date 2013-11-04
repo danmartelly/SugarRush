@@ -10,7 +10,7 @@ package
 	public class BattlePlayState extends FlxState
 	{		
 		var voidFn:Function = function():void {};
-		var logic:BattleLogic = new BattleLogic(voidFn,voidFn, voidFn, voidFn);
+		var logic:BattleLogic = new BattleLogic(healthCallback,turnCallback, attackLogicCallback, endBattleCallback);
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
 		
 		override public function create():void {
@@ -73,6 +73,22 @@ package
 		
 		private function candyCallback():void{
 			logic.useCandy();
+		}
+		
+		private function healthCallback():void {
+			
+		}
+		
+		private function turnCallback():void {
+			
+		}
+		
+		private function attackLogicCallback():void {
+			
+		}
+		
+		private function endBattleCallback():void {
+			
 		}
 	}
 }
