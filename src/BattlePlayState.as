@@ -8,11 +8,12 @@ package
 	import org.flixel.FlxText;
 	
 	public class BattlePlayState extends FlxState
-	{
+	{		
 		var voidFn:Function = function():void {};
 		var logic:BattleLogic = new BattleLogic(voidFn,voidFn, voidFn, voidFn);
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
-		override public function create():void{
+		
+		override public function create():void {
 			FlxG.debug = true;
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
@@ -33,7 +34,7 @@ package
 			FlxG.mouse.show();
 		}
 		
-		private function attackCallback():void{
+		private function attackCallback():void {
 			logic.useAttack();
 		}
 		

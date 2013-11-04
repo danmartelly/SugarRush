@@ -12,6 +12,8 @@ package
 		protected var _player:Player;
 		
 		public var pause:PauseState;
+		public var battle:BattlePlayState;
+		
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 			
@@ -40,13 +42,15 @@ package
 		{
 			if (!pause.showing){
 				super.update();
+				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
 					add(pause);
+				} else if (FlxG.keys.B){
+					battle = new BattlePlayState();
+					FlxG.switchState(battle);
 				}
-				//rest of updates
-				
 			} else {
 				pause.update();
 			}
