@@ -4,7 +4,7 @@ package
 	
 	public class CraftingPlayState extends FlxState
 	{
-		//var logic:CraftLogic = new CraftLogic();
+		private var logic:CraftLogic = new CraftLogic();
 		private var candies:Array;
 		private var cauldronIndices:Array = new Array();
 		private var buttonHeight:int;
@@ -30,7 +30,7 @@ package
 			for (var i:int = 0; i < candies.length; i++)
 			{
 				var candy:Candy = candies[i];
-				var candyButton:FlxButton = new FlxButton(0, i * height, candy.color, selectCandy);
+				var candyButton:FlxButton = new FlxButton(0, i * height, candy.getColor(), selectCandy);
 				height = candyButton.height;
 				buttonHeight = height;
 				add(candyButton);
@@ -53,7 +53,7 @@ package
 				for (var i:int = 0; i < cauldronIndices.length; i++)
 				{
 					var candy:Candy = candies[cauldronIndices[i]];
-					display.push(candy.color);
+					display.push(candy.getColor());
 				}
 				cauldronText.text = "Cauldron:\n| " + display.join(" | ") + " |";
 				banner.text = "";
@@ -77,7 +77,7 @@ package
 				// crafting function from craftLogic goes here, using the 3 candies in cauldron
 				
 				var tempCandies:Array = new Array();
-				for (var i:int = 0; i < candies.length; i++) {
+				for (i = 0; i < candies.length; i++) {
 					if (cauldronIndices.indexOf(i) < 0) {
 						tempCandies.push(candies[i]);
 					}
