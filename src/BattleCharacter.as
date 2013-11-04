@@ -38,6 +38,20 @@ package {
 			return (currentHealth/maxHealth)*100;
 		}
 		
+		public function applyBuff(s:String, turns:Number):void {
+			for (var i:Object in this.buffs) {
+				if (i["name"] == s) {
+					i["turns"] = turns;
+					return;
+				}
+			}
+			this.buffs.push({"name": s, "turns": turns});
+		}
+		
+		public function removeBuff(s:String):void {
+			this.buffs.filter(function(obj:Object):Boolean { return obj["name"] != s; });
+		}
+		
 		public function hasBuff(s:String):Boolean {
 			for (var i:Object in this.buffs) {
 				if (i["name"] == s) {
@@ -51,7 +65,7 @@ package {
 			for (var i:Object in this.buffs) {
 				i["turns"]--;
 			}
-			this.buffs.filter(function(obj) { return obj["turns"] > 0; });
+			this.buffs.filter(function(obj:Object):Boolean { return obj["turns"] > 0; });
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {

@@ -16,5 +16,13 @@ package {
 		override public function getDefenseStat():Number {
 			return this.defenseStat + (this.currentWeapon != null ? this.currentWeapon.defense : 0);
 		}
+		override public function attack(opponent:BattleCharacter): Number {
+			var damageAmount = super.attack(opponent);
+			
+			if (currentWeapon) {
+				opponent.applyBuff(currentWeapon
+			}
+			return damageAmount;
+		}
 	}
 }
