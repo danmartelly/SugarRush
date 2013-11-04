@@ -6,10 +6,10 @@ package
 	{
 		private var _timer:Number;
 		private var _enemies:FlxGroup;
-		private var _player:Player;
+		private var _player:ExplorePlayer;
 		public var spawnRate:Number = 3;
 		
-		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, player:Player)
+		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{
 			_enemies = enemyGroup;
 			_timer = 0;
