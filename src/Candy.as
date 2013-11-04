@@ -3,13 +3,13 @@ package {
 	 * @author ethanis
 	 */
 	public class Candy {
-		var type:Number;
-		const TYPE_SUGAR:Number = 0;
-		const TYPE_CINAMMON:Number = 1;
-		const TYPE_MINT:Number = 2;
-		const TYPE_CHOCOLATE:Number = 3;
+		var type:int;
+		const TYPE_SUGAR:int = 0;
+		const TYPE_CINAMMON:int = 1;
+		const TYPE_MINT:int = 2;
+		const TYPE_CHOCOLATE:int = 3;
 		
-		public function Candy(type:Number = TYPE_SUGAR){
+		public function Candy(type:int = TYPE_SUGAR){
 			this.type = type;
 		}
 	}
