@@ -1,9 +1,9 @@
 package
 {
+	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
-	import org.flixel.FlxG;
 	
 	public class ExplorePlayState extends FlxState
 	{
@@ -11,7 +11,10 @@ package
 		protected var _spawners:FlxGroup;
 		protected var _player:Player;
 		
-		public var pause:PauseState
+		public var pause:PauseState;
+		public var levelX:Number = 1200;
+		public var levelY:Number = 800;
+			
 		
 		override public function create(): void
 		{
@@ -26,6 +29,11 @@ package
 			add(new FlxText(0,0,100,"Explore State"));
 			
 			pause = new PauseState();
+			
+			FlxG.worldBounds.x = 0;
+			FlxG.worldBounds.y = 0;
+			FlxG.worldBounds.width = levelX;
+			FlxG.worldBounds.height = levelY;
 		}
 		
 		override public function update():void
