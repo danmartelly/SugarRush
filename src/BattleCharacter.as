@@ -6,9 +6,8 @@ package {
 		var currentHealth:Number;
 		var maxHealth:Number;
 		var isDead:Boolean = false;
-		var weapon:Weapon = null;
-		var attackStatModifier:Number = 0;
-		var defenseStatModifier:Number = 0;
+		var attackStat:Number = 0;
+		var defenseStat:Number = 0;
 		var buffs:Array = [];
 		
 		public function BattleCharacter(currentHealth:Number, maxHealth:Number):void {
@@ -28,11 +27,11 @@ package {
 		}
 		
 		public function getAttackStat():Number {
-			return this.weapon.attack + this.attackStatModifier;
+			return this.attackStat;
 		}
 		
 		public function getDefenseStat():Number {
-			return this.weapon.defense + this.defenseStatModifier;
+			return this.defenseStat;
 		}
 		
 		public function getHealthAsPercent():Number {
