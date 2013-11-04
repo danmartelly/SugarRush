@@ -7,18 +7,18 @@ package
 		public var health:Number;
 		
 		// Follows the Singleton design pattern
-		private function PlayerData()
+		public function PlayerData(lock:SingletonLock)
 		{
 		}
 		
 		public static function get instance():PlayerData {
 			if (_instance == null) {
-				_instance = new PlayerData();
+				_instance = new PlayerData(new SingletonLock());
 			}
 			return _instance;
 		}
 		
-		public function reset(initialWeapons:Array = null, initialHealth:Number = 10) {
+		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10):void {
 			if (initialWeapons == null) {
 				weapons = new Array();
 			} else {
@@ -35,8 +35,9 @@ package
 			weapons.push(newWeapon);
 		}
 		
-		public function changeHealthBy(changeInHealth:Number) {
+		public function changeHealthBy(changeInHealth:Number):void {
 			health += changeInHealth;
 		}
 	}
 }
+class SingletonLock{}
