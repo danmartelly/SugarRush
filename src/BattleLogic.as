@@ -13,7 +13,8 @@ package {
 		var attackCallback:Function; // tell the battle ui when the player or oppontent attacked
 		var endBattleCallback:Function; // tell the battle ui when the battle ends
 		
-		public function BattleLogic(healthCallback:Function, turnCallback:Function, attackCallback:Function, endBattleCallback:Function){
+		public function BattleLogic(healthCallback:Function, turnCallback:Function, 
+									attackCallback:Function, endBattleCallback:Function){
 			this.healthCallback = healthCallback;
 			this.turnCallback = turnCallback;
 			this.attackCallback = attackCallback;
@@ -24,13 +25,9 @@ package {
 			endBattleCallback(RAN_AWAY);
 		}
 		
-		private function triggerHealthCallback():void {
-			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
-		}
-		
 		public function useAttack():void {
 			player.attack(enemy);
-			triggerHealthCallback();
+			healthCallback();
 			endTurn();
 		}
 		
@@ -41,11 +38,11 @@ package {
 		
 		public function useCandy():void {
 			player.heal(5);
-			triggerHealthCallback();
+			healthCallback();
 			endTurn();
 		}
 		
-		public function endTurn():void {
+		private function endTurn():void {
 			turn = (turn + 1) % 2;
 			
 			if (player.isDead) {
@@ -58,10 +55,19 @@ package {
 			
 			if (turn == ENEMY_TURN){
 				enemy.attack(player);
-				triggerHealthCallback();
+				healthCallback();
 				endTurn();
 			}
 		}
+		
+		public function playerHealthpercent():Number {
+			return player.getHealthAsPercent();
+		}
+		
+		public function enemyHealthpercent():Number {
+			return enemy.getHealthAsPercent();
+		}
+		
 		
 		// if your turn
 		public static const PLAYER_TURN:int = 0;

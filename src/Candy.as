@@ -3,12 +3,12 @@ package {
 	 * @author ethanis
 	 */
 	public class Candy {
-		var color:String
+		var color:String;
 		const COLOR_RED:String = 'red';
 		const COLOR_BLUE:String = 'blue';
 		const COLOR_WHITE:String = 'white';
 		
-		public function Candy(color:int = COLOR_RED){
+		public function Candy(color:String = COLOR_RED){
 			this.color = color;
 			
 			switch (this.color){
@@ -27,3 +27,4 @@ package {
 			}
 		}
 	}
+}
