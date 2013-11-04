@@ -60,11 +60,12 @@ package {
 			}
 		}
 		
-		public function playerHealthpercent():Number {
+		// WALTER, USE THESE
+		public function playerHealthPercent():Number {
 			return player.getHealthAsPercent();
 		}
 		
-		public function enemyHealthpercent():Number {
+		public function enemyHealthPercent():Number {
 			return enemy.getHealthAsPercent();
 		}
 		
