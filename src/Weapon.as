@@ -4,7 +4,7 @@ package {
 	 */
 	public class Weapon {
 		var attack:int = 1;
-		var defense:int = 1;
+		var defense:int = 0;
 		var name:String = "";
 
 		var special:Array = [];
@@ -18,8 +18,9 @@ package {
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
-			if (special)
+			if (special) {
 				this.special = special;
+			}
 		}
 	}
 }

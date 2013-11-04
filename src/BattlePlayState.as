@@ -18,7 +18,6 @@ package
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 						
-			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
 			var x:int = FlxG.width /2 + 150;
 			var y:int = FlxG.height - 50;
 			var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
@@ -26,7 +25,32 @@ package
 			var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
 			var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
 			
-			add(title);
+			var enemyName:FlxText = new FlxText(50,35, 100,"Enemy Name");
+
+			var maxEnemyLifeBar:FlxSprite = new FlxSprite(50,50);
+			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
+			
+			var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
+			
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			enemyLifeBar.makeGraphic(50,10,0xff00ff00);
+			
+			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+			add(playerName);
+			
+			var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
+			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
+			
+			var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
+			
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
+			playerLifeBar.makeGraphic(50,10,0xff00ff00);
+			
+			add(enemyName);
 			add(attackButton);
 			add(switchButton);
 			add(runButton);
@@ -39,18 +63,7 @@ package
 		}
 		
 		private function switchCallback():void{
-//			var inventory:BattleInventoryMenu = new BattleInventoryMenu();
-//			var o:FlxBasic = inventory.getFirstAlive();
-//			add(o);
-//			o.draw();
-			var background:FlxSprite = new FlxSprite(220, 140);
-			//background.loadGraphic(playerFront);
-			//background.width = background.height = 100;
-			
-			
-			background.makeGraphic(100,100,0x000000);
-			add(background);
-			background.visible = true;
+			add(new BattleInventoryMenu());
 			logic.switchWeapon(new Weapon("Candy Cane"));
 		}
 		
@@ -61,12 +74,5 @@ package
 		private function candyCallback():void{
 			logic.useCandy();
 		}
-		
-		//enemy HP bar
-		//player HP bar
-		//menu box
-			//consists for four buttons
-		//player sprite
-		//enemy sprite
 	}
 }
