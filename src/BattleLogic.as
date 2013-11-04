@@ -4,7 +4,7 @@ package {
 	 */
 	 
 	public class BattleLogic {
-		var turn:Number = 0;
+		var turn:int = 0;
 		var player:BattlePlayer = new BattlePlayer(10, 10);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		
@@ -26,8 +26,8 @@ package {
 		
 		public function useAttack():void {
 			player.attack(enemy);
-			
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
+			endTurn();
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
@@ -37,7 +37,7 @@ package {
 		
 		public function useCandy():void {
 			player.heal(5);
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
 			endTurn();
 		}
 		
@@ -53,13 +53,13 @@ package {
 		}
 		
 		// if your turn
-		public static const PLAYER_TURN:Number = 0;
+		public static const PLAYER_TURN:int = 0;
 		// if enemy's turn
-		public static const ENEMY_TURN:Number = 1;
+		public static const ENEMY_TURN:int = 1;
 		
 		// reasons for battle ending
-		public static const PLAYER_WON:Number = 0;
-		public static const ENEMY_WON:Number = 1;
-		public static const RAN_AWAY:Number = 2;
+		public static const PLAYER_WON:int = 0;
+		public static const ENEMY_WON:int = 1;
+		public static const RAN_AWAY:int = 2;
 	}	
 }
