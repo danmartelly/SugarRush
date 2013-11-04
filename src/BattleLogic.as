@@ -24,9 +24,13 @@ package {
 			endBattleCallback(RAN_AWAY);
 		}
 		
+		private function triggerHealthCallback():void {
+			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
+		}
+		
 		public function useAttack():void {
 			player.attack(enemy);
-			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
+			triggerHealthCallback();
 			endTurn();
 		}
 		
@@ -37,18 +41,25 @@ package {
 		
 		public function useCandy():void {
 			player.heal(5);
-			healthCallback(player.getHealthAsPercent(), enemy.getHealthAsPercent());
+			triggerHealthCallback();
 			endTurn();
 		}
 		
 		public function endTurn():void {
 			turn = (turn + 1) % 2;
+			
 			if (player.isDead) {
 				endBattleCallback(ENEMY_WON);
 			}else if (enemy.isDead) {
 				endBattleCallback(PLAYER_WON);
 			} else {
 				turnCallback(turn);
+			}
+			
+			if (turn == ENEMY_TURN){
+				enemy.attack(player);
+				triggerHealthCallback();
+				endTurn();
 			}
 		}
 		
