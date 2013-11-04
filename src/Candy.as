@@ -3,14 +3,27 @@ package {
 	 * @author ethanis
 	 */
 	public class Candy {
-		var type:int;
-		const TYPE_SUGAR:int = 0;
-		const TYPE_CINAMMON:int = 1;
-		const TYPE_MINT:int = 2;
-		const TYPE_CHOCOLATE:int = 3;
+		var color:String
+		const COLOR_RED:String = 'red';
+		const COLOR_BLUE:String = 'blue';
+		const COLOR_WHITE:String = 'white';
 		
-		public function Candy(type:int = TYPE_SUGAR){
-			this.type = type;
+		public function Candy(color:int = COLOR_RED){
+			this.color = color;
+			
+			switch (this.color){
+		
+				case 'red':
+					trace('red candy');
+					break;
+				
+				case 'blue':
+					trace('blue candy');
+					break;
+				
+				case 'white':
+					trace('white candy');
+					break;
+			}
 		}
 	}
-}

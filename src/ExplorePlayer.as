@@ -2,14 +2,14 @@ package
 {
 	import org.flixel.*;
 	
-	public class Player extends FlxSprite
+	public class ExplorePlayer extends FlxSprite
 	{
 		[Embed(source="../assets/player_back.png")] protected var playerBack:Class;
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
 		[Embed(source="../assets/player_left.png")] protected var playerLeft:Class;
 		[Embed(source="../assets/player_right.png")] protected var playerRight:Class;
 		
-		public function Player(X:Number=50, Y:Number=50)
+		public function ExplorePlayer(X:Number=50, Y:Number=50)
 		{
 			super(X, Y);
 			makeGraphic(10, 12, 0xffaa11aa);

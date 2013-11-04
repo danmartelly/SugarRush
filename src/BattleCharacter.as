@@ -9,6 +9,7 @@ package {
 		var weapon:Weapon = null;
 		var attackStatModifier:Number = 0;
 		var defenseStatModifier:Number = 0;
+		var buffs:Array = [];
 		
 		public function BattleCharacter(currentHealth:Number, maxHealth:Number):void {
 			this.currentHealth = currentHealth;
@@ -36,6 +37,15 @@ package {
 		
 		public function getHealthAsPercent():Number {
 			return (currentHealth/maxHealth)*100;
+		}
+		
+		public function hasBuff(s:String):Boolean {
+			for (var i:Object in this.buffs) {
+				if (i["name"] == s) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {

@@ -9,7 +9,7 @@ package
 	{
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
-		protected var _player:Player;
+		protected var _player:ExplorePlayer;
 		
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
@@ -22,7 +22,7 @@ package
 		{
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_player = new Player();
+			_player = new ExplorePlayer();
 			var spawner:EnemySpawner = new EnemySpawner(200,200,_enemies,_player);
 			_spawners.add(spawner);
 			add(_spawners);
