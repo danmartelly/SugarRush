@@ -10,11 +10,11 @@ package {
 		}
 		
 		override public function getAttackStat():Number {
-			return this.attackStatModifier + (this.currentWeapon != null ? this.currentWeapon.attack : 0);
+			return this.attackStat + (this.currentWeapon != null ? this.currentWeapon.attack : 0);
 		}
 		
 		override public function getDefenseStat():Number {
-			return this.defenseStatModifier + (this.currentWeapon != null ? this.currentWeapon.defense : 0);
+			return this.defenseStat + (this.currentWeapon != null ? this.currentWeapon.defense : 0);
 		}
 	}
 }
