@@ -12,7 +12,7 @@ package {
 	public class Buff {
 		public var tag:String = "";
 		public var name:String = "";
-		public var effect:Function = function() { }
+		public var effect:Function = function(p:BattleCharacter) { }
 			
 		public function Buff(tag:String, name:String, effect:Function):void {
 			this.tag = tag;
