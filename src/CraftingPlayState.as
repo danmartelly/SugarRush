@@ -74,7 +74,7 @@ package
 					var candy:Candy = candies[cauldronIndices[i]];
 					cauldron.push(candy);
 				}
-				// crafting function from craftLogic goes here, using the 3 candies in cauldron
+				CraftLogic.craft(cauldron);
 				
 				var tempCandies:Array = new Array();
 				for (i = 0; i < candies.length; i++) {
