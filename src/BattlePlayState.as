@@ -89,7 +89,24 @@ package
 		}
 		
 		public function turnCallback(turn:int):void {
-			add(new FlxText(10,60,100,"in turnCallback"));
+			//add(new FlxText(10,60,100,"in turnCallback"));
+			switch(turn){
+				case BattleLogic.ENEMY_TURN:
+					attackButton.active = false;
+					switchButton.active = false;
+					runButton.active = false;
+					candyButton.active = false;
+					break;
+				case BattleLogic.PLAYER_TURN:
+					attackButton.active = true;
+					switchButton.active = true;
+					runButton.active = true;
+					candyButton.active = true;
+					break;
+				
+			}
+			
+			this.update();
 			
 		}
 		
