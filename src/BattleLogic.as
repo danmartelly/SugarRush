@@ -5,11 +5,11 @@ package {
 	 
 	public class BattleLogic {
 		var turn:int = 0;
-		var player:BattlePlayer = new BattlePlayer(10, 10);
+		var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
 		
-		public function BattleLogic(state){
+		public function BattleLogic(state:BattlePlayState){
 			this.state = state;
 		}
 		
@@ -24,8 +24,9 @@ package {
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
-		public function switchWeapon(weapon:Weapon):void {
-			player.currentWeapon = weapon;
+		public function switchWeaponIndex(index:int):void {
+			player.data.currentWeaponIndex = index;
+			var weapon:Weapon = player.data.currentWeapon();
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
 			if (weapon.buffs["equip"]) {
