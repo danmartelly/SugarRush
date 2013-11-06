@@ -24,8 +24,9 @@ package {
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
-		public function switchWeapon(weapon:Weapon):void {
-			player.currentWeapon = weapon;
+		public function switchWeaponIndex(index:int):void {
+			player.data.currentWeaponIndex = index;
+			var weapon:Weapon = player.data.currentWeapon();
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
 			if (weapon.buffs["equip"]) {

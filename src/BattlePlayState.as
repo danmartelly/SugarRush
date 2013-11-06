@@ -63,7 +63,7 @@ package
 		
 		public function switchCallback():void{
 			add(new BattleInventoryMenu());
-			logic.switchWeapon(new Weapon("Candy Cane"));
+			//logic.switchWeaponIndex(1);
 		}
 		
 		public function runCallback():void{
@@ -84,8 +84,6 @@ package
 			
 			var e_health:Number = logic.enemyHealthPercent();
 			enemyLifeBar.scale.x = e_health / 100.0;
-			
-			
 		}
 		
 		public function turnCallback(turn:int):void {
@@ -97,7 +95,7 @@ package
 			
 		}
 		
-		public function endBattleCallback(status:int):void {
+		public function endBattleCallback(status:int):void {			
 			switch(status){
 				case BattleLogic.ENEMY_WON:
 					
@@ -107,8 +105,11 @@ package
 					break;
 				
 				case BattleLogic.RAN_AWAY:
-					PlayerData.instance.health -= 1;
-					FlxG.switchState(ExplorePlayState.instance);
+					logic.player.currentHealth -= 1;
+					logic.player.updatePlayerData();
+					
+					FlxG.mouse.hide();
+					FlxG.switchState(new ExplorePlayState());
 					break;
 			}
 		}
