@@ -108,7 +108,8 @@ package
 				
 				case BattleLogic.RAN_AWAY:
 					PlayerData.instance.health -= 1;
-					FlxG.switchState(ExplorePlayState.instance);
+					FlxG.mouse.hide();
+					FlxG.switchState(new ExplorePlayState());
 					break;
 			}
 		}
