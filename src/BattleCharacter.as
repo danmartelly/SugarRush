@@ -8,7 +8,12 @@ package {
 		var isDead:Boolean = false;
 		var attackStat:Number = 0;
 		var defenseStat:Number = 0;
+		var tempAttackStat:Number = 0;
+		var tempDefenseStat:Number = 0;
+		
+		// used for weapon effects
 		var buffs:Array = [];
+		var flags:Array = [];
 		
 		public function BattleCharacter(currentHealth:Number, maxHealth:Number):void {
 			this.currentHealth = currentHealth;
@@ -38,6 +43,7 @@ package {
 			return (currentHealth/maxHealth)*100;
 		}
 		
+		//buff-related functions
 		public function applyBuff(s:String, turns:Number):void {
 			for (var i:Object in this.buffs) {
 				if (i["name"] == s) {
@@ -47,11 +53,9 @@ package {
 			}
 			this.buffs.push({"name": s, "turns": turns});
 		}
-		
 		public function removeBuff(s:String):void {
 			this.buffs.filter(function(obj:Object):Boolean { return obj["name"] != s; });
 		}
-		
 		public function hasBuff(s:String):Boolean {
 			for (var i:Object in this.buffs) {
 				if (i["name"] == s) {
@@ -60,7 +64,6 @@ package {
 			}
 			return false;
 		}
-		
 		public function tickBuffs():void {
 			for (var i:Object in this.buffs) {
 				i["turns"]--;
