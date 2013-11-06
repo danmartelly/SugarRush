@@ -20,7 +20,7 @@ package
 		}
 		
 		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10, 
-								   initialInventory:Inventory = new Inventory()):void {
+								   initialInventory:Inventory = null):void {
 			if (initialWeapons == null) {
 				weapons = new Array();
 			} else {
