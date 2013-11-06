@@ -56,9 +56,8 @@ package {
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {
-			//var damageAmount:Number = (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-			//				    	   Math.floor(Math.random()*2*opponent.getDefenseStat()));
-			var damageAmount:Number = 5;
+			var damageAmount:Number = (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
+							    	   Math.floor(Math.random()*2*opponent.getDefenseStat()));
 			opponent.hurt(damageAmount);
 			return damageAmount;
 		}
