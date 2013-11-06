@@ -98,7 +98,19 @@ package
 		}
 		
 		public function endBattleCallback(status:int):void {
-			
+			switch(status){
+				case BattleLogic.ENEMY_WON:
+					
+					break;
+				
+				case BattleLogic.PLAYER_WON:
+					break;
+				
+				case BattleLogic.RAN_AWAY:
+					PlayerData.instance.health -= 1;
+					FlxG.switchState(ExplorePlayState);
+					break;
+			}
 		}
 	}
 }
