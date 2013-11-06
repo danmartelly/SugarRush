@@ -6,8 +6,6 @@ package {
 		var attack:int = 1;
 		var defense:int = 0;
 		var name:String = "";
-
-		var special:Number = 0;
 		
 		/*
 		'buffs' is a dictionary of arrays. each key is a point at which buffs can be applied.
@@ -39,12 +37,10 @@ package {
 													new Buff('dispel', 'Dispel', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
 													new Buff('cascade', 'Cascade', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
 
-		public function Weapon(name:String, attack:int=1, defense:int=0, special:Number = 0,
-							   buffs:Object = null){
+		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null){
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
-			this.special = special;
 			
 			if (buffs) {
 				this.buffs = buffs;
