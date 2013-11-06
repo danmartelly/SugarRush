@@ -27,6 +27,18 @@ package
 		}
 		
 		override public function update():void {
+			if (x < 0){
+				x = 0;
+			}
+			if ( x > (FlxG.width)) {
+				x = FlxG.width;
+			}
+			if (y < 0){
+				y = 0;
+			}
+			if ( y > (FlxG.height)) {
+				y = (FlxG.height );
+			}
 			_timer += FlxG.elapsed;
 			var selfPoint:Point = new Point();
 			this.getMidpoint().copyToFlash(selfPoint);
