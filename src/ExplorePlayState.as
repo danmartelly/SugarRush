@@ -7,7 +7,7 @@ package
 	import org.flixel.FlxRect;
 	
 	public class ExplorePlayState extends FlxState
-	{
+	{		
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
@@ -17,7 +17,6 @@ package
 		
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
-			
 		
 		override public function create(): void
 		{
