@@ -5,11 +5,11 @@ package {
 	 
 	public class BattleLogic {
 		var turn:int = 0;
-		var player:BattlePlayer = new BattlePlayer(10, 10);
+		var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
 		
-		public function BattleLogic(state){
+		public function BattleLogic(state:BattlePlayState){
 			this.state = state;
 		}
 		
