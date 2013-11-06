@@ -38,7 +38,6 @@ package
 			enemyLifeBar.setOriginToCorner();
 			
 			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
-
 			
 			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
 			playerLifeBar.makeGraphic(100,10, 0xff00ff00);

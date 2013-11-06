@@ -8,10 +8,6 @@ package {
 		var player:BattlePlayer = new BattlePlayer(10, 10);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
-//		var healthCallback:Function; // tell the battle ui when player/enemy health changes
-//		var turnCallback:Function; // tell the battle ui when the turn changes
-//		var attackCallback:Function; // tell the battle ui when the player or oppontent attacked
-//		var endBattleCallback:Function; // tell the battle ui when the battle ends
 		
 		public function BattleLogic(state){
 			this.state = state;
