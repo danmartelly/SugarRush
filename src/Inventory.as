@@ -1,20 +1,37 @@
 package {
-	/**
-	 * @author ethanis
-	 */
 	public class Inventory {
-		var weapons:Array = [];
-		var candies:Array = [];
-		
-		public function addWeapon(weapon:Weapon): void {
+		private static var weapons:Array = [];
+		private static var candies:Array = [];
+
+		public static function addWeapon(weapon:Weapon):void {
 			weapons.push(weapon);
 		}
 		
-		public function addCandy(candy:Candy): void {
+		public static function removeWeaponAt(index:Number):void {
+			weapons.splice(index, 1);
+		}
+		
+		public static function getWeapons():Array {
+			return weapons;
+		}
+		
+		public static function weaponCount():Number {
+			return weapons.length;
+		}
+		
+		public static function addCandy(candy:Candy):void {
 			candies.push(candy);
 		}
 		
-		public function candyCount(): Number {
+		public static function removeCandyAt(index:Number):void {
+			candies.splice(index, 1);
+		}
+		
+		public static function getCandies():Array {
+			return candies;
+		}
+		
+		public static function candyCount():Number {
 			return candies.length;
 		}
 	}

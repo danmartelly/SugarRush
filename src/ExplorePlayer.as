@@ -3,20 +3,19 @@ package
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	
-	public class Player extends FlxSprite
+	public class ExplorePlayer extends FlxSprite
 	{
 		[Embed(source="../assets/player_back.png")] protected var playerBack:Class;
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
 		[Embed(source="../assets/player_left.png")] protected var playerLeft:Class;
 		[Embed(source="../assets/player_right.png")] protected var playerRight:Class;
 		
-		public var levelX:Number = 800;
-		public var levelY:Number = 600;
+
 		public var playerwidth:Number = 35;
 		public var playerheight:Number = 60;
 		
-		
-		public function Player(X:Number=50, Y:Number=50)
+
+		public function ExplorePlayer(X:Number=50, Y:Number=50)
 		{
 			super(X, Y);
 			makeGraphic(10, 12, 0xffaa11aa);
@@ -28,10 +27,7 @@ package
 			drag.y = maxVelocity.y * 4;
 			loadGraphic(playerFront);
 			
-			FlxG.worldBounds.x = 0;
-			FlxG.worldBounds.y = 0;
-			FlxG.worldBounds.width = levelX;
-			FlxG.worldBounds.height = levelY;
+			
 		}
 		
 		override public function update():void {

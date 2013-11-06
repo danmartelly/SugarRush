@@ -8,24 +8,54 @@ package
 	import org.flixel.FlxText;
 	
 	public class BattlePlayState extends FlxState
-	{
+	{		
 		var voidFn:Function = function():void {};
-		var logic:BattleLogic = new BattleLogic(voidFn,voidFn, voidFn, voidFn);
+		var logic:BattleLogic = new BattleLogic(this);
 		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
-		override public function create():void{
+		
+		private var x:int = FlxG.width /2 + 150;
+		private var y:int = FlxG.height - 50;
+		private var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
+		private var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
+		private var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
+		private var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
+		private var enemyName:FlxText = new FlxText(50,35, 100,"Enemy Name");
+		
+		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		private var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
+		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+		
+		override public function create():void {
 			FlxG.debug = true;
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 						
-			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
-			var x:int = FlxG.width /2 + 150;
-			var y:int = FlxG.height - 50;
-			var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
-			var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
-			var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
-			var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
+
+			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
 			
-			add(title);
+			
+			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
+			
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			enemyLifeBar.makeGraphic(100,10,0xff00ff00);
+			
+			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+			add(playerName);
+			
+			var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
+			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
+			
+			var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
+			
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
+			playerLifeBar.makeGraphic(100,10,0xff00ff00);
+			
+			add(enemyName);
 			add(attackButton);
 			add(switchButton);
 			add(runButton);
@@ -33,39 +63,40 @@ package
 			FlxG.mouse.show();
 		}
 		
-		private function attackCallback():void{
+		public function attackCallback():void {
 			logic.useAttack();
 		}
 		
-		private function switchCallback():void{
-//			var inventory:BattleInventoryMenu = new BattleInventoryMenu();
-//			var o:FlxBasic = inventory.getFirstAlive();
-//			add(o);
-//			o.draw();
-			var background:FlxSprite = new FlxSprite(220, 140);
-			//background.loadGraphic(playerFront);
-			//background.width = background.height = 100;
-			
-			
-			background.makeGraphic(100,100,0x000000);
-			add(background);
-			background.visible = true;
-			//logic.switchWeapon();
+		public function switchCallback():void{
+			add(new BattleInventoryMenu());
+			logic.switchWeapon(new Weapon("Candy Cane"));
 		}
 		
-		private function runCallback():void{
+		public function runCallback():void{
 			logic.useRun();
 		}
 		
-		private function candyCallback():void{
+		public function candyCallback():void{
 			logic.useCandy();
 		}
 		
-		//enemy HP bar
-		//player HP bar
-		//menu box
-			//consists for four buttons
-		//player sprite
-		//enemy sprite
+		public function healthCallback():void {
+			var health:Number = logic.playerHealthPercent();
+			playerLifeBar.makeGraphic(health, 10, 0xff00ff00);
+			health = logic.enemyHealthPercent();
+			enemyLifeBar.makeGraphic(health, 10, 0xff00ff00);
+		}
+		
+		public function turnCallback():void {
+			
+		}
+		
+		public function attackLogicCallback():void {
+			
+		}
+		
+		public function endBattleCallback():void {
+			
+		}
 	}
 }
