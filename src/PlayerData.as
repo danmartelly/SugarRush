@@ -9,7 +9,6 @@ package
 		public var currentHealth:int;
 		public var maxHealth:int;
 		
-		public var health:Number;
 		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, null);
 		public var inventory:Inventory;
 		
