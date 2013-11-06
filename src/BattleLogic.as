@@ -5,7 +5,7 @@ package {
 	 
 	public class BattleLogic {
 		var turn:int = 0;
-		var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
+		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
 		
@@ -39,6 +39,7 @@ package {
 		
 		public function useCandy():void {
 			player.heal(5);
+			this.state.showHealth();
 			this.state.healthCallback();
 			endTurn();
 		}

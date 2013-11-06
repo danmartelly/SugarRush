@@ -55,9 +55,21 @@ package
 			add(runButton);
 			add(candyButton);
 			FlxG.mouse.show();
+			
+			drawHealthBar();
+		}
+		
+		public function showHealth():void{
+			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
+		}
+		
+		private function drawHealthBar():void {
+			var health:Number = logic.playerHealthPercent();
+			playerLifeBar.scale.x = health / 100.0;
 		}
 		
 		public function attackCallback():void {
+			drawHealthBar();
 			logic.useAttack();
 		}
 		
@@ -77,10 +89,7 @@ package
 		public function healthCallback():void {
 			add(new FlxText(10,10,100,"in health call back"));
 			
-			var health:Number = logic.playerHealthPercent();
-			add(new FlxText(10,20,100, "health = " + health));
-			
-			playerLifeBar.scale.x = health / 100.0;
+			drawHealthBar();
 			
 			var e_health:Number = logic.enemyHealthPercent();
 			enemyLifeBar.scale.x = e_health / 100.0;
