@@ -8,6 +8,8 @@ package
 	
 	public class ExplorePlayState extends FlxState
 	{
+		private static var _instance:ExplorePlayState;
+		
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
@@ -17,6 +19,18 @@ package
 		
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
+		
+				// Follows the Singleton design pattern
+		public function ExplorePlayState(lock:SingletonLock)
+		{
+		}
+		
+		public static function get instance():ExplorePlayState {
+			if (_instance == null) {
+				_instance = new ExplorePlayState(new SingletonLock());
+			}
+			return _instance;
+		}
 			
 		
 		override public function create(): void
@@ -60,3 +74,5 @@ package
 		}
 	}
 }
+
+class SingletonLock{}
