@@ -81,6 +81,11 @@ package {
 
 			opponent.hurt(damageAmount);
 			
+			for (var i:Object in this.buffs) {
+				var b:Buff = Weapon.BUFF_LIST[i["id"]];
+				b.effect(this, opponent);
+			}
+			
 			return damageAmount;
 		}
 	}
