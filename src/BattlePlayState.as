@@ -34,27 +34,21 @@ package
 						
 
 			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
-			
-			
 			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
+			enemyLifeBar.setOriginToCorner();
+			
+			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+			
+			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
+			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
+			playerLifeBar.setOriginToCorner();
+			
 			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
-			enemyLifeBar.makeGraphic(100,10,0xff00ff00);
-			
-			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
 			add(playerName);
-			
-			var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
-			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
-			
-			var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
-			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
-			
 			add(maxPlayerLifeBar);
 			add(playerLifeBar);
-			playerLifeBar.makeGraphic(100,10,0xff00ff00);
-			
 			add(enemyName);
 			add(attackButton);
 			add(switchButton);
@@ -81,13 +75,21 @@ package
 		}
 		
 		public function healthCallback():void {
+			add(new FlxText(10,10,100,"in health call back"));
+			
 			var health:Number = logic.playerHealthPercent();
-			playerLifeBar.makeGraphic(health, 10, 0xff00ff00);
-			health = logic.enemyHealthPercent();
-			enemyLifeBar.makeGraphic(health, 10, 0xff00ff00);
+			add(new FlxText(10,20,100, "health = " + health));
+			
+			playerLifeBar.scale.x = health / 100.0;
+			
+			var e_health:Number = logic.enemyHealthPercent();
+			enemyLifeBar.scale.x = e_health / 100.0;
+			
+			
 		}
 		
-		public function turnCallback():void {
+		public function turnCallback(turn:int):void {
+			add(new FlxText(10,60,100,"in turnCallback"));
 			
 		}
 		
@@ -95,8 +97,21 @@ package
 			
 		}
 		
-		public function endBattleCallback():void {
-			
+		public function endBattleCallback(status:int):void {
+			switch(status){
+				case BattleLogic.ENEMY_WON:
+					
+					break;
+				
+				case BattleLogic.PLAYER_WON:
+					break;
+				
+				case BattleLogic.RAN_AWAY:
+					PlayerData.instance.health -= 1;
+					FlxG.mouse.hide();
+					FlxG.switchState(new ExplorePlayState());
+					break;
+			}
 		}
 	}
 }

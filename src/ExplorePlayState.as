@@ -4,9 +4,10 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxRect;
 	
 	public class ExplorePlayState extends FlxState
-	{
+	{		
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
@@ -16,7 +17,6 @@ package
 		
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
-			
 		
 		override public function create(): void
 		{
@@ -32,10 +32,12 @@ package
 			
 			pause = new PauseState();
 			
-			FlxG.worldBounds.x = 0;
-			FlxG.worldBounds.y = 0;
-			FlxG.worldBounds.width = levelX;
-			FlxG.worldBounds.height = levelY;
+
+			FlxG.camera.setBounds(0, 0, levelX, levelY);
+
+			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
+			
+			FlxG.camera.follow(_player);
 		}
 		
 		override public function update():void
