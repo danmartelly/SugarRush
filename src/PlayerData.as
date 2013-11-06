@@ -5,6 +5,7 @@ package
 		private static var _instance:PlayerData;
 		public var weapons:Array;
 		public var health:Number;
+		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, null);
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
@@ -21,6 +22,7 @@ package
 		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10):void {
 			if (initialWeapons == null) {
 				weapons = new Array();
+				weapons.push(startingWeapon);
 			} else {
 				weapons = initialWeapons;
 			}
