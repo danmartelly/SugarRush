@@ -3,17 +3,19 @@ package {
 	 * @author ethanis
 	 */
 	public class Weapon {
-		var attack:int = 1;
-		var defense:int = 0;
-		var name:String = "";
+		var attack:int;
+		var defense:int;
+		var name:String;
+		var buff:int;
 		
 		/*
 		'buffs' is a dictionary of arrays. each key is a point at which buffs can be applied.
 		for example, buffs['equip'] might contain buffs that are applied when equipping this weapon, like 'heal'
 		and buffs['hit'] might contain buffs that are applied when hitting an enemy, like 'burn' and 'freeze'.
 		*/
-		var buffs:Object = { };
+		var buffs:Object = { }; // yo nate why isn't this just the index of the buff? we only have 1 buff and they are all on-hit effects
 		
+		// 1-3 match Candy constants.
 		public static const NO_SPECIAL:int = 0;
 		public static const RED_SPECIAL:int = 1;
 		public static const BLUE_SPECIAL:int = 2;
@@ -37,18 +39,24 @@ package {
 													new Buff('dispel', 'Dispel', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
 													new Buff('cascade', 'Cascade', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
 
-		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null){
+		public function Weapon(name:String, attack:int=1, defense:int=0, buff:int = 0){
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
-			
-			if (buffs) {
-				this.buffs = buffs;
-			}
+			this.buff = buff;
 		}
 		
 		public function buffsOfType(type:String):Array {
 			return buffs[type];
+		}
+		
+		public function getDisplayName():String {
+			if (buff == 0) {
+				return name;
+			}
+			else {
+				return name + " of " + BUFF_LIST[buff].name;
+			}
 		}
 	}
 }

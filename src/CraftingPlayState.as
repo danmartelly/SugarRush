@@ -30,7 +30,7 @@ package
 			for (var i:int = 0; i < candies.length; i++)
 			{
 				var candy:Candy = candies[i];
-				var candyButton:FlxButton = new FlxButton(0, i * height, candy.getColor(), selectCandy);
+				var candyButton:FlxButton = new FlxButton(0, i * height, candy.getColorName(), selectCandy);
 				height = candyButton.height;
 				buttonHeight = height;
 				add(candyButton);
@@ -53,7 +53,7 @@ package
 				for (var i:int = 0; i < cauldronIndices.length; i++)
 				{
 					var candy:Candy = candies[cauldronIndices[i]];
-					display.push(candy.getColor());
+					display.push(candy.getColorName());
 				}
 				cauldronText.text = "Cauldron:\n| " + display.join(" | ") + " |";
 				banner.text = "";
@@ -74,7 +74,8 @@ package
 					var candy:Candy = candies[cauldronIndices[i]];
 					cauldron.push(candy);
 				}
-				CraftLogic.craft(cauldron);
+				var weapon:Weapon = CraftLogic.craft(cauldron);
+				banner.text = "You got a " + weapon.getDisplayName() + "!";
 				
 				var tempCandies:Array = new Array();
 				for (i = 0; i < candies.length; i++) {
@@ -82,7 +83,7 @@ package
 						tempCandies.push(candies[i]);
 					}
 				}
-				candies = tempCandies;
+				//candies = tempCandies;
 				// need to update player inventory and redraw the current screen
 			}
 		}
