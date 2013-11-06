@@ -11,7 +11,7 @@ package
 	{		
 		var voidFn:Function = function():void {};
 		var logic:BattleLogic = new BattleLogic(this);
-		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
+		
 		
 		private var x:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height - 50;

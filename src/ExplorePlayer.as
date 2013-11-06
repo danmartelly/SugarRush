@@ -5,10 +5,7 @@ package
 	
 	public class ExplorePlayer extends FlxSprite
 	{
-		[Embed(source="../assets/player_back.png")] protected var playerBack:Class;
-		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
-		[Embed(source="../assets/player_left.png")] protected var playerLeft:Class;
-		[Embed(source="../assets/player_right.png")] protected var playerRight:Class;
+		
 		
 
 		public var playerwidth:Number = 35;
@@ -25,7 +22,7 @@ package
 			maxVelocity.y = 90;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
-			loadGraphic(playerFront);
+			loadGraphic(Sources.playerFront);
 			
 			
 		}
@@ -48,19 +45,19 @@ package
 			
 			if (FlxG.keys.LEFT) {
 				velocity.x = -maxVelocity.x * 4;
-				loadGraphic(playerLeft);
+				loadGraphic(Sources.playerLeft);
 			}
 			if (FlxG.keys.RIGHT) {
 				velocity.x = maxVelocity.x * 4;
-				loadGraphic(playerRight);
+				loadGraphic(Sources.playerRight);
 			}
 			if (FlxG.keys.UP) {
 				velocity.y = -maxVelocity.y * 4;
-				loadGraphic(playerBack);
+				loadGraphic(Sources.playerBack);
 			}
 			if (FlxG.keys.DOWN) {
 				velocity.y = maxVelocity.y * 4;
-				loadGraphic(playerFront);
+				loadGraphic(Sources.playerFront);
 			}
 		}
 	}
