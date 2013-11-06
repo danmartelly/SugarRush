@@ -44,17 +44,20 @@ package {
 		}
 		
 		//buff-related functions
-		public function applyBuff(s:String, turns:Number):void {
+		public function applyBuff(s:String, id:Number, turns:Number):void {
 			for (var i:Object in this.buffs) {
 				if (i["name"] == s) {
 					i["turns"] = turns;
 					return;
 				}
 			}
-			this.buffs.push({"name": s, "turns": turns});
+			this.buffs.push({"name": s, "id": id, "turns": turns});
 		}
 		public function removeBuff(s:String):void {
 			this.buffs.filter(function(obj:Object):Boolean { return obj["name"] != s; });
+		}
+		public function removeAllBuffs():void {
+			this.buffs = [];
 		}
 		public function hasBuff(s:String):Boolean {
 			for (var i:Object in this.buffs) {
@@ -66,9 +69,10 @@ package {
 		}
 		public function tickBuffs():void {
 			for (var i:Object in this.buffs) {
-				i["turns"]--;
+				if (i["turns"] > 0)
+					i["turns"]--;
 			}
-			this.buffs.filter(function(obj:Object):Boolean { return obj["turns"] > 0; });
+			this.buffs.filter(function(obj:Object):Boolean { return obj["turns"] != 0; });
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {
