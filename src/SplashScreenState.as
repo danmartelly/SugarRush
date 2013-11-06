@@ -32,7 +32,7 @@ package
 		}
 		
 		private function startGame():void {
-			FlxG.switchState(ExplorePlayState.instance);
+			FlxG.switchState(new ExplorePlayState());
 		}
 	}
 }
