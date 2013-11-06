@@ -14,7 +14,7 @@ package {
 			} else {
 				
 			}
-			return new Weapon("test", 1, 0, 0, null);
+			return new Weapon("test", 1, 0, null);
 		}
 	}
 }

@@ -70,7 +70,7 @@ package {
 		public function tickBuffs():void {
 			for (var i:Object in this.buffs) {
 				if (i["turns"] > 0)
-					i["turns"]--;
+					i["turns"]--; 
 			}
 			this.buffs.filter(function(obj:Object):Boolean { return obj["turns"] != 0; });
 		}
