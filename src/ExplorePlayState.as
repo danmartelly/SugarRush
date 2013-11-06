@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxRect;
+	import org.flixel.FlxBackdrop;
 	
 	public class ExplorePlayState extends FlxState
 	{		
@@ -18,8 +19,12 @@ package
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 		
+		private var background:FlxBackdrop ;
+		
 		override public function create(): void
 		{
+			background = new FlxBackdrop(Sources.ExploreBackground, 0, 0, false, false); 
+			add(background);
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new ExplorePlayer();
