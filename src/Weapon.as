@@ -14,16 +14,16 @@ package {
 		*/
 		var buffs:Object = { };
 		
-		public const NO_SPECIAL:int = 0;
-		public const RED_SPECIAL:int = 1;
-		public const BLUE_SPECIAL:int = 2;
-		public const WHITE_SPECIAL:int = 3;
-		public const RR_SPECIAL:int = 4;
-		public const BB_SPECIAL:int = 5;
-		public const WW_SPECIAL:int = 6;
-		public const RB_SPECIAL:int = 7;
-		public const RW_SPECIAL:int = 8;
-		public const WB_SPECIAL:int = 9;
+		public static const NO_SPECIAL:int = 0;
+		public static const RED_SPECIAL:int = 1;
+		public static const BLUE_SPECIAL:int = 2;
+		public static const WHITE_SPECIAL:int = 3;
+		public static const RR_SPECIAL:int = 4;
+		public static const BB_SPECIAL:int = 5;
+		public static const WW_SPECIAL:int = 6;
+		public static const RB_SPECIAL:int = 7;
+		public static const RW_SPECIAL:int = 8;
+		public static const WB_SPECIAL:int = 9;
 		
 		// this might get moved later -npinsker
 		public static const BUFF_LIST:Array = [ 	new Buff('none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
