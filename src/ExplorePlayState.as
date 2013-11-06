@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxRect;
 	
 	public class ExplorePlayState extends FlxState
 	{
@@ -30,10 +31,12 @@ package
 			
 			pause = new PauseState();
 			
-			FlxG.worldBounds.x = 0;
-			FlxG.worldBounds.y = 0;
-			FlxG.worldBounds.width = levelX;
-			FlxG.worldBounds.height = levelY;
+
+			FlxG.camera.setBounds(0, 0, levelX, levelY);
+
+			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
+			
+			FlxG.camera.follow(_player);
 		}
 		
 		override public function update():void
