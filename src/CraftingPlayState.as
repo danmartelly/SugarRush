@@ -75,7 +75,7 @@ package
 					cauldron.push(candy);
 				}
 				var weapon:Weapon = CraftLogic.craft(cauldron);
-				banner.text = "You got a " + weapon.getDisplayName() + "!";
+				banner.text = "You got a " + weapon.getDisplayName() + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
 				
 				var tempCandies:Array = new Array();
 				for (i = 0; i < candies.length; i++) {
