@@ -45,9 +45,9 @@ package {
 		
 		//buff-related functions
 		public function applyBuff(s:String, id:Number, turns:Number):void {
-			for (var i:Object in this.buffs) {
-				if (i["name"] == s) {
-					i["turns"] = turns;
+			for (var i=0; i<this.buffs.length; ++i) {
+				if (this.buffs[i]["name"] == s) {
+					this.buffs[i]["turns"] = turns;
 					return;
 				}
 			}
@@ -68,11 +68,16 @@ package {
 			return false;
 		}
 		public function tickBuffs():void {
-			for (var i:Object in this.buffs) {
-				if (i["turns"] > 0)
-					i["turns"]--; 
+			var newBuffs = new Array();
+			for (var i=0; i<this.buffs.length; ++i) {
+				if (this.buffs[i]["turns"] > 0) {
+					this.buffs[i]["turns"]--;
+				}
+				if (this.buffs[i]["turns"] > 0 || this.buffs[i]["turns"] == -1) {
+					newBuffs.push(this.buffs[i]);
+				}
 			}
-			this.buffs.filter(function(obj:Object):Boolean { return obj["turns"] != 0; });
+			this.buffs = newBuffs;
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {
@@ -81,10 +86,11 @@ package {
 
 			opponent.hurt(damageAmount);
 			
-			for (var i:Object in this.buffs) {
-				var b:Buff = Weapon.BUFF_LIST[i["id"]];
+			for (var i=0; i<this.buffs.length; ++i) {
+				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
+			this.tickBuffs();
 			
 			return damageAmount;
 		}
