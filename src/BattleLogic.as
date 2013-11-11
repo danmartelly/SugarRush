@@ -1,4 +1,5 @@
 package {
+	import flash.utils.describeType;
 	/**
 	 * @author ethanis
 	 */
@@ -6,7 +7,7 @@ package {
 	public class BattleLogic {
 		var turn:int = 0;
 		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
-		var enemy:BattleEnemy = new BattleEnemy(5, 5, "carrot");
+		var enemy:BattleEnemy = new BattleEnemy(8, 8, randomEnemy());
 		var state:BattlePlayState;
 		
 		var itemsPerPage:int;
@@ -15,8 +16,13 @@ package {
 		public function BattleLogic(state:BattlePlayState, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
+			
+			initializePlayer();
 		}
 		
+		public function initializePlayer():void {
+			switchWeaponIndex(player.data.currentWeaponIndex); //in order to re-apply buffs
+		}
 		public function useRun():void {
 			this.state.endBattleCallback(RAN_AWAY);
 		}
@@ -25,6 +31,12 @@ package {
 			player.attack(enemy);
 			this.state.healthCallback();
 			endTurn();
+		}
+		
+		private static function randomEnemy():String {
+			var enemyCount:int = Sources.enemyNames.length;
+			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
+			return Sources.enemyNames[enemyIndex];
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
@@ -50,6 +62,9 @@ package {
 		private function endTurn():void {
 			turn = (turn + 1) % 2;
 			
+			if (turn == ENEMY_TURN) player.removeTempStats();
+			else enemy.removeTempStats();
+			
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);
 			}else if (enemy.isDead) {
@@ -58,7 +73,7 @@ package {
 				this.state.turnCallback(turn);
 			}
 			
-			if (turn == ENEMY_TURN){
+			if (turn == ENEMY_TURN && !enemy.isDead){
 				enemy.attack(player);
 				this.state.healthCallback();
 				endTurn();

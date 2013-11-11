@@ -18,8 +18,8 @@ package
 		 */
 		public static function craft(cauldron:Array):Weapon
 		{
-			var first:int = cauldron[(int)(3 * Math.random())].getColorNumber();
-			var second:int = cauldron[(int)(3 * Math.random())].getColorNumber();
+			var first:int = cauldron[(int)(3 * Math.random())].getColorNumber() + 1;
+			var second:int = cauldron[(int)(3 * Math.random())].getColorNumber() + 1;
 			var roll:Number = Math.random();
 			
 			var buff:int = 0;

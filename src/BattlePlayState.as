@@ -1,16 +1,16 @@
 package
 {
-	import org.flixel.FlxBasic;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	
 	public class BattlePlayState extends FlxState
 	{		
-		var voidFn:Function = function():void {};
-		var logic:BattleLogic = null;
+		private var voidFn:Function = function():void {};
+		private var logic:BattleLogic = null;
 		
 		private var x:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height - 50;
@@ -27,6 +27,12 @@ package
 		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
 		private var playerSprite:FlxSprite = new FlxSprite(50, FlxG.height-325, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
+		private var timer:Number = 1;
+		private var timerStart:Boolean = false;
+		
+		
+		
+		private var buttonGroup:FlxGroup = new FlxGroup();
 		
 		override public function create():void {
 			FlxG.debug = true;
@@ -45,6 +51,10 @@ package
 			
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
 			
+			enemySprite.addAnimation("idle", [0]);
+			enemySprite.addAnimation("attacked", [1]);
+		
+			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
 			add(playerName);
@@ -59,22 +69,46 @@ package
 			add(playerSprite);
 			FlxG.mouse.show();
 			
+			buttonGroup.add(attackButton);
+			buttonGroup.add(switchButton);
+			buttonGroup.add(runButton);
+			buttonGroup.add(candyButton);
+			
 			drawHealthBar();
 		}
+		
+		public function runTime():void
+		{
+			//Reduce Number
+			timer -= FlxG.elapsed;
+			
+			
+			
+		}
+		
 		override public function update():void {
 			if (FlxG.keys.justPressed("B")) {
-				var s1 = "", s2 = "";
-				for (var i=0; i<logic.player.buffs.length; ++i) {
+				var s1:String = "", s2:String = "";
+				for (var i:int=0; i<logic.player.buffs.length; ++i) {
 					if (i) s1 += ", ";
 					s1 += logic.player.buffs[i].name + "(" + logic.player.buffs[i].turns + ")";
 				}
-				for (var i=0; i<logic.enemy.buffs.length; ++i) {
+				for (i=0; i<logic.enemy.buffs.length; ++i) {
 					if (i) s2 += ", ";
 					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
 				}
 				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().name + " buffs: " + s1);
 				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
 
+			}
+			if (timerStart == true){
+				runTime();
+				enemySprite.play("attacked");
+			}
+			if (timer <= 0){
+				timer = 1;
+				timerStart = false;
+				enemySprite.play("idle");
 			}
 			super.update();
 		}
@@ -90,13 +124,18 @@ package
 		
 		public function attackCallback():void {
 			drawHealthBar();
+			timerStart = true;
 			logic.useAttack();
+			
 		}
 		
-		public function switchCallback():void {
-			add(new BattleInventoryMenu());
-			//logic.switchWeaponIndex(1);
-			
+
+		public function switchCallback():void{
+			add(new BattleInventoryMenu(inventoryCallback));
+		}
+		
+		public function inventoryCallback(index:int):void {
+			logic.switchWeaponIndex(index);
 		}
 		
 		public function runCallback():void{
@@ -108,8 +147,6 @@ package
 		}
 		
 		public function healthCallback():void {
-			add(new FlxText(10,10,100,"in health call back"));
-			
 			drawHealthBar();
 			
 			var e_health:Number = logic.enemyHealthPercent();
@@ -117,7 +154,6 @@ package
 		}
 		
 		public function turnCallback(turn:int):void {
-			//add(new FlxText(10,60,100,"in turnCallback"));
 			switch(turn){
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
@@ -149,6 +185,22 @@ package
 					break;
 				
 				case BattleLogic.PLAYER_WON:
+					var candyColor:int = Math.floor(Math.random()*3);
+					var candyDrop:Candy = new Candy(candyColor);
+					Inventory.addCandy(candyColor);
+					switch(candyColor){
+						case 0:
+							add(new FlxText(200, 200, 200, "You have earned red candy!"));
+							break;
+						case 1:
+							add(new FlxText(200, 200, 200, "You have earned blue candy!"));
+							break;
+						case 2:
+							add(new FlxText(200, 200, 200, "You have earned white candy!"));
+							break;
+					}
+					add(new FlxButton(200,220,"End battle",endBattle));
+					buttonGroup.setAll("active",false);
 					break;
 				
 				case BattleLogic.RAN_AWAY:
@@ -159,6 +211,13 @@ package
 					FlxG.switchState(new ExplorePlayState());
 					break;
 			}
+		}
+		
+		private function endBattle():void
+		{
+			this.destroy();
+			logic.player.updatePlayerData();
+			FlxG.switchState(new ExplorePlayState());
 		}
 	}
 }

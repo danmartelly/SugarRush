@@ -6,21 +6,20 @@ package {
 		private var colorNumber:int;
 		private var colorName:String;
 		
-		// These match the basic specials in Weapon.
-		public static const COLOR_RED:int = 1;
-		public static const COLOR_BLUE:int = 2;
-		public static const COLOR_WHITE:int = 3;
+		public static const COLOR_RED:int = 0;
+		public static const COLOR_BLUE:int = 1;
+		public static const COLOR_WHITE:int = 2;
 		
 		public function Candy(colorNumber:int = COLOR_RED){
 			this.colorNumber = colorNumber;
 			switch (this.colorNumber){
-				case 1:
+				case 0:
 					this.colorName = 'red';
 					break;
-				case 2:
+				case 1:
 					this.colorName = 'blue';
 					break;
-				case 3:
+				case 2:
 					this.colorName = 'white';
 					break;
 			}

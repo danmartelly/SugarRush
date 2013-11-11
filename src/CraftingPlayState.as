@@ -15,12 +15,20 @@ package
 		{
 			FlxG.bgColor = 0xaaffaacc;
 			
-			this.candies = new Array(new Candy(Candy.COLOR_RED), new Candy(Candy.COLOR_BLUE), new Candy(Candy.COLOR_WHITE), new Candy(Candy.COLOR_RED)); // Need to pull this from the player's inventory
+			this.candies = new Array();
+			
+			for (var color:int = 0; color < 3; color++) {
+				for (var i:int = 0; i < Inventory.candyCount(color); i++) {
+					this.candies.push(new Candy(color));
+				}
+			}
 			
 			var title:FlxText = new FlxText(0, 0, 100, "Crafting state");
 			var craftButton:FlxButton = new FlxButton(100, 200, "COMBINE", combineCandy);
+			var doneButton:FlxButton = new FlxButton(200, 200, "DONE", done);
 			add(title);
 			add(craftButton);
+			add(doneButton);
 			add(this.cauldronText);
 			add(this.banner);
 			
@@ -80,12 +88,18 @@ package
 				var tempCandies:Array = new Array();
 				for (i = 0; i < candies.length; i++) {
 					if (cauldronIndices.indexOf(i) < 0) {
-						tempCandies.push(candies[i]);
+						var color:int = candies[i];
+						tempCandies.push(color);
+						Inventory.removeCandy(color);
 					}
 				}
 				//candies = tempCandies;
-				// need to update player inventory and redraw the current screen
+				Inventory.addWeapon(weapon);
 			}
+		}
+		
+		private function done():void {
+			FlxG.switchState(new ExplorePlayState());
 		}
 	}
 }

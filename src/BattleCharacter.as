@@ -32,15 +32,19 @@ package {
 		}
 		
 		public function getAttackStat():Number {
-			return this.attackStat;
+			return this.attackStat + this.tempAttackStat;
 		}
 		
 		public function getDefenseStat():Number {
-			return this.defenseStat;
+			return this.defenseStat + this.tempDefenseStat;
 		}
 		
 		public function getHealthAsPercent():Number {
 			return (currentHealth/maxHealth)*100;
+		}
+		
+		public function removeTempStats():void {
+			this.tempAttackStat = this.tempDefenseStat = 0;
 		}
 		
 		//buff-related functions
@@ -81,15 +85,16 @@ package {
 		}
 		
 		public function attack(opponent:BattleCharacter): Number {
-			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-							    	   			   Math.floor(Math.random()*2*opponent.getDefenseStat())));
-
-			opponent.hurt(damageAmount);
-			
 			for (var i:int=0; i<this.buffs.length; ++i) {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
+			
+			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
+				Math.floor(Math.random()*2*opponent.getDefenseStat())));
+			
+			opponent.hurt(damageAmount);
+			
 			this.tickBuffs();
 			
 			return damageAmount;
