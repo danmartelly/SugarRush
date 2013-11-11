@@ -11,7 +11,6 @@ package
 		private var voidFn:Function = function():void {};
 		private var logic:BattleLogic = null;
 		
-		
 		private var x:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height - 50;
 		private var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
@@ -25,6 +24,8 @@ package
 		private var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
 		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+		private var playerSprite:FlxSprite = new FlxSprite(50, FlxG.height-325, Sources.battlePlayer);
+		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		override public function create():void {
 			FlxG.debug = true;
@@ -41,6 +42,7 @@ package
 			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
 			
+			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
 			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
@@ -52,6 +54,8 @@ package
 			add(switchButton);
 			add(runButton);
 			add(candyButton);
+			add(enemySprite);
+			add(playerSprite);
 			FlxG.mouse.show();
 			
 			drawHealthBar();
