@@ -29,7 +29,6 @@ package
 								   initialInventory:Inventory = null):void {
 			if (initialWeapons == null) {
 				weapons = new Array();
-				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				weapons.push(startingWeapon);
 			} else {
 				weapons = initialWeapons;
