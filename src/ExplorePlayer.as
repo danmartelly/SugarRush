@@ -33,14 +33,14 @@ package
 			if (x < 0){
 				x = 0;
 			}
-			if ( x > (FlxG.width - playerwidth)) {
-				x = FlxG.width - playerwidth;
+			if ( x > (1200 - playerwidth)) {
+				x = 1200 - playerwidth;
 			}
 			if (y < 0){
 				y = 0;
 			}
-			if ( y > (FlxG.height - playerheight)) {
-				y = (FlxG.height - playerheight);
+			if ( y > (800 - (playerheight+50))) {
+				y = (800 - (playerheight+50));
 			}
 			
 			if (FlxG.keys.LEFT) {
