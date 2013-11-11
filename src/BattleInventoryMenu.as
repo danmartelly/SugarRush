@@ -11,7 +11,7 @@ package
 		public function BattleInventoryMenu()
 		{
 			background = new FlxSprite(210, 130);
-			background.makeGraphic(200,200,0xff000000);
+			background.makeGraphic(193,280,0xff000000);
 			add(background);
 			background.visible = true;
 			
@@ -28,8 +28,36 @@ package
 			square.makeGraphic(50, 50, 0xff00ff00);
 			add(square);
 			
+			square = new FlxSprite(220, 200);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
 			
-			endButton = new FlxButton(330, 340, "Cancel", cancelCallback);
+			square = new FlxSprite(280, 200);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			square = new FlxSprite(340, 200);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			square = new FlxSprite(220, 260);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			square = new FlxSprite(280, 260);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			square = new FlxSprite(340, 260);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			square = new FlxSprite(280, 320);
+			square.makeGraphic(50,50,0xff00ff00);
+			add(square);
+			
+			
+			endButton = new FlxButton(263, 380, "Cancel", cancelCallback);
 			endButton.draw();
 			endButton.visible = true;
 			add(endButton);
