@@ -7,16 +7,17 @@ package
 		[Embed(source="../assets/player_front.png")] public static var playerFront:Class;
 		[Embed(source="../assets/player_left.png")] public static var playerLeft:Class;
 		[Embed(source="../assets/player_right.png")] public static var playerRight:Class;
-		[Embed(source="../assets/map.png")] public static var ExploreBackground:Class;
-		[Embed(source="../assets/tomato.png")] public static var tomatoEnemy:Class;
-		[Embed(source="../assets/carrot.png")] public static var carrotEnemy:Class;
+		[Embed(source="../assets/map.png")] public static var ExploreBackground:Class;		
+		[Embed(source="../assets/tomatosprite.png")] public static var Tomato:Class;
+		[Embed(source="../assets/carrotsprite.png")] public static var Carrot:Class;
+		
 		//music and sound effects
 		
 		//text
 		
-		var enemyMap:Object = {
-			"tomato": tomatoEnemy,
-			"carrot": carrotEnemy
+		public static const enemyMap:Object = {
+			"tomato": Tomato,
+			"carrot": Carrot
 		};
 	}
 }

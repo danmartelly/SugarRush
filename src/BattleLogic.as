@@ -6,7 +6,7 @@ package {
 	public class BattleLogic {
 		var turn:int = 0;
 		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
-		var enemy:BattleEnemy = new BattleEnemy(5, 5, "tomato");
+		var enemy:BattleEnemy = new BattleEnemy(5, 5, "carrot");
 		var state:BattlePlayState;
 		
 		var itemsPerPage:int;
