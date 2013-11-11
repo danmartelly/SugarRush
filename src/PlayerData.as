@@ -3,19 +3,17 @@ package
 	public class PlayerData
 	{
 		private static var _instance:PlayerData;
-		public var weapons:Array;
 
 		public var currentWeaponIndex:int = 0;
 		public var currentHealth:int;
 		public var maxHealth:int;
 		
 		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, null);
-		public var inventory:Inventory;
+		public var opWeapon:Weapon = new Weapon("OP", 50, 50, null);
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
 		{
-			weapons = new Array();
 		}
 		
 		public static function get instance():PlayerData {
@@ -25,18 +23,14 @@ package
 			return _instance;
 		}
 		
-		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10, 
-								   initialInventory:Inventory = null):void {
+		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10):void {
 			if (initialWeapons == null) {
-				weapons = new Array();
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
-				weapons.push(startingWeapon);
-			} else {
-				weapons = initialWeapons;
+				Inventory.addWeapon(startingWeapon);
+				Inventory.addWeapon(opWeapon);
 			}
 			currentHealth = initialHealth;
 			maxHealth = initialHealth;
-			inventory == initialInventory || new Inventory();
 		}
 		
 		public function playerHasDied():Boolean {
@@ -44,11 +38,11 @@ package
 		}
 		
 		public function addWeapon(newWeapon:Weapon):void {
-			weapons.push(newWeapon);
+			Inventory.addWeapon(newWeapon);
 		}
 		
 		public function currentWeapon():Weapon {
-			return weapons[currentWeaponIndex];
+			return Inventory.getWeapons()[currentWeaponIndex];
 		}
 	}
 }

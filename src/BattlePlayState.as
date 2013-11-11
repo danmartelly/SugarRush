@@ -93,8 +93,12 @@ package
 		}
 		
 		public function switchCallback():void{
-			add(new BattleInventoryMenu());
+			add(new BattleInventoryMenu(inventoryCallback));
 			//logic.switchWeaponIndex(1);
+		}
+		
+		public function inventoryCallback(index:int):void {
+			logic.switchWeaponIndex(index);
 		}
 		
 		public function runCallback():void{

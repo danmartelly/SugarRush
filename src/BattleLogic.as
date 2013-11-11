@@ -65,7 +65,7 @@ package {
 				this.state.turnCallback(turn);
 			}
 			
-			if (turn == ENEMY_TURN){
+			if (turn == ENEMY_TURN && !enemy.isDead){
 				enemy.attack(player);
 				this.state.healthCallback();
 				endTurn();

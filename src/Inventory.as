@@ -1,6 +1,6 @@
 package {
 	public class Inventory {
-		private static var weapons:Array = [];
+		public static var weapons:Array = [];
 		private static var reds:Number = 0;
 		private static var blues:Number = 0;
 		private static var whites:Number = 0;
