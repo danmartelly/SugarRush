@@ -53,6 +53,7 @@ package {
 		}
 		
 		public function useCandy():void {
+			Inventory.removeCandy(Math.floor(Math.random()*3));
 			player.heal(5);
 			this.state.showHealth();
 			this.state.healthCallback();
