@@ -47,9 +47,9 @@ package
 			//background.width = background.height = 100;
 			
 			
-			background.makeGraphic(100,100,0x000000);
+			background.makeGraphic(100,100,0xff000000);
 			add(background);
-			background.visible = true;
+			//background.visible = true;
 			logic.switchWeapon(new Weapon("n"));
 		}
 		
