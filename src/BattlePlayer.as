@@ -21,7 +21,7 @@ package {
 			var damageAmount:int = super.attack(opponent);
 			
 			if (data.currentWeapon() && data.currentWeapon().buffs["hit"]) {
-				var i = data.currentWeapon().buffs["hit"];
+				var i:int = data.currentWeapon().buffs["hit"];
 				var b:Buff = Weapon.BUFF_LIST[i];
 				opponent.applyBuff(b.tag, i, b.numTurns);
 			}
