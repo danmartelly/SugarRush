@@ -3,8 +3,11 @@ package {
 	 * @author ethanis
 	 */
 	public class BattleEnemy extends BattleCharacter {
-		public function BattleEnemy(currentHealth:Number, maxHealth:Number):void {
+		public var name:String;
+		
+		public function BattleEnemy(currentHealth:Number, maxHealth:Number, name:String):void {
 			super(currentHealth, maxHealth);
+			this.name = name;
 		}
 	}
 }
