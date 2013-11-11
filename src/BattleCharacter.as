@@ -21,7 +21,7 @@ package {
 		}
 		
 		public function heal(amount:Number):void {
-			this.currentHealth = Math.min((this.currentHealth + amount), maxHealth);
+			this.currentHealth = Math.min((this.currentHealth + amount), this.maxHealth);
 		}
 		
 		public function hurt(amount:Number):void {
@@ -68,8 +68,8 @@ package {
 			return false;
 		}
 		public function tickBuffs():void {
-			var newBuffs = new Array();
-			for (var i=0; i<this.buffs.length; ++i) {
+			var newBuffs:Array = new Array();
+			for (var i:int=0; i<this.buffs.length; ++i) {
 				if (this.buffs[i]["turns"] > 0) {
 					this.buffs[i]["turns"]--;
 				}
@@ -86,7 +86,7 @@ package {
 
 			opponent.hurt(damageAmount);
 			
-			for (var i=0; i<this.buffs.length; ++i) {
+			for (var i:int=0; i<this.buffs.length; ++i) {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
