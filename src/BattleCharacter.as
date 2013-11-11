@@ -21,7 +21,7 @@ package {
 		}
 		
 		public function heal(amount:Number):void {
-			this.currentHealth = Math.min((this.currentHealth + amount), maxHealth);
+			this.currentHealth = Math.min((this.currentHealth + amount), this.maxHealth);
 		}
 		
 		public function hurt(amount:Number):void {

@@ -3,7 +3,7 @@ package {
 	 * @author ethanis
 	 */
 	public class Candy {
-		private var color:String
+		private var color:String;
 		public static const COLOR_RED:String = 'red';
 		public static const COLOR_BLUE:String = 'blue';
 		public static const COLOR_WHITE:String = 'white';
