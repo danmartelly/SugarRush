@@ -26,6 +26,10 @@ package
 		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
 		private var playerSprite:FlxSprite = new FlxSprite(50, FlxG.height-325, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
+		private var timer:Number = 1;
+		private var timerStart:Boolean = false;
+		
+		
 		
 		override public function create():void {
 			FlxG.debug = true;
@@ -44,6 +48,10 @@ package
 			
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
 			
+			enemySprite.addAnimation("idle", [0]);
+			enemySprite.addAnimation("attacked", [1]);
+		
+			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
 			add(playerName);
@@ -60,6 +68,16 @@ package
 			
 			drawHealthBar();
 		}
+		
+		public function runTime():void
+		{
+			//Reduce Number
+			timer -= FlxG.elapsed;
+			
+			
+			
+		}
+		
 		override public function update():void {
 			if (FlxG.keys.justPressed("B")) {
 				var s1:String = "", s2:String = "";
@@ -75,6 +93,15 @@ package
 				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
 
 			}
+			if (timerStart == true){
+				runTime();
+				enemySprite.play("attacked");
+			}
+			if (timer <= 0){
+				timer = 1;
+				timerStart = false;
+				enemySprite.play("idle");
+			}
 			super.update();
 		}
 		
@@ -89,7 +116,9 @@ package
 		
 		public function attackCallback():void {
 			drawHealthBar();
+			timerStart = true;
 			logic.useAttack();
+			
 		}
 		
 		public function switchCallback():void{
