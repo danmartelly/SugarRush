@@ -26,6 +26,7 @@ package
 		private var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
 		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+		private var enemySprite:FlxSprite = new FlxSprite(x-150, 0);
 		
 		override public function create():void {
 			FlxG.debug = true;
@@ -42,6 +43,8 @@ package
 			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
 			
+			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
+			
 			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
@@ -53,6 +56,7 @@ package
 			add(switchButton);
 			add(runButton);
 			add(candyButton);
+			add(enemySprite);
 			FlxG.mouse.show();
 			
 			drawHealthBar();
@@ -87,22 +91,6 @@ package
 		public function attackCallback():void {
 			drawHealthBar();
 			logic.useAttack();
-		}
-		
-		private function switchCallback():void{
-//			var inventory:BattleInventoryMenu = new BattleInventoryMenu();
-//			var o:FlxBasic = inventory.getFirstAlive();
-//			add(o);
-//			o.draw();
-			var background:FlxSprite = new FlxSprite(220, 140);
-			//background.loadGraphic(playerFront);
-			//background.width = background.height = 100;
-			
-			
-			background.makeGraphic(100,100,0xff000000);
-			add(background);
-			//background.visible = true;
-			//logic.switchWeapon(new Weapon("n"));
 		}
 		
 		public function switchCallback():void {

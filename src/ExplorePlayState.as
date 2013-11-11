@@ -7,7 +7,9 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
-
+	import org.flixel.FlxState;
+	import org.flixel.FlxText;
+	
 	public class ExplorePlayState extends FlxState
 	{		
 		protected var _enemies:FlxGroup;
@@ -35,7 +37,8 @@ package
 		
 		override public function create(): void
 		{
-			background = new FlxBackdrop(Sources.ExploreBackground, 0, 0, false, false); 
+			 
+			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
@@ -84,6 +87,7 @@ package
 			add(_whiteCount);
 			
 			add(new FlxText(0,0,100,"Explore State"));
+			add(new ExploreHUD());
 			
 			pause = new PauseState();
 			
@@ -103,6 +107,9 @@ package
 				_whiteCount.text = "x" + Inventory.candyCount(2);
 				super.update();
 				
+				// Check player and enemy collision
+				FlxG.collide(_player, _enemies, triggerBattleState);
+				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
@@ -114,6 +121,14 @@ package
 			} else {
 				pause.update();
 			}
+		}
+		
+		public function triggerBattleState(player:FlxSprite, enemy:Enemy):void {
+			// for now just remove all enemies in a certain radius
+			_enemies.remove(enemy);
+			//switch to the battle state
+			battle = new BattlePlayState();
+			FlxG.switchState(battle);
 		}
 	}
 }
