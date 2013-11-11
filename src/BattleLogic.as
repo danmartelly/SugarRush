@@ -9,7 +9,11 @@ package {
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
 		
-		public function BattleLogic(state:BattlePlayState){
+		var itemsPerPage:int;
+		var inventoryPage:int;
+		
+		public function BattleLogic(state:BattlePlayState, itemsPerPage:int=5){
+			this.itemsPerPage = itemsPerPage;
 			this.state = state;
 		}
 		
@@ -68,6 +72,11 @@ package {
 		
 		public function enemyHealthPercent():Number {
 			return enemy.getHealthAsPercent();
+		}
+		
+		// inventory pagination for gui
+		public function currentInventoryPage():Array {
+			return [];
 		}
 		
 		
