@@ -35,7 +35,8 @@ package
 		
 		override public function create(): void
 		{
-			background = new FlxBackdrop(Sources.ExploreBackground, 0, 0, false, false); 
+			 
+			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
