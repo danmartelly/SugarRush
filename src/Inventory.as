@@ -1,7 +1,9 @@
 package {
 	public class Inventory {
 		private static var weapons:Array = [];
-		private static var candies:Array = [];
+		private static var reds:Number = 0;
+		private static var blues:Number = 0;
+		private static var whites:Number = 0;
 
 		public static function addWeapon(weapon:Weapon):void {
 			weapons.push(weapon);
@@ -19,20 +21,49 @@ package {
 			return weapons.length;
 		}
 		
-		public static function addCandy(candy:Candy):void {
-			candies.push(candy);
+		public static function addCandy(color:Number):void {
+			switch(color) {
+				case 0:
+					if (reds != 99) {reds += 1;}
+					break;
+				case 1:
+					if (blues != 99) {blues += 1;}
+					break;
+				case 2:
+					if (whites != 99) {whites += 1;}
+					break;
+				default:
+					break;
+			}
 		}
 		
-		public static function removeCandyAt(index:Number):void {
-			candies.splice(index, 1);
+		public static function removeCandy(color:Number):void {
+			switch(color) {
+				case 0:
+					if (reds != 0) {reds -= 1;}
+					break;
+				case 1:
+					if (blues != 0) {blues -= 1;}
+					break;
+				case 2:
+					if (whites != 0) {whites -= 1;}
+					break;
+				default:
+					break;
+			}
 		}
 		
-		public static function getCandies():Array {
-			return candies;
-		}
-		
-		public static function candyCount():Number {
-			return candies.length;
+		public static function candyCount(color:Number):Number {
+			switch(color) {
+				case 0:
+					return reds;
+				case 1:
+					return blues;
+				case 2:
+					return whites;
+				default:
+					return 0;
+			}
 		}
 	}
 }

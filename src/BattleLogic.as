@@ -5,7 +5,7 @@ package {
 	 
 	public class BattleLogic {
 		var turn:int = 0;
-		var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
+		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
 		var state:BattlePlayState;
 		
@@ -34,15 +34,15 @@ package {
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
 			if (weapon.buffs["equip"]) {
-				for (var i in weapon.buffs["equip"]) {
-					var b:Buff = Weapon.BUFF_LIST[i];
-					player.applyBuff(b.tag, i, b.numTurns);
-				}
+				var i:int = weapon.buffs["equip"];
+				var b:Buff = Weapon.BUFF_LIST[i];
+				player.applyBuff(b.tag, i, b.numTurns);
 			}
 		}
 		
 		public function useCandy():void {
 			player.heal(5);
+			this.state.showHealth();
 			this.state.healthCallback();
 			endTurn();
 		}
@@ -76,7 +76,7 @@ package {
 		
 		// inventory pagination for gui
 		public function currentInventoryPage():Array {
-			
+			return [];
 		}
 		
 		

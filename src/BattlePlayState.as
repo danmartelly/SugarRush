@@ -10,7 +10,7 @@ package
 	public class BattlePlayState extends FlxState
 	{		
 		var voidFn:Function = function():void {};
-		var logic:BattleLogic = new BattleLogic(this);
+		var logic:BattleLogic = null;
 		
 		
 		private var x:int = FlxG.width /2 + 150;
@@ -31,8 +31,7 @@ package
 			FlxG.debug = true;
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
-						
-
+			logic = new BattleLogic(this);
 			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
 			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
 			enemyLifeBar.setOriginToCorner();
@@ -55,9 +54,38 @@ package
 			add(runButton);
 			add(candyButton);
 			FlxG.mouse.show();
+			
+			drawHealthBar();
+		}
+		override public function update():void {
+			if (FlxG.keys.justPressed("B")) {
+				var s1 = "", s2 = "";
+				for (var i=0; i<logic.player.buffs.length; ++i) {
+					if (i) s1 += ", ";
+					s1 += logic.player.buffs[i].name + "(" + logic.player.buffs[i].turns + ")";
+				}
+				for (var i=0; i<logic.enemy.buffs.length; ++i) {
+					if (i) s2 += ", ";
+					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
+				}
+				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().name + " buffs: " + s1);
+				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
+
+			}
+			super.update();
+		}
+		
+		public function showHealth():void{
+			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
+		}
+		
+		private function drawHealthBar():void {
+			var health:Number = logic.playerHealthPercent();
+			playerLifeBar.scale.x = health / 100.0;
 		}
 		
 		public function attackCallback():void {
+			drawHealthBar();
 			logic.useAttack();
 		}
 		
@@ -77,17 +105,31 @@ package
 		public function healthCallback():void {
 			add(new FlxText(10,10,100,"in health call back"));
 			
-			var health:Number = logic.playerHealthPercent();
-			add(new FlxText(10,20,100, "health = " + health));
-			
-			playerLifeBar.scale.x = health / 100.0;
+			drawHealthBar();
 			
 			var e_health:Number = logic.enemyHealthPercent();
 			enemyLifeBar.scale.x = e_health / 100.0;
 		}
 		
 		public function turnCallback(turn:int):void {
-			add(new FlxText(10,60,100,"in turnCallback"));
+			//add(new FlxText(10,60,100,"in turnCallback"));
+			switch(turn){
+				case BattleLogic.ENEMY_TURN:
+					attackButton.active = false;
+					switchButton.active = false;
+					runButton.active = false;
+					candyButton.active = false;
+					break;
+				case BattleLogic.PLAYER_TURN:
+					attackButton.active = true;
+					switchButton.active = true;
+					runButton.active = true;
+					candyButton.active = true;
+					break;
+				
+			}
+			
+			this.update();
 			
 		}
 		

@@ -3,33 +3,35 @@ package {
 	 * @author ethanis
 	 */
 	public class Candy {
-		private var color:String;
-		public static const COLOR_RED:String = 'red';
-		public static const COLOR_BLUE:String = 'blue';
-		public static const COLOR_WHITE:String = 'white';
+		private var colorNumber:int;
+		private var colorName:String;
 		
-		public function Candy(color:String = COLOR_RED){
-			this.color = color;
-			/*
-			switch (this.color){
+		// These match the basic specials in Weapon.
+		public static const COLOR_RED:int = 1;
+		public static const COLOR_BLUE:int = 2;
+		public static const COLOR_WHITE:int = 3;
 		
-				case 'red':
-					trace('red candy');
+		public function Candy(colorNumber:int = COLOR_RED){
+			this.colorNumber = colorNumber;
+			switch (this.colorNumber){
+				case 1:
+					this.colorName = 'red';
 					break;
-				
-				case 'blue':
-					trace('blue candy');
+				case 2:
+					this.colorName = 'blue';
 					break;
-				
-				case 'white':
-					trace('white candy');
+				case 3:
+					this.colorName = 'white';
 					break;
 			}
-			*/
 		}
 		
-		public function getColor():String {
-			return this.color;
+		public function getColorNumber():int {
+			return this.colorNumber;
+		}
+		
+		public function getColorName():String {
+			return this.colorName;
 		}
 	}
 }
