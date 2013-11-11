@@ -16,8 +16,13 @@ package {
 		public function BattleLogic(state:BattlePlayState, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
+			
+			initializePlayer();
 		}
 		
+		public function initializePlayer():void {
+			switchWeaponIndex(player.data.currentWeaponIndex); //in order to re-apply buffs
+		}
 		public function useRun():void {
 			this.state.endBattleCallback(RAN_AWAY);
 		}
