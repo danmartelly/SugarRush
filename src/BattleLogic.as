@@ -7,7 +7,7 @@ package {
 	public class BattleLogic {
 		var turn:int = 0;
 		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
-		var enemy:BattleEnemy = new BattleEnemy(5, 5, randomEnemy());
+		var enemy:BattleEnemy = new BattleEnemy(8, 8, randomEnemy());
 		var state:BattlePlayState;
 		
 		var itemsPerPage:int;
@@ -61,6 +61,9 @@ package {
 		
 		private function endTurn():void {
 			turn = (turn + 1) % 2;
+			
+			if (turn == ENEMY_TURN) player.removeTempStats();
+			else enemy.removeTempStats();
 			
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);

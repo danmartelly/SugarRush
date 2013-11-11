@@ -9,8 +9,9 @@ package
 		public var maxHealth:int;
 		
 		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, null);
-		public var opWeapon:Weapon = new Weapon("OP", 50, 50, null);
+		public var fireWeapon:Weapon = new Weapon("fire", 1, 0, {"hit": 1});
 		public var lsWeapon:Weapon = new Weapon("life", 1, 0, {"equip": 6});
+		public var dispelWeapon:Weapon = new Weapon("dispel", 1, 0, {"equip": 8});
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
@@ -28,8 +29,9 @@ package
 			if (initialWeapons == null) {
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				Inventory.addWeapon(startingWeapon);
-				Inventory.addWeapon(opWeapon);
+				Inventory.addWeapon(fireWeapon);
 				Inventory.addWeapon(lsWeapon);
+				Inventory.addWeapon(dispelWeapon);
 			}
 			currentHealth = initialHealth;
 			maxHealth = initialHealth;
