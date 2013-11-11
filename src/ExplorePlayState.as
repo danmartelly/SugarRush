@@ -70,6 +70,8 @@ package
 				} else if (FlxG.keys.B){
 					battle = new BattlePlayState();
 					FlxG.switchState(battle);
+				} else if (FlxG.keys.C){
+					FlxG.switchState(new CraftingPlayState());
 				}
 			} else {
 				pause.update();
