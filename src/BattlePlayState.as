@@ -8,32 +8,84 @@ package
 	import org.flixel.FlxText;
 	
 	public class BattlePlayState extends FlxState
-	{
+	{		
 		var voidFn:Function = function():void {};
-		var logic:BattleLogic = new BattleLogic(voidFn,voidFn, voidFn, voidFn);
-		[Embed(source="../assets/player_front.png")] protected var playerFront:Class;
-		override public function create():void{
+		var logic:BattleLogic = null;
+		
+		
+		private var x:int = FlxG.width /2 + 150;
+		private var y:int = FlxG.height - 50;
+		private var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
+		private var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
+		private var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
+		private var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
+		private var enemyName:FlxText = new FlxText(50,35, 100,"Enemy Name");
+		
+		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		private var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
+		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
+		
+		override public function create():void {
 			FlxG.debug = true;
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
-						
-			var title:FlxText = new FlxText(50, 50, 100, "Battle state");
-			var x:int = FlxG.width /2 + 150;
-			var y:int = FlxG.height - 50;
-			var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
-			var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
-			var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
-			var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
+			logic = new BattleLogic(this);
+			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
+			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
+			enemyLifeBar.setOriginToCorner();
 			
-			add(title);
+			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
+			
+			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
+			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
+			playerLifeBar.setOriginToCorner();
+			
+			
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			add(playerName);
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
+			add(enemyName);
 			add(attackButton);
 			add(switchButton);
 			add(runButton);
 			add(candyButton);
 			FlxG.mouse.show();
+			
+			drawHealthBar();
+		}
+		override public function update():void {
+			if (FlxG.keys.justPressed("B")) {
+				var s1 = "", s2 = "";
+				for (var i=0; i<logic.player.buffs.length; ++i) {
+					if (i) s1 += ", ";
+					s1 += logic.player.buffs[i].name + "(" + logic.player.buffs[i].turns + ")";
+				}
+				for (var i=0; i<logic.enemy.buffs.length; ++i) {
+					if (i) s2 += ", ";
+					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
+				}
+				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().name + " buffs: " + s1);
+				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
+
+			}
+			super.update();
 		}
 		
-		private function attackCallback():void{
+		public function showHealth():void{
+			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
+		}
+		
+		private function drawHealthBar():void {
+			var health:Number = logic.playerHealthPercent();
+			playerLifeBar.scale.x = health / 100.0;
+		}
+		
+		public function attackCallback():void {
+			drawHealthBar();
 			logic.useAttack();
 		}
 		
@@ -50,22 +102,75 @@ package
 			background.makeGraphic(100,100,0xff000000);
 			add(background);
 			//background.visible = true;
-			logic.switchWeapon(new Weapon("n"));
+			//logic.switchWeapon(new Weapon("n"));
 		}
 		
-		private function runCallback():void{
+		public function switchCallback():void {
+			add(new BattleInventoryMenu());
+			//logic.switchWeaponIndex(1);
+			
+		}
+		
+		public function runCallback():void{
 			logic.useRun();
 		}
 		
-		private function candyCallback():void{
+		public function candyCallback():void{
 			logic.useCandy();
 		}
 		
-		//enemy HP bar
-		//player HP bar
-		//menu box
-			//consists for four buttons
-		//player sprite
-		//enemy sprite
+		public function healthCallback():void {
+			add(new FlxText(10,10,100,"in health call back"));
+			
+			drawHealthBar();
+			
+			var e_health:Number = logic.enemyHealthPercent();
+			enemyLifeBar.scale.x = e_health / 100.0;
+		}
+		
+		public function turnCallback(turn:int):void {
+			//add(new FlxText(10,60,100,"in turnCallback"));
+			switch(turn){
+				case BattleLogic.ENEMY_TURN:
+					attackButton.active = false;
+					switchButton.active = false;
+					runButton.active = false;
+					candyButton.active = false;
+					break;
+				case BattleLogic.PLAYER_TURN:
+					attackButton.active = true;
+					switchButton.active = true;
+					runButton.active = true;
+					candyButton.active = true;
+					break;
+				
+			}
+			
+			this.update();
+			
+		}
+		
+		public function attackLogicCallback():void {
+			
+		}
+		
+		public function endBattleCallback(status:int):void {			
+			switch(status){
+				case BattleLogic.ENEMY_WON:
+					
+					break;
+				
+				case BattleLogic.PLAYER_WON:
+					break;
+				
+				case BattleLogic.RAN_AWAY:
+					logic.player.currentHealth -= 1;
+					logic.player.updatePlayerData();
+					
+					FlxG.mouse.hide();
+					FlxG.switchState(new ExplorePlayState());
+					break;
+			}
+		}
 	}
 }

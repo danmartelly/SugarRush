@@ -13,10 +13,10 @@ package
 		private const aggroSpeed:Number = 50;
 		private const avoidOtherEnemyDistance:Number = 80;
 		private const ambleSpeed:Number = 10;
-		private var _player:Player;
+		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
 		
-		public function Enemy(X:Number, Y:Number, enemyGroup:FlxGroup, player:Player)
+		public function Enemy(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{
 			super(X, Y, null);
 			_enemies = enemyGroup;
@@ -27,6 +27,18 @@ package
 		}
 		
 		override public function update():void {
+			if (x < 0){
+				x = 0;
+			}
+			if ( x > (FlxG.width)) {
+				x = FlxG.width;
+			}
+			if (y < 0){
+				y = 0;
+			}
+			if ( y > (FlxG.height)) {
+				y = (FlxG.height );
+			}
 			_timer += FlxG.elapsed;
 			var selfPoint:Point = new Point();
 			this.getMidpoint().copyToFlash(selfPoint);

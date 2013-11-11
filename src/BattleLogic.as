@@ -4,62 +4,81 @@ package {
 	 */
 	 
 	public class BattleLogic {
-		var turn:Number = 0;
-		var player:BattlePlayer = new BattlePlayer(10, 10);
+		var turn:int = 0;
+		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
 		var enemy:BattleEnemy = new BattleEnemy(5, 5);
+		var state:BattlePlayState;
 		
-		var healthCallback:Function; // tell the battle ui when player/enemy health changes
-		var turnCallback:Function; // tell the battle ui when the turn changes
-		var attackCallback:Function; // tell the battle ui when the player or oppontent attacked
-		var endBattleCallback:Function; // tell the battle ui when the battle ends
-		
-		public function BattleLogic(healthCallback:Function, turnCallback:Function, attackCallback:Function, endBattleCallback:Function){
-			this.healthCallback = healthCallback;
-			this.turnCallback = turnCallback;
-			this.attackCallback = attackCallback;
-			this.endBattleCallback = endBattleCallback;
+		public function BattleLogic(state:BattlePlayState){
+			this.state = state;
 		}
 		
 		public function useRun():void {
-			endBattleCallback(RAN_AWAY);
+			this.state.endBattleCallback(RAN_AWAY);
 		}
 		
 		public function useAttack():void {
 			player.attack(enemy);
-			
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			this.state.healthCallback();
+			endTurn();
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
-		public function switchWeapon(weapon:Weapon):void {
-			player.currentWeapon = weapon;
+		public function switchWeaponIndex(index:int):void {
+			player.data.currentWeaponIndex = index;
+			var weapon:Weapon = player.data.currentWeapon();
+			
+			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
+			if (weapon.buffs["equip"]) {
+				var i:int = weapon.buffs["equip"];
+				var b:Buff = Weapon.BUFF_LIST[i];
+				player.applyBuff(b.tag, i, b.numTurns);
+			}
 		}
 		
 		public function useCandy():void {
 			player.heal(5);
-			healthCallback(player.currentHealth, enemy.currentHealth);
+			this.state.showHealth();
+			this.state.healthCallback();
 			endTurn();
 		}
 		
-		public function endTurn():void {
+		private function endTurn():void {
 			turn = (turn + 1) % 2;
+			
 			if (player.isDead) {
-				endBattleCallback(ENEMY_WON);
+				this.state.endBattleCallback(ENEMY_WON);
 			}else if (enemy.isDead) {
-				endBattleCallback(PLAYER_WON);
+				this.state.endBattleCallback(PLAYER_WON);
 			} else {
-				turnCallback(turn);
+				this.state.turnCallback(turn);
+			}
+			
+			if (turn == ENEMY_TURN){
+				enemy.attack(player);
+				this.state.healthCallback();
+				endTurn();
 			}
 		}
 		
+		// WALTER, USE THESE
+		public function playerHealthPercent():Number {
+			return player.getHealthAsPercent();
+		}
+		
+		public function enemyHealthPercent():Number {
+			return enemy.getHealthAsPercent();
+		}
+		
+		
 		// if your turn
-		public static const PLAYER_TURN:Number = 0;
+		public static const PLAYER_TURN:int = 0;
 		// if enemy's turn
-		public static const ENEMY_TURN:Number = 1;
+		public static const ENEMY_TURN:int = 1;
 		
 		// reasons for battle ending
-		public static const PLAYER_WON:Number = 0;
-		public static const ENEMY_WON:Number = 1;
-		public static const RAN_AWAY:Number = 2;
+		public static const PLAYER_WON:int = 0;
+		public static const ENEMY_WON:int = 1;
+		public static const RAN_AWAY:int = 2;
 	}	
 }

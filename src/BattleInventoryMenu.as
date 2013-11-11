@@ -10,11 +10,10 @@ package
 		private var endButton:FlxButton;
 		public function BattleInventoryMenu()
 		{
-//			background = new FlxSprite(220, 140);
-//			background = new FlxSprite(220, 140).makeGraphic(200, 200, 0x00ff00);
-//			background.draw();
-//			background.visible = true;
-//			add(background);
+			background = new FlxSprite(220, 140);
+			background.makeGraphic(100,100,0xff000000);
+			add(background);
+			background.visible = true;
 			
 			endButton = new FlxButton(330, 250, "Cancel", cancelCallback);
 			endButton.draw();
@@ -26,7 +25,8 @@ package
 		
 		private function cancelCallback():void
 		{
-			this.destroy();
+			this.exists = false;
+			endButton.exists = false;
 		}
 		
 		
