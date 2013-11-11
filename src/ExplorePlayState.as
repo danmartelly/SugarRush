@@ -1,14 +1,6 @@
 package
 {
-	import org.flixel.FlxBackdrop;
-	import org.flixel.FlxG;
-	import org.flixel.FlxGroup;
-	import org.flixel.FlxRect;
-	import org.flixel.FlxSprite;
-	import org.flixel.FlxState;
-	import org.flixel.FlxText;
-	import org.flixel.FlxState;
-	import org.flixel.FlxText;
+	import org.flixel.*
 	
 	public class ExplorePlayState extends FlxState
 	{		
@@ -33,11 +25,13 @@ package
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new ExplorePlayer();
-			var spawner:EnemySpawner = new EnemySpawner(200,200,_enemies,_player);
+			var spawner:EnemySpawner = new EnemySpawner(200, 200, _enemies, _player);
+			var craftButton:FlxButton = new FlxButton(350, 410, "CRAFT", triggerCraftingState);
 			_spawners.add(spawner);
 			add(_spawners);
 			add(_enemies);
 			add(_player);
+			add(craftButton);
 			
 			
 			
@@ -84,6 +78,10 @@ package
 			//switch to the battle state
 			battle = new BattlePlayState();
 			FlxG.switchState(battle);
+		}
+		
+		public function triggerCraftingState(player:FlxSprite, enemy:Enemy):void {
+			FlxG.switchState(new CraftingPlayState);
 		}
 	}
 }
