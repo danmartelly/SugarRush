@@ -21,5 +21,9 @@ package {
 			this.numTurns = numTurns;
 			this.effect = effect;
 		}
+		
+		public function getDisplayName():String {
+			return this.name;
+		}
 	}
 }

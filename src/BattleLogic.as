@@ -30,10 +30,9 @@ package {
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
 			if (weapon.buffs["equip"]) {
-				for (var i in weapon.buffs["equip"]) {
-					var b:Buff = Weapon.BUFF_LIST[i];
-					player.applyBuff(b.tag, i, b.numTurns);
-				}
+				var i:int = weapon.buffs["equip"];
+				var b:Buff = Weapon.BUFF_LIST[i];
+				player.applyBuff(b.tag, i, b.numTurns);
 			}
 		}
 		

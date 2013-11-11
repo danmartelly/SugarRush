@@ -10,7 +10,7 @@ package
 	public class BattlePlayState extends FlxState
 	{		
 		var voidFn:Function = function():void {};
-		var logic:BattleLogic = new BattleLogic(this);
+		var logic:BattleLogic = null;
 		
 		
 		private var x:int = FlxG.width /2 + 150;
@@ -31,8 +31,7 @@ package
 			FlxG.debug = true;
 			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
-						
-
+			logic = new BattleLogic(this);
 			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
 			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
 			enemyLifeBar.setOriginToCorner();
@@ -57,6 +56,23 @@ package
 			FlxG.mouse.show();
 			
 			drawHealthBar();
+		}
+		override public function update():void {
+			if (FlxG.keys.justPressed("B")) {
+				var s1 = "", s2 = "";
+				for (var i=0; i<logic.player.buffs.length; ++i) {
+					if (i) s1 += ", ";
+					s1 += logic.player.buffs[i].name + "(" + logic.player.buffs[i].turns + ")";
+				}
+				for (var i=0; i<logic.enemy.buffs.length; ++i) {
+					if (i) s2 += ", ";
+					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
+				}
+				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().name + " buffs: " + s1);
+				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
+
+			}
+			super.update();
 		}
 		
 		public function showHealth():void{
