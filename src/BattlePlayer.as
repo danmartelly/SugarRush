@@ -3,7 +3,7 @@ package {
 	 * @author ethanis
 	 */
 	public class BattlePlayer extends BattleCharacter {
-		var data:PlayerData = null;
+		public var data:PlayerData = null;
 		
 		public function BattlePlayer(playerData:PlayerData):void {
 			data = playerData;
