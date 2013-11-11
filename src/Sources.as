@@ -15,7 +15,7 @@ package
 		//music and sound effects
 		
 		//text
-		
+		public static const enemyNames:Array = ["tomato", "carrot"];
 		public static const enemyMap:Object = {
 			"tomato": Tomato,
 			"carrot": Carrot

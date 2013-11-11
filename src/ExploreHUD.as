@@ -4,12 +4,7 @@ package
 	
 	public class ExploreHUD extends FlxGroup
 	{
-		private var worldEdgeRight:Number = FlxG.worldBounds.x;
-		private var worldEdgeBottom:Number = FlxG.worldBounds.y;
-		protected var healthLabel:FlxText = new FlxText(0, 5, 100, "Health: ");
-		protected var healthValLabel:FlxText = new FlxText(worldEdgeRight - 50, 5, 20, "-1/10");
-		protected var candyLabel:FlxText = new FlxText(worldEdgeRight - 150, 15, 100, "Candies: ");
-		protected var candyValLabel:FlxText = new FlxText(worldEdgeRight - 50, 15, 20, "-1");
+		protected var _healthLabel:FlxText;
 		
 		protected var _inventoryBox:FlxSprite;
 		protected var _inventoryDividerH:FlxSprite;
@@ -24,17 +19,7 @@ package
 		protected var _whiteCount:FlxText;
 		
 		public function ExploreHUD()
-		{
-			healthLabel = new FlxText(0, 5, 100, "Health: ");
-			healthValLabel= new FlxText(worldEdgeRight - 50, 5, 20, "-1/10");
-			candyLabel = new FlxText(worldEdgeRight - 150, 15, 100, "Candies: ");
-			candyValLabel = new FlxText(worldEdgeRight - 50, 15, 20, "-1");;
-			var thing:Number = FlxG.worldBounds.x;
-			this.add(healthLabel);
-			this.add(healthValLabel);
-			this.add(candyLabel);
-			this.add(candyValLabel);
-			
+		{	
 			_inventoryBox = new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xFF000000);
 			_inventoryBox.scrollFactor.x = _inventoryBox.scrollFactor.y = 0;
 			_inventoryDividerH = new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, 1);
@@ -71,12 +56,16 @@ package
 			add(_redCount);
 			add(_blueCount);
 			add(_whiteCount);
+			
+			_healthLabel = new FlxText(FlxG.width - 40, FlxG.height - 30, 40, "Health: ");
+			add(_healthLabel);
 		}
 		
 		override public function update():void {
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
+			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 			super.update();
 		}
 	}

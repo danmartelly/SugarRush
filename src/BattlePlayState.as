@@ -1,6 +1,5 @@
 package
 {
-	import org.flixel.FlxBasic;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
@@ -9,8 +8,8 @@ package
 	
 	public class BattlePlayState extends FlxState
 	{		
-		var voidFn:Function = function():void {};
-		var logic:BattleLogic = null;
+		private var voidFn:Function = function():void {};
+		private var logic:BattleLogic = null;
 		
 		private var x:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height - 50;
@@ -81,12 +80,12 @@ package
 		
 		override public function update():void {
 			if (FlxG.keys.justPressed("B")) {
-				var s1 = "", s2 = "";
-				for (var i=0; i<logic.player.buffs.length; ++i) {
+				var s1:String = "", s2:String = "";
+				for (var i:int=0; i<logic.player.buffs.length; ++i) {
 					if (i) s1 += ", ";
 					s1 += logic.player.buffs[i].name + "(" + logic.player.buffs[i].turns + ")";
 				}
-				for (var i=0; i<logic.enemy.buffs.length; ++i) {
+				for (i=0; i<logic.enemy.buffs.length; ++i) {
 					if (i) s2 += ", ";
 					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
 				}
@@ -177,6 +176,11 @@ package
 					break;
 				
 				case BattleLogic.PLAYER_WON:
+					var candyColor:int = Math.floor(Math.random()*2);
+					var candyDrop:Candy = new Candy(candyColor);
+					Inventory.addCandy(candyColor);
+					add(new FlxText(200, 200, 100, "You have earned candy!"));
+					add(new FlxButton(200,220,"End battle",endBattle));
 					break;
 				
 				case BattleLogic.RAN_AWAY:
@@ -187,6 +191,12 @@ package
 					FlxG.switchState(new ExplorePlayState());
 					break;
 			}
+		}
+		
+		private function endBattle():void
+		{
+			this.destroy();
+			FlxG.switchState(new ExplorePlayState());
 		}
 	}
 }
