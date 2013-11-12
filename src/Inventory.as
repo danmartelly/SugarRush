@@ -65,5 +65,11 @@ package {
 					return 0;
 			}
 		}
+		public static function hasCandy():Boolean {
+			if (reds == 0 && blues == 0 && whites == 0){
+				return false;
+			}
+			return true;
+		}
 	}
 }
