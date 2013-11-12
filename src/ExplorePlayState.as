@@ -46,6 +46,7 @@ package
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			
 			FlxG.camera.follow(_player);
+			FlxG.mouse.show();
 		}
 		
 		override public function update():void
