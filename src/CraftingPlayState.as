@@ -10,6 +10,9 @@ package
 		private var buttonHeight:int;
 		private var cauldronText:FlxText = new FlxText(100, 100, 500, "");
 		private var banner:FlxText = new FlxText(100, 300, 500, "");
+		private var title:FlxText = new FlxText(0, 0, 100, "Crafting state");
+		private var combineButton:FlxButton = new FlxButton(100, 200, "COMBINE", combineCandy);
+		private var doneButton:FlxButton = new FlxButton(200, 200, "DONE", done);
 		
 		override public function create():void
 		{
@@ -23,12 +26,9 @@ package
 				}
 			}
 			
-			var title:FlxText = new FlxText(0, 0, 100, "Crafting state");
-			var craftButton:FlxButton = new FlxButton(100, 200, "COMBINE", combineCandy);
-			var doneButton:FlxButton = new FlxButton(200, 200, "DONE", done);
-			add(title);
-			add(craftButton);
-			add(doneButton);
+			add(this.title);
+			add(this.combineButton);
+			add(this.doneButton);
 			add(this.cauldronText);
 			add(this.banner);
 			
@@ -76,25 +76,16 @@ package
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
-				banner.text = "Mix, mix, swirl...";
 				var cauldron:Array = new Array();
 				for (var i:int = 0; i < cauldronIndices.length; i++) {
 					var candy:Candy = candies[cauldronIndices[i]];
 					cauldron.push(candy);
+					Inventory.removeCandy(candy.getColorNumber());
 				}
 				var weapon:Weapon = CraftLogic.craft(cauldron);
 				banner.text = "You got a " + weapon.getDisplayName() + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
-				
-				var tempCandies:Array = new Array();
-				for (i = 0; i < candies.length; i++) {
-					if (cauldronIndices.indexOf(i) < 0) {
-						var color:int = candies[i];
-						tempCandies.push(color);
-						Inventory.removeCandy(color);
-					}
-				}
-				//candies = tempCandies;
 				Inventory.addWeapon(weapon);
+				remove(this.combineButton);
 			}
 		}
 		

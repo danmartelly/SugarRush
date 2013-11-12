@@ -13,13 +13,13 @@ package {
 		public function Candy(colorNumber:int = COLOR_RED){
 			this.colorNumber = colorNumber;
 			switch (this.colorNumber){
-				case 0:
+				case COLOR_RED:
 					this.colorName = 'red';
 					break;
-				case 1:
+				case COLOR_BLUE:
 					this.colorName = 'blue';
 					break;
-				case 2:
+				case COLOR_WHITE:
 					this.colorName = 'white';
 					break;
 			}

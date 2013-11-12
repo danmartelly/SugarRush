@@ -64,8 +64,8 @@ package
 				} else if (FlxG.keys.B){
 					battle = new BattlePlayState();
 					FlxG.switchState(battle);
-				} else if (FlxG.keys.C){
-					FlxG.switchState(new CraftingPlayState());
+				} else if (FlxG.keys.C){ // cheathax
+					Inventory.addCandy((int)(3 * Math.random()));
 				}
 			} else {
 				pause.update();

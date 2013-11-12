@@ -58,8 +58,8 @@ package
 			var name:String = adjective + " " + candyType + " " + weaponType;
 			var attack:int = .1 / Math.random() + 1;
 			var defense:int = .1 / Math.random();
-			
-			return new Weapon(name, attack, defense, buff);
+			trace (buff);
+			return new Weapon(name, attack, defense, {'equip': buff});
 		}
 	}
 }

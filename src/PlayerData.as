@@ -9,7 +9,7 @@ package
 		public var maxHealth:int;
 		
 		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, null);
-		public var fireWeapon:Weapon = new Weapon("fire", 1, 0, {"hit": 1});
+		public var fireWeapon:Weapon = new Weapon("fire", 1, 0, {"hit": 1}); // Please don't use magic numbers here. We have our pseudo-enum for a reason.
 		public var lsWeapon:Weapon = new Weapon("life", 1, 0, {"equip": 6});
 		public var dispelWeapon:Weapon = new Weapon("dispel", 1, 0, {"equip": 8});
 		

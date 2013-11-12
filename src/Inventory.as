@@ -9,7 +9,7 @@ package {
 			weapons.push(weapon);
 		}
 		
-		public static function removeWeaponAt(index:Number):void {
+		public static function removeWeaponAt(index:int):void {
 			weapons.splice(index, 1);
 		}
 		
@@ -21,7 +21,7 @@ package {
 			return weapons.length;
 		}
 		
-		public static function addCandy(color:Number):void {
+		public static function addCandy(color:int):void {
 			switch(color) {
 				case 0:
 					if (reds != 99) {reds += 1;}
@@ -37,7 +37,7 @@ package {
 			}
 		}
 		
-		public static function removeCandy(color:Number):void {
+		public static function removeCandy(color:int):void {
 			switch(color) {
 				case 0:
 					if (reds != 0) {reds -= 1;}
@@ -53,7 +53,7 @@ package {
 			}
 		}
 		
-		public static function candyCount(color:Number):Number {
+		public static function candyCount(color:int):Number {
 			switch(color) {
 				case 0:
 					return reds;
