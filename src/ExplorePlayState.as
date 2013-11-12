@@ -80,8 +80,8 @@ package
 			FlxG.switchState(battle);
 		}
 		
-		public function triggerCraftingState(player:FlxSprite, enemy:Enemy):void {
-			FlxG.switchState(new CraftingPlayState);
+		public function triggerCraftingState():void {
+			FlxG.switchState(new CraftingPlayState());
 		}
 	}
 }
