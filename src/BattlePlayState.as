@@ -207,7 +207,7 @@ package
 					logic.player.currentHealth -= 1;
 					logic.player.updatePlayerData();
 					
-					FlxG.mouse.hide();
+					//FlxG.mouse.hide();
 					FlxG.switchState(new ExplorePlayState());
 					break;
 			}
