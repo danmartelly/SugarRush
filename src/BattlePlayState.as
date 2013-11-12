@@ -25,7 +25,7 @@ package
 		private var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
 		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
-		private var playerSprite:FlxSprite = new FlxSprite(50, FlxG.height-325, Sources.battlePlayer);
+		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;
@@ -36,21 +36,19 @@ package
 		
 		override public function create():void {
 			FlxG.debug = true;
-			FlxG.visualDebug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this);
+			
 			maxEnemyLifeBar.makeGraphic(100,10,0xff00aa00);
 			enemyLifeBar.makeGraphic(100,10, 0xff00ff00);
 			enemyLifeBar.setOriginToCorner();
-			
-			var playerName:FlxText = new FlxText(x,y-65,100,"Kid");
-			
+						
 			maxPlayerLifeBar.makeGraphic(100,10,0xff00aa00);
 			playerLifeBar.makeGraphic(100,10, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
 			
+			enemyName.text = logic.enemy.name;
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
-			
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
 		
@@ -103,12 +101,12 @@ package
 			}
 			if (timerStart == true){
 				runTime();
-				enemySprite.play("attacked");
 			}
 			if (timer <= 0){
 				timer = 1;
 				timerStart = false;
 				enemySprite.play("idle");
+				playerSprite.loadGraphic(Sources.battlePlayer);
 			}
 			super.update();
 		}
@@ -126,7 +124,8 @@ package
 			drawHealthBar();
 			timerStart = true;
 			logic.useAttack();
-			
+			playerSprite.loadGraphic(Sources.battlePlayerAttack);
+			enemySprite.play("attacked");
 		}
 		
 
@@ -143,7 +142,9 @@ package
 		}
 		
 		public function candyCallback():void{
+			timerStart = true;
 			logic.useCandy();
+			playerSprite.loadGraphic(Sources.battlePlayerEat);
 		}
 		
 		public function healthCallback():void {
