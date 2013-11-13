@@ -39,13 +39,22 @@ package {
 													new Buff('dispel', 'Dispel', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
 													new Buff('cascade', 'Cascade', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
 
-		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null){
+		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
 			this.name = name;
 			this.attack = attack;
 			this.defense = defense;
 			
-			if (buffs)
-				this.buffs = buffs;
+			if (useDefault) {
+				this.buffs = { };
+				this.buffs[Sources.defaultBuffStrings[buffs]] = buffs;
+			}
+			else {
+				this.initializeBuffs(buffs);
+			}
+		}
+		
+		public function initializeBuffs(buffs:Object) {
+			this.buffs = buffs;
 		}
 		
 		public function buffsOfType(type:String):Array {

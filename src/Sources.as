@@ -29,6 +29,10 @@ package
 		
 		//music and sound effects
 		
+		//buff stuff
+		
+		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
+		
 		//text
 		public static const enemyNames:Array = ["tomato", "carrot", "eggplant", "lettuce"];
 		public static const enemyMap:Object = {
