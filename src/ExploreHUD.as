@@ -60,6 +60,11 @@ package
 			_healthLabel = new FlxText(FlxG.width - 40, FlxG.height - 30, 40, "Health: ");
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			add(_healthLabel);
+			
+			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 10, 100, "press p to pause");
+			pauseInstruction.color = 0x01777777;
+			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
+			add(pauseInstruction);
 		}
 		
 		override public function update():void {

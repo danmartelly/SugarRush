@@ -26,16 +26,17 @@ package
 			_enemies = new FlxGroup();
 			_player = new ExplorePlayer();
 			var spawner:EnemySpawner = new EnemySpawner(200, 200, _enemies, _player);
-			var craftButton:FlxButton = new FlxButton(350, 410, "CRAFT", triggerCraftingState);
+			var craftButton:FlxButton = new FlxButton(550, 410, "CRAFT", triggerCraftingState);
 			_spawners.add(spawner);
 			add(_spawners);
 			add(_enemies);
 			add(_player);
+			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
 			add(craftButton);
 			
 			
 			
-			add(new FlxText(0,0,100,"Explore State"));
+			//add(new FlxText(0,0,100,"Explore State"));
 			add(new ExploreHUD());
 			
 			pause = new PauseState();
