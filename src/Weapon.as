@@ -28,16 +28,16 @@ package {
 		public static const WB_SPECIAL:int = 9;
 		
 		// this might get moved later -npinsker
-		public static const BUFF_LIST:Array = [ 	new Buff('none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
-													new Buff('burn', 'Burn', 3, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.hurt(1); }),
-													new Buff('freeze', 'Freeze', 1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; } ),
-													new Buff('heal', 'Drain', -1, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.heal(1); }),
-													new Buff('burn', 'Ignite', 3, function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
-													new Buff('freeze', 'Entomb', 2, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; }),
-													new Buff('heal', 'Greater Drain', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(1); }),
-													new Buff('pierce', 'Pierce', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.flags = ['true']; }),
-													new Buff('dispel', 'Dispel', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
-													new Buff('cascade', 'Cascade', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
+		public static const BUFF_LIST:Array = [ 	new Buff('none', 'none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
+													new Buff('burn', 'Burn', 'Has a 50% chance to apply a burn on hit which damages the enemy over time.', 3, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.hurt(1); }),
+													new Buff('freeze', 'Freeze', 'Has a chance to freeze the enemy, disabling their attack for a turn.', 1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; } ),
+													new Buff('heal', 'Drain', 'Has a 50% chance to restore 1 point of blood sugar on hit.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.heal(1); }),
+													new Buff('burn', 'Ignite', 'Applies a burn on hit which damages the enemy over time.', 3, function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
+													new Buff('freeze', 'Entomb', 'Has a chance to freeze the enemy, disabling their attack for 2 turns.', 2, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; }),
+													new Buff('heal', 'Greater Drain', 'Restores one point of blood sugar on hit.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(1); }),
+													new Buff('pierce', 'Pierce', 'Attacks with this weapon ignore the enemy\'s defense.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.flags = ['true']; }),
+													new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
+													new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
 
 		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
 			this.name = name;
