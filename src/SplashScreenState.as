@@ -6,6 +6,8 @@ package
 	{
 		[Embed(source="../assets/title.png")] protected var backgroundImg:Class;
 		
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		
 		public var background:FlxSprite;
 		private var startText:FlxText;
 		
@@ -15,10 +17,10 @@ package
 			background.loadGraphic(backgroundImg);
 			add(background);
 			
-			startText = new FlxText(2*(FlxG.width/3) - 5, (FlxG.height/2) + 10, FlxG.width, "Press 'S' to start!");
-			startText.size = 18;
+			startText = new FlxText(2*(FlxG.width/3)+70, (FlxG.height/2)-30, FlxG.width, " Press 'S' \nto start!");
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;
+			startText.setFormat("COOKIES",26);
 			add(startText);
 		}
 		

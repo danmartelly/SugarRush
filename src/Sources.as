@@ -21,7 +21,10 @@ package
 		[Embed(source="../assets/tomatosprite.png")] public static var Tomato:Class;
 		[Embed(source="../assets/carrotsprite.png")] public static var Carrot:Class;
 		[Embed(source="../assets/eggplantsprite.png")] public static var Eggplant:Class;
-		[Embed(source="../assets/lettucesprite.png")] public static var Lettuce:Class;		
+		[Embed(source="../assets/lettucesprite.png")] public static var Lettuce:Class;	
+		
+		//fonts
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		//music and sound effects
 		
