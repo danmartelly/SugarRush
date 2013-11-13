@@ -15,7 +15,7 @@ package
 			background.loadGraphic(backgroundImg);
 			add(background);
 			
-			startText = new FlxText((FlxG.width/2) - 85, (FlxG.height/2) + 10, FlxG.width, "Press 'S' to start!");
+			startText = new FlxText(2*(FlxG.width/3) - 5, (FlxG.height/2) + 10, FlxG.width, "Press 'S' to start!");
 			startText.size = 18;
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;

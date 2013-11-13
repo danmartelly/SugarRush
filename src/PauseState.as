@@ -18,13 +18,15 @@ package
 		public function PauseState()
 		{
 			
-			_field = new FlxText(20,FlxG.height/2-80, FlxG.width, "Paused");
-			_field.setFormat(null, 12, 0xffffFFFF, "center");
+			_field = new FlxText(0,10, FlxG.width, "Paused");
+			_field.setFormat(null, 12, 0xff000000, "center");
+			_field.scrollFactor.x = _field.scrollFactor.y = 0;
 			add(_field);
 			
-			_unpause = new FlxText(20,FlxG.height/2-40, FlxG.width,
+			_unpause = new FlxText(0,25, FlxG.width,
 				"Press space to unpause");
-			_unpause.setFormat(null, 10, 0xffffFFFF, "center");
+			_unpause.setFormat(null, 10, 0xff000000, "center");
+			_unpause.scrollFactor.x = _unpause.scrollFactor.y = 0;
 			add(_unpause);
 		}
 		

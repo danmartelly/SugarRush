@@ -58,6 +58,7 @@ package
 			add(_whiteCount);
 			
 			_healthLabel = new FlxText(FlxG.width - 40, FlxG.height - 30, 40, "Health: ");
+			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			add(_healthLabel);
 		}
 		
