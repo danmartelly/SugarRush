@@ -1,6 +1,10 @@
 package
 {
-	import org.flixel.*;
+	import org.flixel.FlxButton;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxText;
 	
 	public class ExploreHUD extends FlxGroup
 	{
@@ -11,6 +15,7 @@ package
 		protected var _inventoryDividerV:FlxSprite;
 		protected var _weaponsText:FlxSprite;
 		protected var _candiesText:FlxSprite;
+		protected var _weaponSlots:FlxGroup;
 		protected var _redSprite:FlxSprite;
 		protected var _blueSprite:FlxSprite;
 		protected var _whiteSprite:FlxSprite;
@@ -37,6 +42,8 @@ package
 			add(_weaponsText);
 			add(_candiesText);
 			
+			_weaponSlots = new FlxGroup(5);
+			add(_weaponSlots);
 			
 			_redSprite = new FlxSprite(FlxG.width * 0.65, FlxG.height * 0.95, Sources.candyRed);
 			_blueSprite = new FlxSprite(FlxG.width * 0.75, FlxG.height * 0.95, Sources.candyBlue);
@@ -73,6 +80,16 @@ package
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
+			
+			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
+				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
+				weaponSprite.x = (FlxG.width/2) - ((4-i)*50);
+				weaponSprite.y = FlxG.height * 0.91;
+				weaponSprite.label = new FlxText(0, 0, 40, Inventory.getWeapons()[i].getDisplayName());
+				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
+				weaponSprite.makeGraphic(40, 40, 0xFF00FF00);
+			}
+			
 			super.update();
 		}
 	}
