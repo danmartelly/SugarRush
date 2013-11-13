@@ -15,23 +15,24 @@ package
 		
 		private var x:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height - 50;
+		private var invenBarHeight = FlxG.height * 0.1;
 		
-		private var attackButton:FlxButton = new FlxButton(x, y, "Attack", attackCallback);
-		private var switchButton:FlxButton = new FlxButton(x + 85, y, "Switch Weapon", switchCallback);
-		private var runButton:FlxButton = new FlxButton(x, y + 25, "Run", runCallback);
-		private var candyButton:FlxButton = new FlxButton(x + 85, y + 25, "Eat Candy", candyCallback);
+		private var attackButton:FlxButton = new FlxButton(x, y-invenBarHeight, "Attack", attackCallback);
+		private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
+		private var runButton:FlxButton = new FlxButton(x, y + 25-invenBarHeight, "Run", runCallback);
+		private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
-		private var enemyName:FlxText = new FlxText(50,35, 75,"Enemy Name");
+		private var enemyName:FlxText = new FlxText(50,25, 150,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(50, 50, 100, "Health: ?/?");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50);
-		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50);
-		private var playerName:FlxText = new FlxText(x,y-65,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(x, y - 50, 100, "Blood Sugar: ?/?");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50-invenBarHeight);
+		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50-invenBarHeight);
+		private var playerName:FlxText = new FlxText(x,y-75-invenBarHeight,75,"Kid");
+		private var playerHealthText:FlxText = new FlxText(x, y - 50-invenBarHeight, 100, "Blood Sugar: ?/?");
 		
-		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325, Sources.battlePlayer);
+		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		private var timer:Number = 1;
@@ -40,6 +41,8 @@ package
 		private var background:FlxBackdrop;
 		
 		private var buttonGroup:FlxGroup = new FlxGroup();
+		
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		override public function create():void {
 			FlxG.debug = true;
@@ -54,13 +57,21 @@ package
 			playerLifeBar.makeGraphic(100,12, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
 			
+			playerName.setFormat("COOKIES",20);
+			enemyName.setFormat("COOKIES",20);
+			
 			enemyName.text = logic.enemy.name;
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
 			
+			playerName.setFormat("COOKIES",20);
+			enemyName.setFormat("COOKIES",20);
+			
 			playerName.color = 0x01000000;
 			enemyName.color = 0x01000000;
+			
+			
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
@@ -85,6 +96,8 @@ package
 			buttonGroup.add(switchButton);
 			buttonGroup.add(runButton);
 			buttonGroup.add(candyButton);
+			
+			add(new ExploreHUD());
 			
 			drawHealthBar();
 		}
