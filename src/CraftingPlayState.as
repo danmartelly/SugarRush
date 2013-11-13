@@ -86,7 +86,7 @@ package
 				banner.text = "You got a " + weapon.getDisplayName() + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
 				Inventory.addWeapon(weapon);
 				combineButton.destroy();
-				remove(this.combineButton);
+				remove(combineButton);
 			}
 		}
 		

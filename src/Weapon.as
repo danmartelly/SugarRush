@@ -30,10 +30,10 @@ package {
 		// this might get moved later -npinsker
 		public static const BUFF_LIST:Array = [ 	new Buff('none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
 													new Buff('burn', 'Burn', 3, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.hurt(1); }),
-													new Buff('burn', 'Ignite', 3, function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
-													new Buff('freeze', 'Freeze', 1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; }),
-													new Buff('freeze', 'Entomb', 2, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; }),
+													new Buff('freeze', 'Freeze', 1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; } ),
 													new Buff('heal', 'Drain', -1, function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) src.heal(1); }),
+													new Buff('burn', 'Ignite', 3, function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
+													new Buff('freeze', 'Entomb', 2, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat = -src.attackStat; }),
 													new Buff('heal', 'Greater Drain', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(1); }),
 													new Buff('pierce', 'Pierce', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.flags = ['true']; }),
 													new Buff('dispel', 'Dispel', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.tempAttackStat += 2 * trg.buffs.length; trg.buffs = []; }),
@@ -45,6 +45,7 @@ package {
 			this.defense = defense;
 			
 			if (useDefault) {
+				this.buff = (int)(buffs);
 				this.buffs = { };
 				this.buffs[Sources.defaultBuffStrings[buffs]] = buffs;
 			}
