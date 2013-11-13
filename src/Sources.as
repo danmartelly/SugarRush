@@ -24,6 +24,7 @@ package
 		[Embed(source="../assets/lettucesprite.png")] public static var Lettuce:Class;	
 		
 		//fonts
+		//actually idk how this'll work
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		//music and sound effects
