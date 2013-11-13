@@ -49,7 +49,7 @@ package {
 		
 		//buff-related functions
 		public function applyBuff(s:String, id:Number, turns:Number):void {
-			for (var i=0; i<this.buffs.length; ++i) {
+			for (var i:int=0; i<this.buffs.length; ++i) {
 				if (this.buffs[i]["name"] == s) {
 					this.buffs[i]["turns"] = turns;
 					return;
