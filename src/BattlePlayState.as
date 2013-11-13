@@ -1,5 +1,6 @@
 package
 {
+	import org.flixel.FlxBackdrop;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
@@ -30,7 +31,7 @@ package
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;
 		
-		
+		private var background:FlxBackdrop;
 		
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		
@@ -51,7 +52,12 @@ package
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
+			
+			playerName.color = 0x01000000;
+			enemyName.color = 0x01000000;
 		
+			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
+			add(background);
 			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
@@ -189,18 +195,21 @@ package
 					var candyColor:int = Math.floor(Math.random()*3);
 					var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
+					var earningsText:FlxText=new FlxText(260, 200, 200, "You win!");
+					earningsText.color = 0x01000000;
 					switch(candyColor){
 						case 0:
-							add(new FlxText(200, 200, 200, "You have earned red candy!"));
+							earningsText.text = "You have earned red candy!";
 							break;
 						case 1:
-							add(new FlxText(200, 200, 200, "You have earned blue candy!"));
+							earningsText.text = "You have earned blue candy!";
 							break;
 						case 2:
-							add(new FlxText(200, 200, 200, "You have earned white candy!"));
+							earningsText.text = "You have earned white candy!";
 							break;
 					}
-					add(new FlxButton(200,220,"End battle",endBattle));
+					add(earningsText);
+					add(new FlxButton(260,220,"End battle",endBattle));
 					buttonGroup.setAll("active",false);
 					break;
 				

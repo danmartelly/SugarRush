@@ -37,9 +37,10 @@ package
 			add(_weaponsText);
 			add(_candiesText);
 			
-			_redSprite = new FlxSprite(FlxG.width * 0.65, FlxG.height * 0.95).makeGraphic(15, 15, 0xFFFF0000);
-			_blueSprite = new FlxSprite(FlxG.width * 0.75, FlxG.height * 0.95).makeGraphic(15, 15, 0xFF0000FF);
-			_whiteSprite = new FlxSprite(FlxG.width * 0.85, FlxG.height * 0.95).makeGraphic(15, 15, 0xFFFFFFFF);
+			
+			_redSprite = new FlxSprite(FlxG.width * 0.65, FlxG.height * 0.95, Sources.candyRed);
+			_blueSprite = new FlxSprite(FlxG.width * 0.75, FlxG.height * 0.95, Sources.candyBlue);
+			_whiteSprite = new FlxSprite(FlxG.width * 0.85, FlxG.height * 0.95, Sources.candyWhite);
 			_redSprite.scrollFactor.x = _redSprite.scrollFactor.y = 0;
 			_blueSprite.scrollFactor.x = _blueSprite.scrollFactor.y = 0;
 			_whiteSprite.scrollFactor.x = _whiteSprite.scrollFactor.y = 0;
