@@ -21,7 +21,7 @@ package
 			this.candies = new Array();
 			
 			for (var color:int = 0; color < 3; color++) {
-				for (var i:int = 0; i < Inventory.candyCount(color); i++) {
+				for (var j:int = 0; j < Inventory.candyCount(color); j++) {
 					this.candies.push(new Candy(color));
 				}
 			}

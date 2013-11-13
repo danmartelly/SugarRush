@@ -54,7 +54,7 @@ package {
 			}
 		}
 		
-		public function initializeBuffs(buffs:Object) {
+		public function initializeBuffs(buffs:Object):void{
 			this.buffs = buffs;
 		}
 		
