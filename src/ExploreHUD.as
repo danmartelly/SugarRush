@@ -90,12 +90,19 @@ package
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
+				var weapon:Weapon = Inventory.getWeapons()[i]
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
 				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;
 				weaponSprite.y = FlxG.height * 0.91;
-				weaponSprite.label = new FlxText(0, 0, 40, Inventory.getWeapons()[i].getDisplayName());
+				weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.makeGraphic(40, 40, 0xFF00FF00);
+				
+				var weaponStats:FlxText = new FlxText(weaponSprite.x, weaponSprite.y-12, weaponSprite.width,
+													  weapon.attack.toString() + "/" +  weapon.defense.toString());
+				weaponStats.alignment = "center";
+				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
+				add(weaponStats);
 			}
 			
 			super.update();
