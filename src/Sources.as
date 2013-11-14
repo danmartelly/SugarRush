@@ -23,6 +23,11 @@ package
 		[Embed(source="../assets/eggplantsprite.png")] public static var Eggplant:Class;
 		[Embed(source="../assets/lettucesprite.png")] public static var Lettuce:Class;	
 		
+		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
+		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
+		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
+		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;	
+		
 		//fonts
 		//actually idk if this'll work
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;

@@ -18,10 +18,10 @@ package
 		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
 		
 		private var buttonWidth:int = 80;
-		private var attackButton:FlxButton = new FlxButton(0, 410, "ATTACK", attackCallback);
-		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", candyCallback);
+		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", attackCallback); // +2 for margin
+		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "", candyCallback);
 		//private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
-		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth, 410, "RUN", runCallback);
+		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
@@ -71,6 +71,10 @@ package
 			
 			playerName.color = 0x01000000;
 			enemyName.color = 0x01000000;
+			
+			attackButton.loadGraphic(Sources.buttonAttack);
+			eatButton.loadGraphic(Sources.buttonEat);
+			runButton.loadGraphic(Sources.buttonRun);
 			
 			
 		

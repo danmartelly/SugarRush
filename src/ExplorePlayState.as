@@ -31,10 +31,12 @@ package
 			var spawner:EnemySpawner = new EnemySpawner(200, 200, _enemies, _player);
 			_spawners.add(spawner);
 			
-			var craftButton:FlxButton = new FlxButton(560, 410, "CRAFT", triggerCraftingState);
+			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
+			craftButton.loadGraphic(Sources.buttonCraft);
 			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
 
-			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "EAT", eatStuff);
+			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "", eatStuff);
+			eatButton.loadGraphic(Sources.buttonEat);
 			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
 
 			pause = new PauseState();
