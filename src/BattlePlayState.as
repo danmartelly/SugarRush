@@ -14,13 +14,15 @@ package
 		private var logic:BattleLogic = null;
 		
 		private var x:int = FlxG.width /2 + 150;
-		private var y:int = FlxG.height - 50;
-		private var invenBarHeight = FlxG.height * 0.1;
+		private var y:int = FlxG.height ;//- 50;
+		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
 		
-		private var attackButton:FlxButton = new FlxButton(x, y-invenBarHeight, "Attack", attackCallback);
-		private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
-		private var runButton:FlxButton = new FlxButton(x, y + 25-invenBarHeight, "Run", runCallback);
-		private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
+		private var buttonWidth:int = 80;
+		private var attackButton:FlxButton = new FlxButton(0, 410, "ATTACK", attackCallback);
+		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", candyCallback);
+		//private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
+		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth, 410, "RUN", runCallback);
+		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
@@ -42,6 +44,8 @@ package
 		
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		
+		private var inventoryHUD:FlxGroup = new ExploreHUD();
+		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		override public function create():void {
@@ -56,9 +60,6 @@ package
 			maxPlayerLifeBar.makeGraphic(100,12,0xff00aa00);
 			playerLifeBar.makeGraphic(100,12, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
-			
-			playerName.setFormat("COOKIES",20);
-			enemyName.setFormat("COOKIES",20);
 			
 			enemyName.text = logic.enemy.name;
 			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
@@ -76,6 +77,8 @@ package
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
 			
+			add(inventoryHUD);
+			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
 			add(playerName);
@@ -83,9 +86,10 @@ package
 			add(playerLifeBar);
 			add(enemyName);
 			add(attackButton);
-			add(switchButton);
+			//add(switchButton);
 			add(runButton);
-			add(candyButton);
+			add(eatButton);
+			//add(candyButton);
 			add(enemySprite);
 			add(playerSprite);
 			add(playerHealthText);
@@ -93,11 +97,10 @@ package
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
-			buttonGroup.add(switchButton);
+			//buttonGroup.add(switchButton);
 			buttonGroup.add(runButton);
-			buttonGroup.add(candyButton);
+			//buttonGroup.add(candyButton);
 			
-			add(new ExploreHUD());
 			
 			drawHealthBar();
 		}
@@ -176,6 +179,7 @@ package
 		public function candyCallback():void{
 			timerStart = true;
 			logic.useCandy();
+			inventoryHUD.update();
 			playerSprite.loadGraphic(Sources.battlePlayerEat);
 		}
 		
@@ -192,15 +196,15 @@ package
 			switch(turn){
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
-					switchButton.active = false;
+					//switchButton.active = false;
 					runButton.active = false;
-					candyButton.active = false;
+					//candyButton.active = false;
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
-					switchButton.active = true;
+					//switchButton.active = true;
 					runButton.active = true;
-					candyButton.active = true;
+					//candyButton.active = true;
 					break;
 				
 			}
