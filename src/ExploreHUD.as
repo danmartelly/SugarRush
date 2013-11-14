@@ -101,6 +101,7 @@ package
 				var weaponStats:FlxText = new FlxText(weaponSprite.x, weaponSprite.y-12, weaponSprite.width,
 													  weapon.attack.toString() + "/" +  weapon.defense.toString());
 				weaponStats.alignment = "center";
+				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
 				add(weaponStats);
 			}
 			
