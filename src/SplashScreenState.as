@@ -17,7 +17,7 @@ package
 			background.loadGraphic(backgroundImg);
 			add(background);
 			
-			startText = new FlxText((FlxG.width/3)-10, (FlxG.height)-30, FlxG.width, " Press 'S' to start!");
+			startText = new FlxText((FlxG.width/3)-15, (FlxG.height)-40, FlxG.width, " Press 'S' to start!");
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;
 			startText.setFormat("COOKIES",26);

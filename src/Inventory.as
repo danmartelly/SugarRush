@@ -6,6 +6,10 @@ package {
 		private static var whites:Number = 0;
 
 		public static function addWeapon(weapon:Weapon):void {
+			if (weapons.length == 5) {
+				weapons.shift();
+			}
+			
 			weapons.push(weapon);
 		}
 		

@@ -39,8 +39,8 @@ package
 			if (y < 0){
 				y = 0;
 			}
-			if ( y > (800 - (playerheight+50))) {
-				y = (800 - (playerheight+50));
+			if ( y > (800 - (playerheight+75))) { //75 is lower bar
+				y = (800 - (playerheight+75));
 			}
 			
 			if (FlxG.keys.LEFT) {

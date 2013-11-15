@@ -20,12 +20,12 @@ package
 		public function PauseState()
 		{
 			
-			_field = new FlxText(0,200, FlxG.width, "Paused");
+			_field = new FlxText(0,180, FlxG.width, "Paused");
 			_field.setFormat("COOKIES", 30, 0xff000000, "center");
 			_field.scrollFactor.x = _field.scrollFactor.y = 0;
 			add(_field);
 			
-			_unpause = new FlxText(0,230, FlxG.width,
+			_unpause = new FlxText(0,210, FlxG.width,
 				"Press space to unpause");
 			_unpause.setFormat("COOKIES", 20, 0xff000000, "center");
 			_unpause.scrollFactor.x = _unpause.scrollFactor.y = 0;

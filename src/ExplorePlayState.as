@@ -17,30 +17,43 @@ package
 		
 		private var background:FlxBackdrop ;
 		
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		
 		override public function create(): void
 		{
 			 
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
+			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new ExplorePlayer();
 			var spawner:EnemySpawner = new EnemySpawner(200, 200, _enemies, _player);
-			var craftButton:FlxButton = new FlxButton(550, 410, "CRAFT", triggerCraftingState);
 			_spawners.add(spawner);
+			
+			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
+			craftButton.loadGraphic(Sources.buttonCraft);
+			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
+
+			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "", eatStuff);
+			eatButton.loadGraphic(Sources.buttonEat);
+			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
+
+			pause = new PauseState();
+			
+			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
+			pauseInstruction.setFormat("COOKIES",10);
+			pauseInstruction.color = 0x01000000;
+			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
+			
+			
 			add(_spawners);
 			add(_enemies);
 			add(_player);
-			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
-			add(craftButton);
-			
-			
-			
-			//add(new FlxText(0,0,100,"Explore State"));
 			add(new ExploreHUD());
-			
-			pause = new PauseState();
-			
+			add(craftButton);
+			add(eatButton);
+			add(pauseInstruction);
 
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
@@ -84,6 +97,9 @@ package
 		
 		public function triggerCraftingState():void {
 			FlxG.switchState(new CraftingPlayState());
+		}
+		
+		public function eatStuff():void{
 		}
 	}
 }

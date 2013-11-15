@@ -23,34 +23,20 @@ package
 			var roll:Number = Math.random();
 			
 			var buff:int = 0;
-			if (first == second)
+			if (roll < probDoubleSpecial)
 			{
-				if (roll < probDoubleSpecial)
+				if (first == second)
 				{
-					
+					buff = first + 3; // corresponds to the specials of double of a certain color
 				}
-				else if (roll < probSpecial)
+				else
 				{
-					buff = first;
+					buff = first + second + 4; // corresponds to the specials of mixed colors
 				}
 			}
-			else
+			else if (roll < probSpecial)
 			{
-				if (roll < probDoubleSpecial)
-				{
-					if (first == second)
-					{
-						buff = first + 3; // corresponds to the specials of double of a certain color
-					}
-					else
-					{
-						buff = first + second + 4; // corresponds to the specials of mixed colors
-					}
-				}
-				else if (roll < probSpecial)
-				{
-					buff = first;
-				}
+				buff = first;
 			}
 			var adjective:String = adjectives[(int)(adjectives.length * Math.random())]
 			var candyType:String = candyTypes[(int)(candyTypes.length * Math.random())]
@@ -58,8 +44,7 @@ package
 			var name:String = adjective + " " + candyType + " " + weaponType;
 			var attack:int = .1 / Math.random() + 1;
 			var defense:int = .1 / Math.random();
-			trace (buff);
-			return new Weapon(name, attack, defense, {'equip': buff});
+			return new Weapon(name, attack, defense, buff);
 		}
 	}
 }
