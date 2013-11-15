@@ -204,7 +204,7 @@ package
 			switch(status){
 				case BattleLogic.ENEMY_WON:
 					
-					break;
+					FlxG.switchState(new EndState());
 				
 				case BattleLogic.PLAYER_WON:
 					var candyColor:int = Math.floor(Math.random()*3);
