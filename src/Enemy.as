@@ -56,7 +56,7 @@ package
 			var velocityVector:Point = new Point();
 			var enemyArray:Array = _enemies.members;
 			for each (var otherEnemy:Enemy in enemyArray) {
-				if (this == otherEnemy) {continue;}
+				if (this == otherEnemy || otherEnemy == null) {continue;}
 				var otherPoint:Point = new Point();
 				otherEnemy.getMidpoint().copyToFlash(otherPoint);
 				var vectorFromOther:Point = selfPoint.subtract(otherPoint);

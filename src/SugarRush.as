@@ -9,7 +9,7 @@ package
 		public function SugarRush()
 		{
 
-			super(640, 480, SplashScreenState, 1);
+			super(640, 480, SplashScreenState, ExplorePlayState, 1);
 			PlayerData.instance.initialize();
 
 		}

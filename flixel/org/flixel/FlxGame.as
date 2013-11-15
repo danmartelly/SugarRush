@@ -56,6 +56,11 @@ package org.flixel
 		 */
 		internal var _state:FlxState;
 		/**
+		 * The state that should only be created once. Specifically used for the Sugar Rush game.
+		 */
+		internal var _steadyState:FlxState;
+		internal var _steadyStateClass:Class;
+		/**
 		 * Mouse cursor.
 		 */
 		internal var _mouse:Sprite;
@@ -174,7 +179,7 @@ package org.flixel
 		 * @param	FlashFramerate	Sets the actual display framerate for Flash player (default is 30 times per second).
 		 * @param	UseSystemCursor	Whether to use the default OS mouse pointer, or to use custom flixel ones.
 		 */
-		public function FlxGame(GameSizeX:uint,GameSizeY:uint,InitialState:Class,Zoom:Number=1,GameFramerate:uint=60,FlashFramerate:uint=30,UseSystemCursor:Boolean=false)
+		public function FlxGame(GameSizeX:uint,GameSizeY:uint,InitialState:Class,SteadyState:Class,Zoom:Number=1,GameFramerate:uint=60,FlashFramerate:uint=30,UseSystemCursor:Boolean=false)
 		{
 			//super high priority init stuff (focus, mouse, etc)
 			_lostFocus = false;
@@ -205,6 +210,8 @@ package org.flixel
 			_recording = false;
 			
 			//then get ready to create the game object for real
+			_steadyStateClass = SteadyState;
+			_steadyState = null;
 			_iState = InitialState;
 			_requestedState = null;
 			_requestedReset = true;
@@ -491,12 +498,23 @@ package org.flixel
 				timerManager.clear();
 			
 			//Destroy the old state (if there is an old state)
-			if(_state != null)
+			//modified by danmartelly
+			if(_state != null && !(_state is _steadyStateClass))
 				_state.destroy();
 			
 			//Finally assign and create the new state
 			_state = _requestedState;
-			_state.create();
+			if (_state is _steadyStateClass) {
+				if (_steadyState == null) {
+					_steadyState = _state;
+					_state.create();
+				} else {
+					_requestedState = _steadyState;
+					_state = _requestedState;
+				}
+			} else {
+				_state.create();	
+			}
 		}
 		
 		/**
