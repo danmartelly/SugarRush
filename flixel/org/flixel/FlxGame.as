@@ -512,6 +512,9 @@ package org.flixel
 					_requestedState = _steadyState;
 					_state = _requestedState;
 				}
+				if ("resetFlxGFunctions" in _state) {
+					_steadyStateClass(_state).resetFlxGFunctions();
+				}
 			} else {
 				_state.create();	
 			}

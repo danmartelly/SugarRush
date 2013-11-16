@@ -54,9 +54,11 @@ package
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
-
+		}
+		
+		public function resetFlxGFunctions():void {
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
-
+			
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			
 			FlxG.camera.follow(_player);
