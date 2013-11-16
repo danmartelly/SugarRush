@@ -17,6 +17,7 @@ package
 		protected var _weaponsText:FlxText;
 		protected var _candiesText:FlxText;
 		protected var _weaponSlots:FlxGroup;
+		protected var _weaponStatsGroup:FlxGroup;
 		protected var _redSprite:FlxSprite;
 		protected var _blueSprite:FlxSprite;
 		protected var _whiteSprite:FlxSprite;
@@ -52,6 +53,8 @@ package
 			
 			_weaponSlots = new FlxGroup(5);
 			add(_weaponSlots);
+			_weaponStatsGroup = new FlxGroup(5);
+			add(_weaponStatsGroup);
 			
 			_redSprite = new FlxSprite(FlxG.width * 0.65, FlxG.height * 0.94, Sources.candyRed);
 			_blueSprite = new FlxSprite(FlxG.width * 0.75, FlxG.height * 0.94, Sources.candyBlue);
@@ -97,12 +100,14 @@ package
 				weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.makeGraphic(40, 40, 0xFF00FF00);
-				
-				var weaponStats:FlxText = new FlxText(weaponSprite.x, weaponSprite.y-12, weaponSprite.width,
-													  weapon.attack.toString() + "/" +  weapon.defense.toString());
-				weaponStats.alignment = "center";
+								
+				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
+				weaponStats.x = weaponSprite.x+10;
+				weaponStats.y = weaponSprite.y-12;
+				weaponStats.width = weaponSprite.width;
+				weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
 				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-				//add(weaponStats);
+				weaponStats.makeGraphic(40, 40, 0x00000000);
 			}
 			
 			super.update();
