@@ -102,7 +102,7 @@ package
 													  weapon.attack.toString() + "/" +  weapon.defense.toString());
 				weaponStats.alignment = "center";
 				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-				add(weaponStats);
+				//add(weaponStats);
 			}
 			
 			super.update();
