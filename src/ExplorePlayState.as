@@ -1,14 +1,20 @@
 package
 {
-	import org.flixel.*
+	import org.flixel.*;
 	
 	public class ExplorePlayState extends FlxState
-	{		
+	{	
+		// syntax: FlxPoint 
+		private const spawnerLocations:Array = [
+			[new FlxPoint(0,0)],
+			[new FlxPoint(600,400)],
+			[new FlxPoint(1100,700)]
+		];
+		
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
 
-		
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 		
@@ -28,8 +34,15 @@ package
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
 			_player = new ExplorePlayer();
-			var spawner:EnemySpawner = new EnemySpawner(200, 200, _enemies, _player);
-			_spawners.add(spawner);
+			for each (var e in spawnerLocations) {
+				var entry:Array = e as Array;
+				//breakdown
+				var spawnPoint:FlxPoint = entry[0];
+				//make new Spawner
+				var spawner:EnemySpawner = new EnemySpawner(spawnPoint.x, spawnPoint.y, _enemies, _player);
+				//add to State
+				_spawners.add(spawner);
+			}
 			
 			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
 			craftButton.loadGraphic(Sources.buttonCraft);
@@ -87,7 +100,7 @@ package
 			}
 		}
 		
-		public function triggerBattleState(player:FlxSprite, enemy:Enemy):void {
+		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			// for now just remove all enemies in a certain radius
 			_enemies.remove(enemy);
 			//switch to the battle state

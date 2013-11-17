@@ -19,9 +19,13 @@ package
 		[Embed(source="../assets/rawcandy_white.png")] public static var candyWhite:Class;
 
 		[Embed(source="../assets/tomatosprite.png")] public static var Tomato:Class;
+		[Embed(source="../assets/tomato_small.png")] public static var SmallTomato:Class;
 		[Embed(source="../assets/carrotsprite.png")] public static var Carrot:Class;
+		[Embed(source="../assets/carrot_small.png")] public static var SmallCarrot:Class;
 		[Embed(source="../assets/eggplantsprite.png")] public static var Eggplant:Class;
+		[Embed(source="../assets/eggplant_small.png")] public static var SmallEggplant:Class;
 		[Embed(source="../assets/lettucesprite.png")] public static var Lettuce:Class;	
+		[Embed(source="../assets/lettuce_small.png")] public static var SmallLettuce:Class;
 		
 		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
 		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	

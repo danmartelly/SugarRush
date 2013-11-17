@@ -4,7 +4,7 @@ package
 	
 	import org.flixel.*;
 	
-	public class Enemy extends FlxSprite
+	public class ExploreEnemy extends FlxSprite
 	{
 		
 		private var _timer:Number = 0;
@@ -16,9 +16,9 @@ package
 		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
 		
-		public function Enemy(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
+		public function ExploreEnemy(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{
-			super(X, Y, null);
+			super(X, Y, Sources.SmallCarrot);
 			_enemies = enemyGroup;
 			_player = player;
 			velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
@@ -55,7 +55,7 @@ package
 			// try to be as far away from all enemies that are close by
 			var velocityVector:Point = new Point();
 			var enemyArray:Array = _enemies.members;
-			for each (var otherEnemy:Enemy in enemyArray) {
+			for each (var otherEnemy:ExploreEnemy in enemyArray) {
 				if (this == otherEnemy) {continue;}
 				var otherPoint:Point = new Point();
 				otherEnemy.getMidpoint().copyToFlash(otherPoint);

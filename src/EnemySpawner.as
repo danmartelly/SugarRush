@@ -32,7 +32,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			_enemies.add(new Enemy(this.x, this.y, _enemies, _player));
+			_enemies.add(new ExploreEnemy(this.x, this.y, _enemies, _player));
 		}
 	}
 }
