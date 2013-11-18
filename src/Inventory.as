@@ -4,6 +4,10 @@ package {
 		private static var reds:Number = 0;
 		private static var blues:Number = 0;
 		private static var whites:Number = 0;
+		
+		public static const COLOR_RED:int = 0;
+		public static const COLOR_BLUE:int = 1;
+		public static const COLOR_WHITE:int = 2;
 
 		public static function addWeapon(weapon:Weapon):void {
 			if (weapons.length == 5) {
@@ -27,13 +31,13 @@ package {
 		
 		public static function addCandy(color:int):void {
 			switch(color) {
-				case 0:
+				case COLOR_RED:
 					if (reds != 99) {reds += 1;}
 					break;
-				case 1:
+				case COLOR_BLUE:
 					if (blues != 99) {blues += 1;}
 					break;
-				case 2:
+				case COLOR_WHITE:
 					if (whites != 99) {whites += 1;}
 					break;
 				default:
@@ -41,29 +45,44 @@ package {
 			}
 		}
 		
-		public static function removeCandy(color:int):void {
+		public Boolean function removeCandy(color:int):void {
 			switch(color) {
-				case 0:
-					if (reds != 0) {reds -= 1;}
+				case COLOR_RED:
+					if (reds != 0) {
+						reds -= 1;
+						return true
+					} else {
+						return false;
+					}
 					break;
-				case 1:
-					if (blues != 0) {blues -= 1;}
+				case COLOR_BLUE:
+					if (blues != 0) {
+						blues -= 1;
+						return true
+					} else {
+						return false;
+					}
 					break;
-				case 2:
-					if (whites != 0) {whites -= 1;}
+				case COLOR_WHITE:
+					if (whites != 0) {
+						whites -= 1;
+						return true
+					} else {
+						return false;
+					}
 					break;
 				default:
-					break;
+					return false;
 			}
 		}
 		
 		public static function candyCount(color:int):Number {
 			switch(color) {
-				case 0:
+				case COLOR_RED:
 					return reds;
-				case 1:
+				case COLOR_BLUE:
 					return blues;
-				case 2:
+				case COLOR_WHITE:
 					return whites;
 				default:
 					return 0;

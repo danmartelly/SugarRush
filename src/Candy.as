@@ -2,6 +2,8 @@ package {
 	/**
 	 * @author ethanis
 	 */
+	
+	// DEPRECATED
 	public class Candy {
 		private var colorNumber:int;
 		private var colorName:String;

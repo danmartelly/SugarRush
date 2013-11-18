@@ -229,7 +229,7 @@ package
 				
 				case BattleLogic.PLAYER_WON:
 					var candyColor:int = Math.floor(Math.random()*3);
-					var candyDrop:Candy = new Candy(candyColor);
+					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText=new FlxText(260, 200, 200, "You win!");
 					earningsText.color = 0x01000000;
