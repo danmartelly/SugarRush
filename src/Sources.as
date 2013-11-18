@@ -44,7 +44,13 @@ package
 		
 		//text
 		public static const enemyNames:Array = ["tomato", "carrot", "eggplant", "lettuce"];
-		public static const enemyMap:Object = {
+		public static const enemyExploreSpriteMap:Object = {
+			"tomato": SmallTomato,
+			"carrot": SmallCarrot,
+			"eggplant": SmallEggplant,
+			"lettuce": SmallLettuce
+		};
+		public static const enemyBattleSpriteMap:Object = {
 			"tomato": Tomato,
 			"carrot": Carrot,
 			"eggplant": Eggplant,

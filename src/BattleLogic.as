@@ -7,16 +7,16 @@ package {
 	public class BattleLogic {
 		var turn:int = 0;
 		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
-		var enemy:BattleEnemy = new BattleEnemy(8, 8, randomEnemy());
+		var enemy:BattleEnemy;
 		var state:BattlePlayState;
 		
 		var itemsPerPage:int;
 		var inventoryPage:int;
 		
-		public function BattleLogic(state:BattlePlayState, enemyType:String, itemsPerPage:int=5){
+		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
-			enemy = new BattleEnemy(8, 8, enemyType);
+			enemy = new BattleEnemy(8, 8, enemyData);
 			
 			initializePlayer();
 		}

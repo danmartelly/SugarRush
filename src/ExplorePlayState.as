@@ -90,7 +90,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState("carrot");
+					battle = new BattlePlayState(EnemyData.randomEnemyData(8));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -104,7 +104,7 @@ package
 			// for now just remove all enemies in a certain radius
 			_enemies.remove(enemy);
 			//switch to the battle state
-			battle = new BattlePlayState(enemy.enemyType);
+			battle = new BattlePlayState(enemy.enemyData);
 			FlxG.switchState(battle);
 		}
 		
