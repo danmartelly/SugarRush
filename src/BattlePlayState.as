@@ -214,7 +214,7 @@ package
 					//switchButton.active = false;
 					runButton.active = false;
 					//candyButton.active = false;
-					turnText.visible = false;
+					turnText.text = "Enemy turn!";
 					
 					break;
 				case BattleLogic.PLAYER_TURN:
