@@ -40,7 +40,7 @@ package
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		// for turn notification
-		public var turnText:FlxText = new FlxText(50,300,100,null);
+		private var turnText:FlxText = new FlxText(50,300,100,"Player's turn!");
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -214,16 +214,14 @@ package
 					//switchButton.active = false;
 					runButton.active = false;
 					//candyButton.active = false;
-					turnText.text = "Enemy turn!";
-					
+					updateEnemyText();
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
 					//switchButton.active = true;
 					runButton.active = true;
 					//candyButton.active = true;
-					(new FlxTimer()).start(1,1,updateText);
-
+					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
 				
 			}
@@ -232,8 +230,11 @@ package
 			
 		}
 		
-		public function updateText(timer:FlxTimer):void {
-			turnText.visible = true;
+		public function updateEnemyText():void {
+			turnText.text = "Enemy's turn!";
+		}
+		
+		public function updatePlayerText(timer:FlxTimer):void {
 			turnText.text = "Player's turn!";
 		}
 		

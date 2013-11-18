@@ -79,7 +79,6 @@ package {
 			
 			if (turn == ENEMY_TURN && !enemy.isDead){
 				enemy.attack(player);
-				this.state.turnText.text = "Enemy's turn!";
 				this.state.healthCallback();
 				endTurn();
 			}
