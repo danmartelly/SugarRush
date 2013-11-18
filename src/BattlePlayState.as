@@ -14,7 +14,7 @@ package
 		private var voidFn:Function = function():void {};
 		private var logic:BattleLogic = null;
 		
-		private var x:int = FlxG.width /2 + 150;
+		private var hor:int = FlxG.width /2 + 150;
 		private var y:int = FlxG.height ;//- 50;
 		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
 		
@@ -31,16 +31,17 @@ package
 		private var enemyName:FlxText = new FlxText(50,25, 150,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(50, 50, 100, "Health: ?/?");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(x,y - 50-invenBarHeight);
-		private var playerLifeBar:FlxSprite = new FlxSprite(x, y - 50-invenBarHeight);
-		private var playerName:FlxText = new FlxText(x,y-75-invenBarHeight,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(x, y - 50-invenBarHeight, 100, "Blood Sugar: ?/?");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50-invenBarHeight);
+		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50-invenBarHeight);
+		private var playerName:FlxText = new FlxText(hor,y-75-invenBarHeight,75,"Kid");
+		private var playerHealthText:FlxText = new FlxText(hor, y - 50-invenBarHeight, 100, "Blood Sugar: ?/?");
 		
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(50,300,100,"Player's turn!");
+		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
+		
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -85,7 +86,8 @@ package
 			eatButton.loadGraphic(Sources.buttonEat);
 			runButton.loadGraphic(Sources.buttonRun);
 			
-			
+			turnText.size = 10;
+			turnText.color = 0xff000000;
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
