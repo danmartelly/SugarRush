@@ -45,7 +45,7 @@ package {
 			}
 		}
 		
-		public Boolean function removeCandy(color:int):void {
+		public static function removeCandy(color:int):Boolean {
 			switch(color) {
 				case COLOR_RED:
 					if (reds != 0) {
