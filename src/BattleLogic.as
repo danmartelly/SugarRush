@@ -55,11 +55,11 @@ package {
 		
 		public function useCandy():void {
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-			Inventory.removeCandy(Math.floor(Math.random()*3));
-			player.heal(5);
-			this.state.showHealth();
-			this.state.healthCallback();
-			endTurn();
+				Inventory.removeCandy(Math.floor(Math.random()*3));
+				player.heal(5);
+				this.state.showHealth();
+				this.state.healthCallback();
+				endTurn();
 			}
 		}
 		
