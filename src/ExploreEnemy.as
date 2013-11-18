@@ -13,20 +13,15 @@ package
 		private const aggroSpeed:Number = 50;
 		private const avoidOtherEnemyDistance:Number = 80;
 		private const ambleSpeed:Number = 10;
-		private var nameGraphicMap:Object = {
-			"carrot":Sources.SmallCarrot,
-			"tomato":Sources.SmallTomato,
-			"eggplant":Sources.SmallEggplant,
-			"lettuce":Sources.SmallLettuce
-		};
-		public var enemyType:String;
+		
+		public var enemyData:EnemyData;
 		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
 		
-		public function ExploreEnemy(X:Number, Y:Number, enemyType:String, enemyGroup:FlxGroup, player:ExplorePlayer)
+		public function ExploreEnemy(X:Number, Y:Number, enemyData:EnemyData, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{	
-			this.enemyType = enemyType;
-			super(X, Y, nameGraphicMap[enemyType]);
+			this.enemyData = enemyData;
+			super(X, Y, this.enemyData.exploreAsset());
 			_enemies = enemyGroup;
 			_player = player;
 			velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
@@ -38,14 +33,14 @@ package
 			if (x < 0){
 				x = 0;
 			}
-			if ( x > (FlxG.width)) {
-				x = FlxG.width;
+			if ( x > (FlxG.worldBounds.width - this.frameWidth)) {
+				x = FlxG.worldBounds.width - this.frameWidth;
 			}
 			if (y < 0){
 				y = 0;
 			}
-			if ( y > (FlxG.height)) {
-				y = (FlxG.height );
+			if ( y > (FlxG.worldBounds.height - (this.frameHeight+75))) { //75 is lower bar
+				y = (FlxG.worldBounds.height - (this.frameHeight+75));
 			}
 			_timer += FlxG.elapsed;
 			var selfPoint:Point = new Point();

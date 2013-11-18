@@ -24,7 +24,7 @@ package
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
-		private var enemyType:String;
+		private var enemyData:EnemyData;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyName:FlxText = new FlxText(50,25, 150,"Enemy Name");
@@ -49,14 +49,14 @@ package
 		
 		Sources.fontCookies;
 		
-		public function BattlePlayState(enemyType:String) {
-			this.enemyType = enemyType;
+		public function BattlePlayState(enemyData:EnemyData) {
+			this.enemyData = enemyData;
 		}
 		
 		override public function create():void {
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
-			logic = new BattleLogic(this, enemyType);
+			logic = new BattleLogic(this, enemyData);
 			
 			maxEnemyLifeBar.makeGraphic(100,12,0xff00aa00);
 			enemyLifeBar.makeGraphic(100,12, 0xff00ff00);
@@ -67,7 +67,7 @@ package
 			playerLifeBar.setOriginToCorner();
 			
 			enemyName.text = logic.enemy.name;
-			enemySprite.loadGraphic(Sources.enemyMap[logic.enemy.name], true, false, 300, 300);
+			enemySprite.loadGraphic(Sources.enemyBattleSpriteMap[logic.enemy.name], true, false, 300, 300);
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
 			

@@ -33,13 +33,13 @@ package
 			if (x < 0){
 				x = 0;
 			}
-			if ( x > (1200 - playerwidth)) {
+			if ( x > (FlxG.worldBounds.width - playerwidth)) {
 				x = 1200 - playerwidth;
 			}
 			if (y < 0){
 				y = 0;
 			}
-			if ( y > (800 - (playerheight+75))) { //75 is lower bar
+			if ( y > (FlxG.worldBounds.height - (playerheight+75))) { //75 is lower bar
 				y = (800 - (playerheight+75));
 			}
 			
