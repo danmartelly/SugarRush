@@ -13,9 +13,10 @@ package {
 		var itemsPerPage:int;
 		var inventoryPage:int;
 		
-		public function BattleLogic(state:BattlePlayState, itemsPerPage:int=5){
+		public function BattleLogic(state:BattlePlayState, enemyType:String, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
+			enemy = new BattleEnemy(8, 8, enemyType);
 			
 			initializePlayer();
 		}

@@ -32,7 +32,10 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			_enemies.add(new ExploreEnemy(this.x, this.y, "eggplant", _enemies, _player));
+			var enemyCount:int = Sources.enemyNames.length;
+			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
+			var enemyType:String = Sources.enemyNames[enemyIndex]
+			_enemies.add(new ExploreEnemy(this.x, this.y, enemyType, _enemies, _player));
 		}
 	}
 }

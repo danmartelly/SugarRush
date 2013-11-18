@@ -24,6 +24,7 @@ package
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
+		private var enemyType:String;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyName:FlxText = new FlxText(50,25, 150,"Enemy Name");
@@ -48,10 +49,14 @@ package
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
+		public function BattlePlayState(enemyType:String) {
+			this.enemyType = enemyType;
+		}
+		
 		override public function create():void {
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
-			logic = new BattleLogic(this);
+			logic = new BattleLogic(this, enemyType);
 			
 			maxEnemyLifeBar.makeGraphic(100,12,0xff00aa00);
 			enemyLifeBar.makeGraphic(100,12, 0xff00ff00);
