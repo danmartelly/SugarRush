@@ -233,17 +233,7 @@ package
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText=new FlxText(260, 200, 200, "You win!");
 					earningsText.color = 0x01000000;
-					switch(candyColor){
-						case 0:
-							earningsText.text = "You have earned red candy!";
-							break;
-						case 1:
-							earningsText.text = "You have earned blue candy!";
-							break;
-						case 2:
-							earningsText.text = "You have earned white candy!";
-							break;
-					}
+					earningsText.text = "You have earned " + Helper.getCandyName(candyColor) + " candy!";
 					add(earningsText);
 					add(new FlxButton(260,220,"End battle",endBattle));
 					buttonGroup.setAll("active",false);
