@@ -47,7 +47,7 @@ package
 		
 		private var inventoryHUD:FlxGroup = new ExploreHUD();
 		
-		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		Sources.fontCookies;
 		
 		public function BattlePlayState(enemyType:String) {
 			this.enemyType = enemyType;

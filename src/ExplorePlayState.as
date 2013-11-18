@@ -23,7 +23,7 @@ package
 		
 		private var background:FlxBackdrop ;
 		
-		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		Sources.fontCookies;
 		
 		override public function create(): void
 		{

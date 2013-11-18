@@ -33,8 +33,8 @@ package
 		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;	
 		
 		//fonts
-		//actually idk if this'll work
-		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		// Even if we comment this out it seems to still work?
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] public static var fontCookies:Class;
 		
 		//music and sound effects
 		
