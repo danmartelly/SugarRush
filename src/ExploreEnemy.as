@@ -33,14 +33,14 @@ package
 			if (x < 0){
 				x = 0;
 			}
-			if ( x > (FlxG.width)) {
-				x = FlxG.width;
+			if ( x > (FlxG.worldBounds.width - this.frameWidth)) {
+				x = FlxG.worldBounds.width - this.frameWidth;
 			}
 			if (y < 0){
 				y = 0;
 			}
-			if ( y > (FlxG.height)) {
-				y = (FlxG.height );
+			if ( y > (FlxG.worldBounds.height - (this.frameHeight+75))) { //75 is lower bar
+				y = (FlxG.worldBounds.height - (this.frameHeight+75));
 			}
 			_timer += FlxG.elapsed;
 			var selfPoint:Point = new Point();
