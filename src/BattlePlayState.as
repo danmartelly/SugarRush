@@ -7,6 +7,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	
 	public class BattlePlayState extends FlxState
 	{		
@@ -39,7 +40,7 @@ package
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(50,300,100,"Turn");
+		public var turnText:FlxText = new FlxText(50,300,100,null);
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -213,20 +214,27 @@ package
 					//switchButton.active = false;
 					runButton.active = false;
 					//candyButton.active = false;
-					turnText.text = "Enemy's turn!";
+					turnText.visible = false;
+					
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
 					//switchButton.active = true;
 					runButton.active = true;
 					//candyButton.active = true;
-					turnText.text = "Player's turn!";
+					(new FlxTimer()).start(1,1,updateText);
+
 					break;
 				
 			}
 			
 			this.update();
 			
+		}
+		
+		public function updateText(timer:FlxTimer):void {
+			turnText.visible = true;
+			turnText.text = "Player's turn!";
 		}
 		
 		public function attackLogicCallback():void {
