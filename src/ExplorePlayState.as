@@ -6,9 +6,10 @@ package
 	{	
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
-			[new FlxPoint(0,0)],
-			[new FlxPoint(600,400)],
-			[new FlxPoint(1100,700)]
+			[new FlxPoint(10,10)],
+			[new FlxPoint(1150,10)],
+			[new FlxPoint(10,700)],
+			[new FlxPoint(1150,700)]
 		];
 		
 		protected var _enemies:FlxGroup;
@@ -102,7 +103,7 @@ package
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			// for now just remove all enemies in a certain radius
-			_enemies.remove(enemy);
+			enemy.kill();
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
 			FlxG.switchState(battle);
