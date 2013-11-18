@@ -37,6 +37,9 @@ package
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] public static var fontCookies:Class;
 		
 		//music and sound effects
+		[Embed(source="../assets/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
+		[Embed(source="../assets/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
+		[Embed(source="../assets/battle_start.mp3")] public static var battleStart:Class;
 		
 		//buff stuff
 		

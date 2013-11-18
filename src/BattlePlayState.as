@@ -177,6 +177,7 @@ package
 			timerStart = true;
 			logic.useAttack();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
+			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
 		}
 		

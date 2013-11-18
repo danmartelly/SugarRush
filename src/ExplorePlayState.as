@@ -106,7 +106,13 @@ package
 			enemy.kill();
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
-			FlxG.switchState(battle);
+			pause.showing = true;
+			FlxG.play(Sources.battleStart);
+			FlxG.fade(0x00000000, 1, startBattle);	
+
+			function startBattle():void {
+				FlxG.switchState(battle);
+			}
 		}
 		
 		public function triggerCraftingState():void {
