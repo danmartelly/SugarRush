@@ -38,6 +38,9 @@ package
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
+		// for turn notification
+		private var turnText:FlxText = new FlxText(50,300,100,"Turn");
+		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
 		
@@ -109,6 +112,8 @@ package
 			//buttonGroup.add(switchButton);
 			buttonGroup.add(runButton);
 			//buttonGroup.add(candyButton);
+			
+			add(turnText);
 			
 			
 			drawHealthBar();
@@ -208,12 +213,14 @@ package
 					//switchButton.active = false;
 					runButton.active = false;
 					//candyButton.active = false;
+					turnText.text = "Enemy's turn!";
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
 					//switchButton.active = true;
 					runButton.active = true;
 					//candyButton.active = true;
+					turnText.text = "Player's turn!";
 					break;
 				
 			}
