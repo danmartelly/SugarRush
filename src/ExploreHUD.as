@@ -24,6 +24,7 @@ package
 		protected var _redCount:FlxText;
 		protected var _blueCount:FlxText;
 		protected var _whiteCount:FlxText;
+		private var inventoryCallback:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
@@ -86,6 +87,15 @@ package
 			add(_healthLabel);
 		}
 		
+		private function itemCallbackFn(i:int): Function
+		{
+			return function():void {
+				inventoryCallback(i);
+			};
+		}
+		public function applyCallbacks(callback:Function):void {
+			inventoryCallback = callback;
+		}
 		override public function update():void {
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
@@ -93,13 +103,14 @@ package
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
-				var weapon:Weapon = Inventory.getWeapons()[i]
+				var weapon:Weapon = Inventory.getWeapons()[i];
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
 				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;
 				weaponSprite.y = FlxG.height * 0.91;
 				weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.makeGraphic(40, 40, 0xFF00FF00);
+				weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
 								
 				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
 				weaponStats.x = weaponSprite.x+10;

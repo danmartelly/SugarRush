@@ -50,7 +50,7 @@ package
 		
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		
-		private var inventoryHUD:FlxGroup = new ExploreHUD();
+		private var inventoryHUD:ExploreHUD = new ExploreHUD();
 		
 		Sources.fontCookies;
 		
@@ -88,6 +88,8 @@ package
 			
 			turnText.size = 10;
 			turnText.color = 0xff000000;
+			
+			inventoryHUD.applyCallbacks(inventoryCallback);
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
