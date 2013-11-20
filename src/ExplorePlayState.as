@@ -100,10 +100,22 @@ package
 				if (invincibilityTime > 0) {
 					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
 					_player.flicker(invincibilityTime);
+					
+					if (invincibilityTime == 0) {
+						for (var i=0; i<_enemies.length; ++i) {
+							var enemy = _enemies.members[i];
+							if (FlxG.overlap(_player, enemy, triggerBattleState)) {
+								break;
+							}
+						}
+					}
 				}
 				
 				// Check player and enemy collision
-				if (invincibilityTime == 0) {
+				else if (invincibilityTime == 0) {
+					/* i haven't looked into the source to see how collision works exactly.
+					however, it only seems to trigger on the first frame of a collision,
+					rather than on every frame of a collision, so the above FlxG.overlap seems necessary to me. */
 					FlxG.collide(_player, _enemies, triggerBattleState);
 				}
 				
@@ -127,6 +139,7 @@ package
 		}
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
+			
 			// for now just remove all enemies in a certain radius
 			enemy.kill();
 			//switch to the battle state
