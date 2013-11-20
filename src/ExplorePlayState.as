@@ -1,6 +1,14 @@
 package
 {
-	import org.flixel.*;
+	import org.flixel.FlxBackdrop;
+	import org.flixel.FlxButton;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
+	import org.flixel.FlxRect;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	
 	public class ExplorePlayState extends FlxState
 	{	
@@ -16,6 +24,7 @@ package
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
 
+		public var HUD:ExploreHUD;
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 		
@@ -65,7 +74,8 @@ package
 			add(_spawners);
 			add(_enemies);
 			add(_player);
-			add(new ExploreHUD());
+			HUD = new ExploreHUD()
+			add(HUD);
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
@@ -84,13 +94,28 @@ package
 
 				super.update();
 				
+				if (PlayerData.instance.currentHealth <= 0){
+					FlxG.switchState(new EndState());
+				}
 				if (invincibilityTime > 0) {
 					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
 					_player.flicker(invincibilityTime);
+					
+					if (invincibilityTime == 0) {
+						for (var i=0; i<_enemies.length; ++i) {
+							var enemy = _enemies.members[i];
+							if (FlxG.overlap(_player, enemy, triggerBattleState)) {
+								break;
+							}
+						}
+					}
 				}
 				
 				// Check player and enemy collision
-				if (invincibilityTime == 0) {
+				else if (invincibilityTime == 0) {
+					/* i haven't looked into the source to see how collision works exactly.
+					however, it only seems to trigger on the first frame of a collision,
+					rather than on every frame of a collision, so the above FlxG.overlap seems necessary to me. */
 					FlxG.collide(_player, _enemies, triggerBattleState);
 				}
 				
@@ -114,6 +139,7 @@ package
 		}
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
+			
 			// for now just remove all enemies in a certain radius
 			enemy.kill();
 			//switch to the battle state
