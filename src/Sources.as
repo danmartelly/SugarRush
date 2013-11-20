@@ -17,6 +17,12 @@ package
 		[Embed(source="../assets/rawcandy_blue.png")] public static var candyBlue:Class;	
 		[Embed(source="../assets/rawcandy_red.png")] public static var candyRed:Class;	
 		[Embed(source="../assets/rawcandy_white.png")] public static var candyWhite:Class;
+		[Embed(source="../assets/rawcandy_disabled.png")] public static var candyDisabled:Class;
+		[Embed(source="../assets/rawcandy_blueb.png")] public static var candyBlueBig:Class;	
+		[Embed(source="../assets/rawcandy_redb.png")] public static var candyRedBig:Class;	
+		[Embed(source="../assets/rawcandy_whiteb.png")] public static var candyWhiteBig:Class;
+		[Embed(source="../assets/rawcandy_disabledb.png")] public static var candyDisabledBig:Class;
+		
 
 		[Embed(source="../assets/tomatosprite.png")] public static var Tomato:Class;
 		[Embed(source="../assets/tomato_small.png")] public static var SmallTomato:Class;
@@ -30,7 +36,9 @@ package
 		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
 		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
 		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
-		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;	
+		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
+
+		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
 		
 		//fonts
 		// Even if we comment this out it seems to still work?

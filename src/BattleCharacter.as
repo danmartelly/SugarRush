@@ -89,9 +89,14 @@ package {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
+			var opponentDefense = opponent.getDefenseStat();
+			
+			if (this.flags.indexOf("true") != -1) {
+				opponentDefense = 0;
+			}
 			
 			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-				Math.floor(Math.random()*2*opponent.getDefenseStat())));
+				Math.floor(Math.random()*2*opponentDefense)));
 			
 			opponent.hurt(damageAmount);
 			
