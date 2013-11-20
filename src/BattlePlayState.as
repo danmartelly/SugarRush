@@ -47,7 +47,7 @@ package
 		// for turn notification
 		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
 		
-		private var invulnTime:Number = 5.;
+		private var invulnTime:Number = 3.;
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -70,11 +70,11 @@ package
 			logic = new BattleLogic(this, enemyData);
 			
 			maxEnemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight,0xff00aa00);
-			enemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, 0xff00ff00);
+			enemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, healthColor(logic.enemyHealthPercent()));
 			enemyLifeBar.setOriginToCorner();
 						
 			maxPlayerLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight,0xff00aa00);
-			playerLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, 0xff00ff00);
+			playerLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, healthColor(logic.playerHealthPercent()));
 			playerLifeBar.setOriginToCorner();
 			
 			enemyName.text = logic.enemy.name;
@@ -124,6 +124,7 @@ package
 			
 			buttonGroup.add(attackButton);
 			//buttonGroup.add(switchButton);
+			buttonGroup.add(eatButton);
 			buttonGroup.add(runButton);
 			//buttonGroup.add(candyButton);
 			
@@ -173,15 +174,25 @@ package
 			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
 		}
 		
+		private function healthColor(healthPercent:int):uint {
+			if (healthPercent > 50){
+				return 0xff00ff00;
+			} else if (healthPercent > 25) {
+				return 0xffffff00;
+			} else {
+				return 0xffff0000;
+			}
+		}
+		
 		private function drawHealthBar():void {
 			var health:Number = logic.playerHealthPercent();
 			playerLifeBar.scale.x = health / 100.0;
 			// change color based on health!
-			playerLifeBar.color = 0xff00ff00;
+			playerLifeBar.fill(healthColor(health));
 			
 			var e_health:Number = logic.enemyHealthPercent();
 			enemyLifeBar.scale.x = e_health / 100.0;
-			enemyLifeBar.color = 0xff00ff00;
+			enemyLifeBar.fill(healthColor(e_health));
 			
 			updateHealthText();
 		}
