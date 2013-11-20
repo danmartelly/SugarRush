@@ -8,7 +8,7 @@ package
 	
 	public class ExploreHUD extends FlxGroup
 	{
-		protected var _healthLabel:FlxText;
+		public var _healthLabel:FlxText;
 		
 		protected var _inventoryBox:FlxSprite;
 		protected var _buttonBar:FlxSprite;

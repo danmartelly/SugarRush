@@ -1,6 +1,14 @@
 package
 {
-	import org.flixel.*;
+	import org.flixel.FlxBackdrop;
+	import org.flixel.FlxButton;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
+	import org.flixel.FlxRect;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	
 	public class ExplorePlayState extends FlxState
 	{	
@@ -16,6 +24,7 @@ package
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
 
+		public var HUD:ExploreHUD;
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 		
@@ -65,7 +74,8 @@ package
 			add(_spawners);
 			add(_enemies);
 			add(_player);
-			add(new ExploreHUD());
+			HUD = new ExploreHUD()
+			add(HUD);
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
@@ -84,6 +94,9 @@ package
 
 				super.update();
 				
+				if (PlayerData.instance.currentHealth <= 0){
+					FlxG.switchState(new EndState());
+				}
 				if (invincibilityTime > 0) {
 					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
 					_player.flicker(invincibilityTime);

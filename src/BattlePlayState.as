@@ -27,16 +27,19 @@ package
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
+		const lifeBarWidth:int = 160;
+		const lifeBarHeight:int = 18;
+			
 		private var enemyData:EnemyData;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
-		private var enemyName:FlxText = new FlxText(50,25, 150,"Enemy Name");
-		private var enemyHealthText:FlxText = new FlxText(50, 50, 100, "Health: ?/?");
+		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
+		private var enemyHealthText:FlxText = new FlxText(50, 52, lifeBarWidth, "Health: ?/?");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50-invenBarHeight);
-		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50-invenBarHeight);
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50 - invenBarHeight);
+		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50 - invenBarHeight);
 		private var playerName:FlxText = new FlxText(hor,y-75-invenBarHeight,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(hor, y - 50-invenBarHeight, 100, "Blood Sugar: ?/?");
+		private var playerHealthText:FlxText = new FlxText(hor, y - 48 - invenBarHeight, lifeBarWidth, "Blood Sugar: ?/?");
 		
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
@@ -66,12 +69,12 @@ package
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this, enemyData);
 			
-			maxEnemyLifeBar.makeGraphic(100,12,0xff00aa00);
-			enemyLifeBar.makeGraphic(100,12, 0xff00ff00);
+			maxEnemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight,0xff00aa00);
+			enemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, 0xff00ff00);
 			enemyLifeBar.setOriginToCorner();
 						
-			maxPlayerLifeBar.makeGraphic(100,12,0xff00aa00);
-			playerLifeBar.makeGraphic(100,12, 0xff00ff00);
+			maxPlayerLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight,0xff00aa00);
+			playerLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, 0xff00ff00);
 			playerLifeBar.setOriginToCorner();
 			
 			enemyName.text = logic.enemy.name;
@@ -93,6 +96,9 @@ package
 			turnText.color = 0xff000000;
 			
 			inventoryHUD.applyCallbacks(inventoryCallback);
+			
+			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
+			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
@@ -170,9 +176,12 @@ package
 		private function drawHealthBar():void {
 			var health:Number = logic.playerHealthPercent();
 			playerLifeBar.scale.x = health / 100.0;
+			// change color based on health!
+			playerLifeBar.color = 0xff00ff00;
 			
 			var e_health:Number = logic.enemyHealthPercent();
 			enemyLifeBar.scale.x = e_health / 100.0;
+			enemyLifeBar.color = 0xff00ff00;
 			
 			updateHealthText();
 		}
