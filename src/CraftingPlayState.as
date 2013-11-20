@@ -24,19 +24,19 @@ package
 			cauldronImage.scale = new FlxPoint(0.8,0.8);
 			add(cauldronImage);
 			
-			var candyOffset:int = 80;
-			var candyWidth:int = 10;
-			var candyY:int = 300;
-			var candyScale:FlxPoint = new FlxPoint(5, 5);
+			var candyOffset:int = 50;
+			var candyWidth:int = 75;
+			var candyX:int = (FlxG.width - candyWidth) / 2;
+			var candyY:int = 270;
 			
-			var candy1:FlxButton = new FlxButton(FlxG.width / 2 - candyOffset - candyWidth / 2, candyY, "", removeCandy1);
-			var candy2:FlxButton = new FlxButton(FlxG.width / 2 + candyOffset - candyWidth / 2, candyY, "", removeCandy2);
-			var candy3:FlxButton = new FlxButton(FlxG.width / 2 - candyWidth / 2, candyY - 100, "", removeCandy3);
+			var candy1:FlxButton = new FlxButton(candyX - candyOffset, candyY, "", removeCandy1);
+			var candy2:FlxButton = new FlxButton(candyX + candyOffset, candyY, "", removeCandy2);
+			var candy3:FlxButton = new FlxButton(candyX + 5, candyY - 90, "", removeCandy3);
 			candies = [candy1, candy2, candy3];
 			for (var i:int = 0; i < 3; i++) {
 				var candyButton:FlxButton = candies[i];
 				candyButton.loadGraphic(Sources.candyDisabledBig);
-				//candyButton.scale = candyScale;
+				//candyButton.scale = new FlxPoint(5, 5);
 				add(candyButton);
 			}
 			
