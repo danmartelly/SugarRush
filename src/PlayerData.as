@@ -7,6 +7,7 @@ package
 		public var currentWeaponIndex:int = 0;
 		public var currentHealth:int;
 		public var maxHealth:int;
+		public var killCount:int = 0;
 		
 		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, Weapon.NO_SPECIAL);
 		public var fireWeapon:Weapon = new Weapon("fire", 1, 0, Weapon.RED_SPECIAL);
