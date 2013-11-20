@@ -24,6 +24,7 @@ package
 		protected var _redCount:FlxText;
 		protected var _blueCount:FlxText;
 		protected var _whiteCount:FlxText;
+		protected var _killCount:FlxText;
 		private var inventoryCallback:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
@@ -85,6 +86,11 @@ package
 			_healthLabel.setFormat("COOKIES",15);
 			_healthLabel.color=0xff000000;
 			add(_healthLabel);
+			
+			_killCount = new FlxText(FlxG.width - 90, 10, 90, "Kills: ");
+			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
+			_killCount.setFormat("COOKIES", 15, 0xff000000);
+			add(_killCount);
 		}
 		
 		private function itemCallbackFn(i:int): Function
@@ -101,6 +107,7 @@ package
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
+			_killCount.text = "Kills: " + PlayerData.instance.killCount;
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
 				var weapon:Weapon = Inventory.getWeapons()[i];

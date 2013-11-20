@@ -5,11 +5,13 @@ package
 		public var currentHealth:int;
 		public var maxHealth:int;
 		public var name:String;
+		public var difficulty:Number;
 		
-		public function EnemyData(maxHealth:int, name:String) {
+		public function EnemyData(maxHealth:int, name:String, difficulty:Number = 1) {
 			this.maxHealth = maxHealth;
 			this.currentHealth = this.maxHealth;
 			this.name = name;
+			this.difficulty = difficulty;
 		}
 		
 		public static function randomEnemyData(maxHealth:int):EnemyData {

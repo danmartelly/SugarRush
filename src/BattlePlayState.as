@@ -124,6 +124,7 @@ package
 			
 			buttonGroup.add(attackButton);
 			//buttonGroup.add(switchButton);
+			buttonGroup.add(eatButton);
 			buttonGroup.add(runButton);
 			//buttonGroup.add(candyButton);
 			

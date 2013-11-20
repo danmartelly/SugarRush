@@ -72,6 +72,7 @@ package {
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);
 			}else if (enemy.isDead) {
+				player.data.killCount += 1;
 				this.state.endBattleCallback(PLAYER_WON);
 			} else {
 				this.state.turnCallback(turn);
