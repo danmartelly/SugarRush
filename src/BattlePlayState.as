@@ -1,5 +1,7 @@
 package
 {
+	import flash.utils.setInterval;
+	
 	import org.flixel.FlxBackdrop;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -270,7 +272,10 @@ package
 					logic.player.updatePlayerData();
 					
 					//FlxG.mouse.hide();
-					FlxG.switchState(new ExplorePlayState());
+					var newExploreState = new ExplorePlayState();
+					newExploreState.setInvincibility(2);
+					
+					FlxG.switchState(newExploreState);
 					break;
 			}
 		}
@@ -279,7 +284,11 @@ package
 		{
 			this.destroy();
 			logic.player.updatePlayerData();
-			FlxG.switchState(new ExplorePlayState());
+			
+			var newExploreState = new ExplorePlayState();
+			newExploreState.setInvincibility(2);
+			
+			FlxG.switchState(newExploreState);
 		}
 	}
 }

@@ -22,13 +22,14 @@ package
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 		
+		public var invincibilityTime:Number = 0;
+		
 		private var background:FlxBackdrop ;
 		
 		Sources.fontCookies;
 		
 		override public function create(): void
-		{
-			 
+		{ 
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			
@@ -83,8 +84,14 @@ package
 
 				super.update();
 				
+				if (invincibilityTime > 0) {
+					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
+				}
+				
 				// Check player and enemy collision
-				FlxG.collide(_player, _enemies, triggerBattleState);
+				if (invincibilityTime == 0) {
+					FlxG.collide(_player, _enemies, triggerBattleState);
+				}
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
@@ -99,6 +106,10 @@ package
 			} else {
 				pause.update();
 			}
+		}
+		
+		public function setInvincibility(duration:Number) {
+			invincibilityTime = duration;
 		}
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
