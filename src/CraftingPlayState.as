@@ -4,93 +4,96 @@ package
 	
 	public class CraftingPlayState extends FlxState
 	{
-		private var logic:CraftLogic = new CraftLogic();
-		private var candies:Array;
-		private var cauldronIndices:Array = new Array();
-		private var buttonHeight:int;
-		private var cauldronText:FlxText = new FlxText(100, 100, 500, "");
+		private var cauldron:Array = new Array();
+		private var cauldronText:FlxText = new FlxText(100, 100, 500, "Cauldron:");
 		private var banner:FlxText = new FlxText(100, 300, 500, "");
-		private var title:FlxText = new FlxText(0, 0, 100, "Crafting state");
-		private var combineButton:FlxButton = new FlxButton(100, 200, "COMBINE", combineCandy);
-		private var doneButton:FlxButton = new FlxButton(200, 200, "DONE", done);
+		
+		Sources.fontCookies;
 		
 		override public function create():void
 		{
-			FlxG.bgColor = 0xaaffaacc;
+			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
+			add(background);
 			
-			this.candies = new Array();
+			add(new ExploreHUD());
 			
-			for (var color:int = 0; color < 3; color++) {
-				for (var j:int = 0; j < Inventory.candyCount(color); j++) {
-					this.candies.push(new Candy(color));
-				}
-			}
+			var combineButton:FlxButton = new FlxButton(FlxG.width/2 - 40, 410, "COMBINE", combineCandy); // same location as attack button on battle screen
+			combineButton.loadGraphic(Sources.buttonCraft);
+			add(combineButton);
 			
-			add(this.title);
-			add(this.combineButton);
-			add(this.doneButton);
+			var doneButton:FlxButton = new FlxButton(560 - 2, 410, "DONE", done); // should be in same location as craft button on explore screen
+			doneButton.loadGraphic(Sources.buttonRun);
+			add(doneButton);
+			
+			var redButton:FlxButton = new FlxButton(FlxG.width * 0.65, FlxG.height * 0.94, "", redCandy);
+			var blueButton:FlxButton = new FlxButton(FlxG.width * 0.75, FlxG.height * 0.94, "", blueCandy);
+			var whiteButton:FlxButton = new FlxButton(FlxG.width * 0.85, FlxG.height * 0.94, "", whiteCandy);
+			redButton.loadGraphic(Sources.candyRed);
+			blueButton.loadGraphic(Sources.candyBlue);
+			whiteButton.loadGraphic(Sources.candyWhite);
+			add(redButton);
+			add(blueButton);
+			add(whiteButton);
+			
+			cauldronText.color = 0xff0077;
+			banner.color = 0x1199ff
 			add(this.cauldronText);
 			add(this.banner);
-			
-			var height:int = 0;
-			
-			var candyButtons:Array = new Array(candies.length);
-			for (var i:int = 0; i < candies.length; i++)
-			{
-				var candy:Candy = candies[i];
-				var candyButton:FlxButton = new FlxButton(0, i * height, candy.getColorName(), selectCandy);
-				height = candyButton.height;
-				buttonHeight = height;
-				add(candyButton);
-			}
 			
 			FlxG.mouse.show();
 		}
 		
-		private function selectCandy():void
+		private function updateCauldron():void {
+			
+		}
+		
+		private function redCandy():void {
+			selectCandy(Inventory.COLOR_RED);
+		}
+		
+		private function blueCandy():void {
+			selectCandy(Inventory.COLOR_BLUE);
+		}
+		
+		private function whiteCandy():void {
+			selectCandy(Inventory.COLOR_WHITE);
+		}
+		
+		private function selectCandy(color:int):void
 		{
-			var index:int = FlxG.mouse.y / this.buttonHeight; // index corresponding to the candy clicked
-			if (cauldronIndices.indexOf(index) < 0)
-			{
-				cauldronIndices.push(index);
-				if (cauldronIndices.length > 3)
-				{
-					cauldronIndices = cauldronIndices.slice(1);
-				}
+			if (Inventory.removeCandy(color) && cauldron.length < 3) {
+				cauldron.push(color);
+				
 				var display:Array = new Array();
-				for (var i:int = 0; i < cauldronIndices.length; i++)
+				for (var i:int = 0; i < cauldron.length; i++)
 				{
-					var candy:Candy = candies[cauldronIndices[i]];
-					display.push(candy.getColorName());
+					var color:int = cauldron[i];
+					display.push(Helper.getCandyName(color));
 				}
 				cauldronText.text = "Cauldron:\n| " + display.join(" | ") + " |";
 				banner.text = "";
 			}
-			else {
-				banner.text = "That candy is already in your cauldron!";
-			}
 		}
 		
 		private function combineCandy():void {
-			if (cauldronIndices.length < 3) {
+			if (cauldron.length < 3) {
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
-				var cauldron:Array = new Array();
-				for (var i:int = 0; i < cauldronIndices.length; i++) {
-					var candy:Candy = candies[cauldronIndices[i]];
-					cauldron.push(candy);
-					Inventory.removeCandy(candy.getColorNumber());
-				}
 				var weapon:Weapon = CraftLogic.craft(cauldron);
 				banner.text = "You got a " + weapon.getDisplayName() + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
 				Inventory.addWeapon(weapon);
-				combineButton.destroy();
-				remove(combineButton);
+				cauldron = new Array();
+				cauldronText.text = "Cauldron:";
 			}
 		}
 		
 		private function done():void {
+			for (var i:int = 0; i < cauldron.length; i++)
+				{
+					var color:int = cauldron[i];
+					Inventory.addCandy(color);
+				}
 			FlxG.switchState(new ExplorePlayState());
 		}
 	}

@@ -14,12 +14,12 @@ package
 		private static const weaponTypes:Array = ['Wand', 'Dagger', 'Gun', 'Sword', 'Nunchucks', 'Ninja Stars', 'Axe', 'Spoon', 'Scythe'];
 		
 		/*
-		 * Takes an array of exactly 3 Candies and returns a Weapon
+		 * Takes an array of exactly 3 ints corresponding to candy numbers and returns a Weapon
 		 */
 		public static function craft(cauldron:Array):Weapon
 		{
-			var first:int = cauldron[(int)(3 * Math.random())].getColorNumber() + 1;
-			var second:int = cauldron[(int)(3 * Math.random())].getColorNumber() + 1;
+			var first:int = cauldron[(int)(3 * Math.random())] + 1;
+			var second:int = cauldron[(int)(3 * Math.random())] + 1;
 			var roll:Number = Math.random();
 			
 			var buff:int = 0;

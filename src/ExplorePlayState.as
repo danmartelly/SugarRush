@@ -6,9 +6,10 @@ package
 	{	
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
-			[new FlxPoint(0,0)],
-			[new FlxPoint(600,400)],
-			[new FlxPoint(1100,700)]
+			[new FlxPoint(10,10)],
+			[new FlxPoint(1150,10)],
+			[new FlxPoint(10,700)],
+			[new FlxPoint(1150,700)]
 		];
 		
 		protected var _enemies:FlxGroup;
@@ -21,13 +22,14 @@ package
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 		
+		public var invincibilityTime:Number = 0;
+		
 		private var background:FlxBackdrop ;
 		
-		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		Sources.fontCookies;
 		
 		override public function create(): void
-		{
-			 
+		{ 
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			
@@ -82,15 +84,22 @@ package
 
 				super.update();
 				
+				if (invincibilityTime > 0) {
+					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
+					_player.flicker(invincibilityTime);
+				}
+				
 				// Check player and enemy collision
-				FlxG.collide(_player, _enemies, triggerBattleState);
+				if (invincibilityTime == 0) {
+					FlxG.collide(_player, _enemies, triggerBattleState);
+				}
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState();
+					battle = new BattlePlayState(EnemyData.randomEnemyData(8));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -100,12 +109,22 @@ package
 			}
 		}
 		
+		public function setInvincibility(duration:Number) {
+			invincibilityTime = duration;
+		}
+		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			// for now just remove all enemies in a certain radius
-			_enemies.remove(enemy);
+			enemy.kill();
 			//switch to the battle state
-			battle = new BattlePlayState();
-			FlxG.switchState(battle);
+			battle = new BattlePlayState(enemy.enemyData);
+			pause.showing = true;
+			FlxG.play(Sources.battleStart);
+			FlxG.fade(0x00000000, 1, startBattle);	
+
+			function startBattle():void {
+				FlxG.switchState(battle);
+			}
 		}
 		
 		public function triggerCraftingState():void {

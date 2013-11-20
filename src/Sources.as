@@ -33,10 +33,13 @@ package
 		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;	
 		
 		//fonts
-		//actually idk if this'll work
-		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		// Even if we comment this out it seems to still work?
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] public static var fontCookies:Class;
 		
 		//music and sound effects
+		[Embed(source="../assets/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
+		[Embed(source="../assets/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
+		[Embed(source="../assets/battle_start.mp3")] public static var battleStart:Class;
 		
 		//buff stuff
 		
@@ -44,7 +47,13 @@ package
 		
 		//text
 		public static const enemyNames:Array = ["tomato", "carrot", "eggplant", "lettuce"];
-		public static const enemyMap:Object = {
+		public static const enemyExploreSpriteMap:Object = {
+			"tomato": SmallTomato,
+			"carrot": SmallCarrot,
+			"eggplant": SmallEggplant,
+			"lettuce": SmallLettuce
+		};
+		public static const enemyBattleSpriteMap:Object = {
 			"tomato": Tomato,
 			"carrot": Carrot,
 			"eggplant": Eggplant,

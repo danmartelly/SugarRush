@@ -7,15 +7,16 @@ package {
 	public class BattleLogic {
 		var turn:int = 0;
 		public var player:BattlePlayer = new BattlePlayer(PlayerData.instance);
-		var enemy:BattleEnemy = new BattleEnemy(8, 8, randomEnemy());
+		var enemy:BattleEnemy;
 		var state:BattlePlayState;
 		
 		var itemsPerPage:int;
 		var inventoryPage:int;
 		
-		public function BattleLogic(state:BattlePlayState, itemsPerPage:int=5){
+		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
+			enemy = new BattleEnemy(8, 8, enemyData);
 			
 			initializePlayer();
 		}
@@ -54,11 +55,11 @@ package {
 		
 		public function useCandy():void {
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-			Inventory.removeCandy(Math.floor(Math.random()*3));
-			player.heal(5);
-			this.state.showHealth();
-			this.state.healthCallback();
-			endTurn();
+				Inventory.removeCandy(Math.floor(Math.random()*3));
+				player.heal(5);
+				this.state.showHealth();
+				this.state.healthCallback();
+				endTurn();
 			}
 		}
 		
