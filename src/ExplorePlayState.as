@@ -86,6 +86,7 @@ package
 				
 				if (invincibilityTime > 0) {
 					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
+					_player.flicker(invincibilityTime);
 				}
 				
 				// Check player and enemy collision
