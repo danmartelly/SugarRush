@@ -44,6 +44,7 @@ package
 		// for turn notification
 		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
 		
+		private var invulnTime:Number = 2.;
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -273,7 +274,7 @@ package
 					
 					//FlxG.mouse.hide();
 					var newExploreState = new ExplorePlayState();
-					newExploreState.setInvincibility(2);
+					newExploreState.setInvincibility(invulnTime);
 					
 					FlxG.switchState(newExploreState);
 					break;
@@ -286,7 +287,7 @@ package
 			logic.player.updatePlayerData();
 			
 			var newExploreState = new ExplorePlayState();
-			newExploreState.setInvincibility(2);
+			newExploreState.setInvincibility(invulnTime);
 			
 			FlxG.switchState(newExploreState);
 		}
