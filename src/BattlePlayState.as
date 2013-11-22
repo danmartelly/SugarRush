@@ -6,6 +6,7 @@ package
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
@@ -22,9 +23,9 @@ package
 		
 		private var buttonWidth:int = 80;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", attackCallback); // +2 for margin
-		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "", candyCallback);
+		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", candyCallback);
 		//private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
-		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
+		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
 		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		const lifeBarWidth:int = 160;
@@ -82,11 +83,8 @@ package
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
 			
-			playerName.setFormat("COOKIES",20);
-			enemyName.setFormat("COOKIES",20);
-			
-			playerName.color = 0x01000000;
-			enemyName.color = 0x01000000;
+			playerName.setFormat("COOKIES",20,0x01000000);
+			enemyName.setFormat("COOKIES",20,0x01000000);
 			
 			attackButton.loadGraphic(Sources.buttonAttack);
 			eatButton.loadGraphic(Sources.buttonEat);
@@ -99,6 +97,22 @@ package
 			
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
+			
+			var attackLabel:FlxText=new FlxText(0,0,80,"ATTACK");
+			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
+			var runLabel:FlxText=new FlxText(0,0,80,"RUN");
+			attackLabel.setFormat("COOKIES", 16, 0xffffffff);
+			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
+			runLabel.setFormat("COOKIES", 16, 0xffffffff);
+			attackLabel.alignment = "center";
+			eatLabel.alignment = "center";
+			runLabel.alignment = "center";
+			attackButton.label=attackLabel;
+			eatButton.label=eatLabel;
+			runButton.label=runLabel;
+			attackButton.labelOffset=new FlxPoint(0,0);
+			eatButton.labelOffset=new FlxPoint(0,0);
+			runButton.labelOffset=new FlxPoint(0,0);
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);

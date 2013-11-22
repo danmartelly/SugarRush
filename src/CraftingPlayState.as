@@ -40,12 +40,22 @@ package
 				add(candyButton);
 			}
 			
-			var combineButton:FlxButton = new FlxButton(FlxG.width/2 - 40, 410, "COMBINE", combineCandy); // same location as attack button on battle screen
+			var combineButton:FlxButton = new FlxButton(FlxG.width/2 - 40, 410, "", combineCandy); // same location as attack button on battle screen
 			combineButton.loadGraphic(Sources.buttonCraft);
+			var combineLabel:FlxText=new FlxText(0,0,80,"COMBINE");
+			combineLabel.setFormat("COOKIES", 16, 0xffffffff);
+			combineLabel.alignment = "center";
+			combineButton.label=combineLabel;
+			combineButton.labelOffset=new FlxPoint(0,0);
 			add(combineButton);
 			
-			var doneButton:FlxButton = new FlxButton(560 - 2, 410, "DONE", done); // should be in same location as craft button on explore screen
+			var doneButton:FlxButton = new FlxButton(560 - 2, 410, "", done); // should be in same location as craft button on explore screen
 			doneButton.loadGraphic(Sources.buttonRun);
+			var doneLabel:FlxText=new FlxText(0,0,80,"DONE");
+			doneLabel.setFormat("COOKIES", 16, 0xffffffff);
+			doneLabel.alignment = "center";
+			doneButton.label=doneLabel;
+			doneButton.labelOffset=new FlxPoint(0,0);
 			add(doneButton);
 			
 			var redButton:FlxButton = new FlxButton(FlxG.width * 0.65, FlxG.height * 0.94, "", redCandy);

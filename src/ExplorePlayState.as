@@ -57,10 +57,20 @@ package
 			
 			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
 			craftButton.loadGraphic(Sources.buttonCraft);
+			var craftLabel:FlxText=new FlxText(0,0,80,"CRAFT");
+			craftLabel.setFormat("COOKIES", 16, 0xffffffff);
+			craftLabel.alignment = "center";
+			craftButton.label=craftLabel;
+			craftButton.labelOffset=new FlxPoint(0,0);
 			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
 
-			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "", eatStuff);
+			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "EAT", eatStuff);
 			eatButton.loadGraphic(Sources.buttonEat);
+			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
+			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
+			eatLabel.alignment = "center";
+			eatButton.label=eatLabel;
+			eatButton.labelOffset=new FlxPoint(0,0);
 			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
 
 			pause = new PauseState();

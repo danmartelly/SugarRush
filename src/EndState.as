@@ -7,25 +7,29 @@ package
 	 */
 	public class EndState extends FlxState
 	{
-		
+		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
+		public var background:FlxSprite;
 		override public function create(): void
 		{
+			background = new FlxSprite(0,0);
+			background.loadGraphic(Sources.LoseBackground);
+			add(background);
 			
 			FlxG.worldBounds.x = 0; 
 			FlxG.worldBounds.width = 640;
 			var text: FlxText;
 			text = new FlxText(40, FlxG.height / 2 - 80, FlxG.width, "Game Over!");
-			text.size = 35;
+			text.setFormat("COOKIES",35);
+			text.alignment = "left";
+			//add(text);
+			
+			text = new FlxText(130, 165 , 300, "Your beloved Candyland has been overrun by Vegetables!");
+			text.setFormat("COOKIES",15, 0x1FFCF76);
 			text.alignment = "left";
 			add(text);
 			
-			text = new FlxText(30, FlxG.height / 2 , FlxG.width, "Your beloved Candyland has been overrun by Vegetables");
-			text.size = 20;
-			text.alignment = "left";
-			add(text);
-			
-			text = new FlxText(30, FlxG.height / 2 + 80 , FlxG.width, "Press Space to Restart");
-			text.size = 20;
+			text = new FlxText(130, 200 , FlxG.width, "Press Space to Restart");
+			text.setFormat("COOKIES",20,0x1FFCF76);
 			text.alignment = "left";
 			add(text);
 			
