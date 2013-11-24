@@ -307,7 +307,7 @@ package
 					logic.player.updatePlayerData();
 					
 					//FlxG.mouse.hide();
-					var newExploreState = new ExplorePlayState();
+					var newExploreState = ExplorePlayState.instance;
 					newExploreState.setInvincibility(invulnTime);
 					
 					FlxG.switchState(newExploreState);
@@ -320,7 +320,7 @@ package
 			this.destroy();
 			logic.player.updatePlayerData();
 			
-			var newExploreState = new ExplorePlayState();
+			var newExploreState = ExplorePlayState.instance;
 			newExploreState.setInvincibility(invulnTime);
 			
 			FlxG.switchState(newExploreState);

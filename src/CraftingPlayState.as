@@ -142,7 +142,7 @@ package
 					var color:int = cauldron[i];
 					Inventory.addCandy(color);
 				}
-			FlxG.switchState(new ExplorePlayState());
+			FlxG.switchState(ExplorePlayState.instance);
 		}
 	}
 }

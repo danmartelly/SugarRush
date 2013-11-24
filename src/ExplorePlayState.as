@@ -12,6 +12,8 @@ package
 	
 	public class ExplorePlayState extends FlxState
 	{	
+		public static var instance:ExplorePlayState = new ExplorePlayState();
+		
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
 			[new FlxPoint(10,10)],
@@ -28,6 +30,8 @@ package
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 		
+		public var buttonArray:Array;
+		
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 		
@@ -37,8 +41,7 @@ package
 		
 		Sources.fontCookies;
 		
-		override public function create(): void
-		{ 
+		public function ExplorePlayState() {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			
@@ -65,6 +68,7 @@ package
 			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
 
 			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "EAT", eatStuff);
+
 			eatButton.loadGraphic(Sources.buttonEat);
 			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
 			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
@@ -72,7 +76,11 @@ package
 			eatButton.label=eatLabel;
 			eatButton.labelOffset=new FlxPoint(0,0);
 			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
-
+			
+			buttonArray = new Array();
+			buttonArray.push(craftButton);
+			buttonArray.push(eatButton);
+			
 			pause = new PauseState();
 			
 			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
@@ -89,13 +97,30 @@ package
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
-
+		}
+		
+		override public function create(): void
+		{ 
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			
 			FlxG.camera.follow(_player);
 			FlxG.mouse.show();
+			
+			//enable all buttons
+			for(var i=0 ; i < buttonArray.length ; i++) {
+				var button:FlxButton = buttonArray[i];
+				button.active = true;
+			}
+		}
+		
+		override public function destroy():void {
+			//disable all buttons
+			for(var i=0 ; i < buttonArray.length ; i++) {
+				var button:FlxButton = buttonArray[i];
+				button.active = false;
+			}
 		}
 		
 		override public function update():void
@@ -154,7 +179,7 @@ package
 			enemy.kill();
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
-			pause.showing = true;
+//			pause.showing = true;
 			FlxG.play(Sources.battleStart);
 			FlxG.fade(0x00000000, 1, startBattle);	
 
