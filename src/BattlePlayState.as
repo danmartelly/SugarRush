@@ -98,7 +98,7 @@ package
 			
 			var attackLabel:FlxText=new FlxText(0,0,80,"ATTACK");
 			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
-			var runLabel:FlxText=new FlxText(0,0,80,"RUN");
+			var runLabel:FlxText=new FlxText(0,0,80,"RUN -1 HP");
 			attackLabel.setFormat("COOKIES", 16, 0xffffffff);
 			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
 			runLabel.setFormat("COOKIES", 16, 0xffffffff);
