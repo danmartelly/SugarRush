@@ -10,7 +10,6 @@ package
 		{
 
 			super(640, 480, SplashScreenState, 1);
-			PlayerData.instance.initialize();
 
 		}
 	}

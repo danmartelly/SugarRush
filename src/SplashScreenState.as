@@ -14,6 +14,12 @@ package
 		
 		public function SplashScreenState()
 		{
+			//initialize/reset all the stats
+			Inventory.resetInventory();
+			PlayerData.instance.initialize();
+			ExplorePlayState.resetInstance();
+			
+			
 			background = new FlxSprite(0,0);
 			background.loadGraphic(backgroundImg);
 			add(background);

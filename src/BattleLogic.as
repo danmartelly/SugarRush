@@ -1,5 +1,6 @@
 package {
 	import flash.utils.describeType;
+	import org.flixel.FlxG;
 	/**
 	 * @author ethanis
 	 */
@@ -16,7 +17,7 @@ package {
 		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
-			enemy = new BattleEnemy(8, 8, enemyData);
+			enemy = new BattleEnemy(enemyData.currentHealth, enemyData.maxHealth, enemyData);
 			
 			initializePlayer();
 		}
@@ -55,11 +56,15 @@ package {
 		
 		public function useCandy():void {
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
+				FlxG.play(Sources.gainHealth);
 				Inventory.removeCandy(Math.floor(Math.random()*3));
 				player.heal(5);
 				this.state.showHealth();
 				this.state.healthCallback();
 				endTurn();
+			}
+			else {
+				FlxG.play(Sources.error);
 			}
 		}
 		

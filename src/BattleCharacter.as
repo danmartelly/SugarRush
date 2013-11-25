@@ -71,6 +71,14 @@ package {
 			}
 			return false;
 		}
+		public function findBuff(s:String):Object {
+			for (var i:int=0; i<this.buffs.length; ++i) {
+				if (this.buffs[i]["name"] == s) {
+					return this.buffs[i];
+				}
+			}
+			return null;
+		}
 		public function tickBuffs():void {
 			var newBuffs:Array = new Array();
 			for (var i:int=0; i<this.buffs.length; ++i) {

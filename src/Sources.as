@@ -75,6 +75,9 @@ package
 		[Embed(source="../assets/sound/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
+		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
+		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
+		[Embed(source="../assets/sound/error.mp3")] public static var error:Class;
 		
 		//buff stuff
 		

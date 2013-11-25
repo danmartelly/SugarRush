@@ -9,6 +9,13 @@ package {
 		public static const COLOR_BLUE:int = 1;
 		public static const COLOR_WHITE:int = 2;
 
+		public static function resetInventory():void {
+			weapons = new Array();
+			reds = 0;
+			blues = 0;
+			whites = 0;
+		}
+		
 		public static function addWeapon(weapon:Weapon):void {
 			if (weapons.length == 5) {
 				weapons.shift();
