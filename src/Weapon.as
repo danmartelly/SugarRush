@@ -70,5 +70,9 @@ package {
 				return name + " of " + BUFF_LIST[buff].name;
 			}
 		}
+		
+//		public function getWeaponType(): String {
+//			return ""; 
+//		}
 	}
 }

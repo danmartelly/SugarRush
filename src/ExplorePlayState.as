@@ -42,8 +42,8 @@ package
 		Sources.fontCookies;
 		
 		public function ExplorePlayState() {
-			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
-			add(background);
+//			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
+//			add(background);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();

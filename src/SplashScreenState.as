@@ -42,6 +42,7 @@ package
 		}
 		
 		private function startGame():void {
+			trace("hi");
 			FlxG.switchState(ExplorePlayState.instance);
 		}
 	}

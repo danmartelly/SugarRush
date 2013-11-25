@@ -113,17 +113,19 @@ package
 				var weapon:Weapon = Inventory.getWeapons()[i];
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
 				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;
-				weaponSprite.y = FlxG.height * 0.91;
-				weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
+				weaponSprite.y = FlxG.height * 0.91;		
+				//weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
-				weaponSprite.makeGraphic(40, 40, 0xFF00FF00);
+				
+				//weaponSprite.fill(0xFFFFFFFF);
+				weaponSprite.loadGraphic(Sources.AxeCane, false, false, 40, 40, false);
 				weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
 								
 				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
 				weaponStats.x = weaponSprite.x+10;
 				weaponStats.y = weaponSprite.y-12;
 				weaponStats.width = weaponSprite.width;
-				weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
+				//weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
 				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
 				weaponStats.makeGraphic(40, 40, 0x00000000);
 			}
