@@ -36,8 +36,6 @@ package
 		public var levelX:Number = 1200;
 		public var levelY:Number = 800;
 		
-		public var invincibilityTime:Number = 0;
-		
 		private var background:FlxBackdrop ;
 		
 		Sources.fontCookies;
@@ -147,11 +145,11 @@ package
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());
 				}
-				if (invincibilityTime > 0) {
-					invincibilityTime = Math.max(invincibilityTime - FlxG.elapsed, 0);
-					_player.flicker(invincibilityTime);
+				if (_player.invincibilityTime > 0) {
+					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
+					_player.flicker(_player.invincibilityTime);
 					
-					if (invincibilityTime == 0) {
+					if (_player.invincibilityTime == 0) {
 						for (var i=0; i<_enemies.length; ++i) {
 							var enemy = _enemies.members[i];
 							if (FlxG.overlap(_player, enemy, triggerBattleState)) {
@@ -162,7 +160,7 @@ package
 				}
 				
 				// Check player and enemy collision
-				else if (invincibilityTime == 0) {
+				else if (_player.invincibilityTime == 0) {
 					/* i haven't looked into the source to see how collision works exactly.
 					however, it only seems to trigger on the first frame of a collision,
 					rather than on every frame of a collision, so the above FlxG.overlap seems necessary to me. */
@@ -187,7 +185,7 @@ package
 		}
 		
 		public function setInvincibility(duration:Number) {
-			invincibilityTime = duration;
+			_player.invincibilityTime = duration;
 		}
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {

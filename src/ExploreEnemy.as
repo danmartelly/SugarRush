@@ -15,6 +15,7 @@ package
 		private const ambleSpeed:Number = 10;
 		
 		public var enemyData:EnemyData;
+		
 		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
 		
@@ -50,7 +51,7 @@ package
 			_player.getMidpoint().copyToFlash(playerPoint);
 			var vectorToPlayer:Point = playerPoint.subtract(selfPoint);
 			var playerDistance:Number = vectorToPlayer.length;
-			if (playerDistance < aggroDistance) {
+			if (_player.invincibilityTime == 0 && playerDistance < aggroDistance) {
 				vectorToPlayer.normalize(aggroSpeed)
 				velocity.copyFromFlash(vectorToPlayer);
 				return;
