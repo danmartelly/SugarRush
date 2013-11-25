@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxGroup;
 
 	public class NewUIHUD extends FlxState
 	{
@@ -12,6 +13,8 @@ package
 		private var eatButton:FlxButton;
 		private var attackSprite:FlxSprite;
 		private var eatSprite:FlxSprite;
+		private var weaponGroup:FlxGroup;
+		private var candyGroup:FlxGroup;
 		
 		public function NewUIHUD(){
 			FlxG.bgColor = 0xff00ff00;
@@ -32,30 +35,57 @@ package
 			
 			add(attackButton);
 			add(eatButton);
+			weaponGroup = renderWeapons();
+			add(weaponGroup);
+			candyGroup = renderCandy();
+			candyGroup.visible = false;
+			add(candyGroup);
 			FlxG.mouse.show();
 			
 
 		}
 		
-		private function renderWeapons():void {
+		private function renderWeapons():FlxGroup {
+			var weapons:FlxGroup = new FlxGroup();
+			var weapon_count:Number = Inventory.weaponCount();
+			for(var i:Number = 0; i < weapon_count; i++){
+				weapons.add(new FlxSprite(i * 40 + 5, 440).makeGraphic(30,30,0xff00ff00));
+			}
+			return weapons;
+		}
+		
+		private function renderCandy():FlxGroup {
+			var candies:FlxGroup = new FlxGroup();
+			var i:Number;
+			for(i = 0; i < Inventory.candyCount(Inventory.COLOR_RED); i++){
+				candies.add(new FlxSprite(i* 40 + 5, 440).makeGraphic(30,30,0xffff0000));
+			}
+			var lastI:Number = (i+1) * 40 + 5;
+			for(i = 0; i < Inventory.candyCount(Inventory.COLOR_WHITE); i++){
+				candies.add(new FlxSprite(i* 40 + lastI, 440).makeGraphic(30,30,0xffffffff));
+			}
 			
+			lastI = (i+1) * 40 + 5;
+			for(i = 0; i < Inventory.candyCount(Inventory.COLOR_BLUE); i++){
+				candies.add(new FlxSprite(i* 40 + lastI, 440).makeGraphic(30,30,0xff000099));
+			}
+			return candies;
 		}
 		
 		private function renderEatSprite():void
 		{
 			attackSprite.visible = false;
-			eatSprite.visible = true;
-//			attackButton.active = true;
-//			eatButton.active = false;			
-			
+			eatSprite.visible = true;		
+			weaponGroup.visible = false;
+			candyGroup.visible = true;
 		}
 		
 		private function renderAttackSprite():void
 		{
 			attackSprite.visible = true;
 			eatSprite.visible = false;
-//			attackButton.active = false;
-//			eatButton.active = true;
+			weaponGroup.visible = true;
+			candyGroup.visible = false;
 			
 		}
 	}
