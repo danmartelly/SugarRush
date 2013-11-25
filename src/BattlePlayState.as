@@ -168,7 +168,7 @@ package
 					if (i) s2 += ", ";
 					s2 += logic.enemy.buffs[i].name + "(" + logic.enemy.buffs[i].turns + ")";
 				}
-				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().name + " buffs: " + s1);
+				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().displayName + " buffs: " + s1);
 				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
 
 			}
@@ -212,7 +212,6 @@ package
 		}
 		
 		public function attackCallback():void {
-			drawHealthBar();
 			timerStart = true;
 			logic.useAttack();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);

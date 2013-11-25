@@ -9,10 +9,10 @@ package
 		public var maxHealth:int;
 		public var killCount:int = 0;
 		
-		public var startingWeapon:Weapon = new Weapon("starter", 1, 0, Weapon.NO_SPECIAL);
-		public var fireWeapon:Weapon = new Weapon("fire", 1, 0, Weapon.RED_SPECIAL);
-		public var lsWeapon:Weapon = new Weapon("life", 1, 0, Weapon.WW_SPECIAL);
-		public var dispelWeapon:Weapon = new Weapon("dispel", 1, 0, Weapon.RW_SPECIAL);
+		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.NO_SPECIAL);
+		public var fireWeapon:Weapon = new Weapon("Sword", "Chocolate", 1, 0, Weapon.RED_SPECIAL);
+		public var lsWeapon:Weapon = new Weapon("Star", "Gumdrop", 1, 0, Weapon.WW_SPECIAL);
+		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.RW_SPECIAL);
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
