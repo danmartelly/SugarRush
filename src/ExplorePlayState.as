@@ -110,6 +110,10 @@ package
 			return _instance;
 		}
 		
+		public static function resetInstance():void {
+			_instance = new ExplorePlayState(new SingletonLock());
+		}
+		
 		override public function create(): void
 		{ 
 			FlxG.camera.setBounds(0, 0, levelX, levelY);

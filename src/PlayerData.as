@@ -4,10 +4,10 @@ package
 	{
 		private static var _instance:PlayerData;
 
-		public var currentWeaponIndex:int = 0;
+		public var currentWeaponIndex:int;
 		public var currentHealth:int;
 		public var maxHealth:int;
-		public var killCount:int = 0;
+		public var killCount:int;
 		
 		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.NO_SPECIAL);
 		public var fireWeapon:Weapon = new Weapon("Sword", "Chocolate", 1, 0, Weapon.RED_SPECIAL);
@@ -36,6 +36,8 @@ package
 			}
 			currentHealth = initialHealth;
 			maxHealth = initialHealth;
+			currentWeaponIndex = 0;
+			killCount = 0;
 		}
 		
 		public function playerHasDied():Boolean {
