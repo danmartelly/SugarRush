@@ -188,7 +188,7 @@ package
 			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
 		}
 		
-		private function healthColor(healthPercent:int):uint {
+		private function healthColor(healthPercent:Number):uint {
 			if (healthPercent > 50){
 				return 0xff00ff00;
 			} else if (healthPercent > 25) {
@@ -200,14 +200,18 @@ package
 		
 		private function drawHealthBar():void {
 			var health:Number = logic.playerHealthPercent();
+			
+			var playerBarColor:uint = healthColor(health);
 			playerLifeBar.scale.x = health / 100.0;
+			//playerLifeBar.fill(playerBarColor);
 			// change color based on health!
-			playerLifeBar.fill(healthColor(health));
 			
 			var e_health:Number = logic.enemyHealthPercent();
-			enemyLifeBar.scale.x = e_health / 100.0;
-			enemyLifeBar.fill(healthColor(e_health));
 			
+			var enemyBarColor:uint = healthColor(e_health);
+			enemyLifeBar.scale.x = e_health / 100.0;
+			//enemyLifeBar.fill(enemyBarColor);
+						
 			updateHealthText();
 		}
 		
