@@ -12,7 +12,7 @@ package
 	
 	public class ExplorePlayState extends FlxState
 	{	
-		public static var instance:ExplorePlayState = new ExplorePlayState();
+		public static var _instance:ExplorePlayState;
 		
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
@@ -41,9 +41,10 @@ package
 		
 		Sources.fontCookies;
 		
-		public function ExplorePlayState() {
-//			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
-//			add(background);
+
+		public function ExplorePlayState(lock:SingletonLock) {
+			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
+			add(background);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
@@ -97,6 +98,13 @@ package
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
+		}
+		
+		public static function get instance():ExplorePlayState {
+			if (_instance == null) {
+				_instance = new ExplorePlayState(new SingletonLock());
+			}
+			return _instance;
 		}
 		
 		override public function create(): void
@@ -196,3 +204,5 @@ package
 		}
 	}
 }
+
+class SingletonLock{}

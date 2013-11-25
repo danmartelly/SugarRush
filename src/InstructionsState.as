@@ -30,7 +30,7 @@ package
 		{
 			super.update();
 			if (FlxG.keys.justPressed("S")) {
-				FlxG.switchState(new ExplorePlayState());
+				FlxG.switchState(ExplorePlayState.instance);
 			}
 		}
 		

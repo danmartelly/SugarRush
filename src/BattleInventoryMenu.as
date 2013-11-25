@@ -25,8 +25,8 @@ package
 				if (i == 9){ col = 1; }
 				
 				var weapon:Weapon = weapons[i];
-				var square:FlxSprite = new FlxButton(220 + 60*col, 140 + 60*row, weapon.name, itemCallbackFn(i));
-				square.makeGraphic(50, 50, 0xff00ff00);
+				var square:FlxSprite = new FlxButton(220 + 60*col, 140 + 60*row, weapon.displayName, itemCallbackFn(i));
+				square.loadGraphic(weapon.image);
 				squares.add(square);
 				add(square);
 			}
