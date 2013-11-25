@@ -18,7 +18,7 @@ package {
 			}
 			this.name = enemyData.name;
 			this.difficulty = enemyData.difficulty;
-			switch (this.difficulty) {
+			/*switch (this.difficulty) {
 				case 1 :
 					this.attackStat = 0;
 				case 2 :
@@ -33,7 +33,7 @@ package {
 				default :
 					this.attackStat = 0;
 					break;
-			}
+			}*/
 		}
 		public function generateStats(difficulty:int):Object {
 			// generates random stats for an enemy based on difficulty
@@ -55,7 +55,7 @@ package {
 			
 			if (attackValue < 0) attackValue = 0;
 			if (defenseValue < 0) defenseValue = 0;
-			if (healthValue < 5) healthValue = 5;
+			if (healthValue < 3) healthValue = 3;
 			
 			return {"attack": attackValue, "defense": defenseValue, "health": healthValue};
 		}
