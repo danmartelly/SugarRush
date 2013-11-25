@@ -25,7 +25,7 @@ package
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
-		protected var _chests:FlxGroup;
+		protected var _chests:ExploreChestManager;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -59,8 +59,7 @@ package
 				_spawners.add(spawner);
 			}
 			
-			_chests = new FlxGroup();
-			_chests.add(new ExploreCandyChest(500,500));
+			_chests = new ExploreChestManager();
 			
 			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
 			craftButton.loadGraphic(Sources.buttonCraft);

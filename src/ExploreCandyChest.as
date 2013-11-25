@@ -4,7 +4,7 @@ package
 	
 	public class ExploreCandyChest extends FlxSprite
 	{
-		public function ExploreCandyChest(X:Number=0, Y:Number=0) {
+		public function ExploreCandyChest(X:Number=500, Y:Number=500) {
 			super(X, Y, null);
 		}
 		
