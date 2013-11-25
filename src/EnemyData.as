@@ -18,7 +18,7 @@ package
 			var enemyCount:int = Sources.enemyNames.length;
 			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
 			var enemyType:String = Sources.enemyNames[enemyIndex];
-			return new EnemyData(maxHealth, enemyType);
+			return new EnemyData(maxHealth, enemyType, enemyIndex);
 		}
 		
 		public function hasDied():Boolean {
