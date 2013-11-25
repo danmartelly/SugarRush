@@ -40,7 +40,7 @@ package {
 		}
 		
 		public function getHealthAsPercent():Number {
-			return (currentHealth/maxHealth)*100;
+			return (currentHealth/maxHealth)*100.0;
 		}
 		
 		public function removeTempStats():void {
@@ -89,7 +89,7 @@ package {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
-			var opponentDefense = opponent.getDefenseStat();
+			var opponentDefense:int = opponent.getDefenseStat();
 			
 			if (this.flags.indexOf("true") != -1) {
 				opponentDefense = 0;

@@ -5,7 +5,9 @@ package {
 	public class Weapon {
 		var attack:int;
 		var defense:int;
-		var name:String;
+		// Cotton Candy Sythe would be of Type Sythe and Mod Cotton Candy
+		var weaponType:String;
+		var weaponMod:String;
 		var buff:int;
 		
 		/*
@@ -14,6 +16,14 @@ package {
 		and buffs['hit'] might contain buffs that are applied when hitting an enemy, like 'burn' and 'freeze'.
 		*/
 		var buffs:Object = { }; // yo nate why isn't this just the index of the buff? we only have 1 buff and they are all on-hit effects
+		
+		private static const verboseMods:Object = {
+			"Cane": "Candy Cane",
+			"Cotton" : "Cotton Candy",
+			"Chocolate": "Chocolate",
+			"Gumdrop": "Gumdrop",
+			"Marsh": "Marshmalllow"
+		};
 		
 		// 1-3 match Candy constants.
 		public static const NO_SPECIAL:int = 0;
@@ -39,8 +49,9 @@ package {
 													new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(2 * src.buffs.length); trg.buffs = []; }),
 													new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
 
-		public function Weapon(name:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
-			this.name = name;
+		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
+			this.weaponType = weaponType;
+			this.weaponMod = weaponMod;
 			this.attack = attack;
 			this.defense = defense;
 			
@@ -62,13 +73,22 @@ package {
 			return buffs[type];
 		}
 		
-		public function getDisplayName():String {
+		public function get baseName():String {
+			return verboseMods[weaponMod] + " " + this.weaponType;
+ 		}
+		
+		public function get displayName():String {
 			if (buff == 0) {
-				return name;
+				return this.baseName;
 			}
 			else {
-				return name + " of " + BUFF_LIST[buff].name;
+				return this.baseName + " of " + BUFF_LIST[buff].name;
 			}
+		}
+		
+		public function get image():Class {
+			var varNameStr:String = this.weaponType + this.weaponMod;
+			return Sources[varNameStr]; 
 		}
 	}
 }
