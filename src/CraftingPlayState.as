@@ -102,9 +102,11 @@ package
 		
 		private function combineCandy():void {
 			if (cauldron.indexOf(-1) > -1) {
+				FlxG.play(Sources.error);
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
+				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
 				banner.text = "You got a " + weapon.displayName + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
 				Inventory.addWeapon(weapon);

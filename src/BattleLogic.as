@@ -1,5 +1,6 @@
 package {
 	import flash.utils.describeType;
+	import org.flixel.FlxG;
 	/**
 	 * @author ethanis
 	 */
@@ -55,11 +56,15 @@ package {
 		
 		public function useCandy():void {
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
+				FlxG.play(Sources.gainHealth);
 				Inventory.removeCandy(Math.floor(Math.random()*3));
 				player.heal(5);
 				this.state.showHealth();
 				this.state.healthCallback();
 				endTurn();
+			}
+			else {
+				FlxG.play(Sources.error);
 			}
 		}
 		
