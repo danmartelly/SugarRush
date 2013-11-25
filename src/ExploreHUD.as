@@ -26,7 +26,6 @@ package
 		protected var _whiteCount:FlxText;
 		protected var _killCount:FlxText;
 		protected var _currentWeaponBox:FlxSprite;
-		private var inventoryCallback:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
@@ -103,12 +102,10 @@ package
 		private function itemCallbackFn(i:int): Function
 		{
 			return function():void {
-				inventoryCallback(i);
+				PlayerData.instance.changeWeapon(i);
 			};
 		}
-		public function applyCallbacks(callback:Function):void {
-			inventoryCallback = callback;
-		}
+		
 		override public function update():void {
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
@@ -131,14 +128,6 @@ package
 					_currentWeaponBox.x = weaponSprite.x;
 					_currentWeaponBox.y = weaponSprite.y;
 				}
-								
-				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
-				weaponStats.x = weaponSprite.x+10;
-				weaponStats.y = weaponSprite.y-12;
-				weaponStats.width = weaponSprite.width;
-				weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
-				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-				weaponStats.makeGraphic(40, 40, 0x00000000);
 				
 			}
 			

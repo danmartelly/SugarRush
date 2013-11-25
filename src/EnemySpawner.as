@@ -11,7 +11,7 @@ package
 		private var _player:ExplorePlayer;
 		private var _enemiesFromThisSpawner:Array;
 		public var spawnRate:Number = 3;
-		public var maxEnemy:Number = 10;
+		public var maxEnemy:Number = 5;
 		
 		private const enemyHealth:int = 8;
 		
