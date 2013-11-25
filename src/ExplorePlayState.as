@@ -40,6 +40,14 @@ package
 		
 		Sources.fontCookies;
 		
+		public function eatCallback():void {
+			var player:PlayerData = PlayerData.instance; 
+			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
+				Inventory.removeCandy(Inventory.randomCandy());
+				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
+			}
+		}
+		
 		public function ExplorePlayState(lock:SingletonLock) {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
@@ -77,6 +85,7 @@ package
 			eatButton.label=eatLabel;
 			eatButton.labelOffset=new FlxPoint(0,0);
 			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
+			eatButton.onDown = eatCallback;
 			
 			buttonArray = new Array();
 			buttonArray.push(craftButton);
