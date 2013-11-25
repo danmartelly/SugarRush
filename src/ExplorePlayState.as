@@ -25,6 +25,7 @@ package
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
+		protected var _chests:FlxGroup;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -57,6 +58,9 @@ package
 				//add to State
 				_spawners.add(spawner);
 			}
+			
+			_chests = new FlxGroup();
+			_chests.add(new ExploreCandyChest(500,500));
 			
 			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
 			craftButton.loadGraphic(Sources.buttonCraft);
@@ -91,6 +95,7 @@ package
 			
 			add(_spawners);
 			add(_enemies);
+			add(_chests);
 			add(_player);
 			HUD = new ExploreHUD()
 			add(HUD);
@@ -161,6 +166,8 @@ package
 					FlxG.collide(_player, _enemies, triggerBattleState);
 				}
 				
+				FlxG.collide(_player, _chests, triggerCandyChest);
+				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
@@ -197,6 +204,11 @@ package
 		
 		public function triggerCraftingState():void {
 			FlxG.switchState(new CraftingPlayState());
+		}
+		
+		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
+			chest.rewardCandy();
+			_chests.remove(chest);
 		}
 		
 		public function eatStuff():void{
