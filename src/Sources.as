@@ -63,6 +63,7 @@ package
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
+		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
 		
 		//fonts
 		// Even if we comment this out it seems to still work?
