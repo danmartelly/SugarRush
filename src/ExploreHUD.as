@@ -128,14 +128,6 @@ package
 					_currentWeaponBox.x = weaponSprite.x;
 					_currentWeaponBox.y = weaponSprite.y;
 				}
-								
-				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
-				weaponStats.x = weaponSprite.x+10;
-				weaponStats.y = weaponSprite.y-12;
-				weaponStats.width = weaponSprite.width;
-				weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
-				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-				weaponStats.makeGraphic(40, 40, 0x00000000);
 				
 			}
 			
