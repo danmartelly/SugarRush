@@ -25,6 +25,7 @@ package
 		protected var _blueCount:FlxText;
 		protected var _whiteCount:FlxText;
 		protected var _killCount:FlxText;
+		protected var _currentWeaponBox:FlxSprite;
 		private var inventoryCallback:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
@@ -52,6 +53,11 @@ package
 			_candiesText.setFormat("COOKIES",15);
 			add(_weaponsText);
 			add(_candiesText);
+			
+			_currentWeaponBox = new FlxSprite(0,0);
+			_currentWeaponBox.makeGraphic(40, 40);
+			_currentWeaponBox.fill(0xff00ff00);
+			add(_currentWeaponBox);
 			
 			_weaponSlots = new FlxGroup(5);
 			add(_weaponSlots);
@@ -114,10 +120,16 @@ package
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
 				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;
 				weaponSprite.y = FlxG.height * 0.91;
+
 				//weaponSprite.label = new FlxText(0, 0, 40, weapon.displayName);
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.loadGraphic(weapon.image);
 				weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
+				
+				if (i == PlayerData.instance.currentWeaponIndex) {
+					_currentWeaponBox.x = weaponSprite.x;
+					_currentWeaponBox.y = weaponSprite.y;
+				}
 								
 				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
 				weaponStats.x = weaponSprite.x+10;
@@ -126,6 +138,7 @@ package
 				weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
 				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
 				weaponStats.makeGraphic(40, 40, 0x00000000);
+				
 			}
 			
 			super.update();
