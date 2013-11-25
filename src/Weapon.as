@@ -47,7 +47,17 @@ package {
 													new Buff('heal', 'Mega Drain', 'Restores one point of blood sugar on hit.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(1); }),
 													new Buff('pierce', 'Pierce', 'Attacks with this weapon ignore the enemy\'s defense.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { src.flags = ['true']; }),
 													new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(2 * src.buffs.length); trg.buffs = []; }),
-													new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, function(src:BattleCharacter, trg:BattleCharacter):void { })	];
+													new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, 
+														function(src:BattleCharacter, trg:BattleCharacter):void {
+															var obj = src.findBuff("cascade");
+															if (obj["stacks"]) {
+																obj["stacks"] += 1;
+															}
+															else { 
+																obj["stacks"] = 1;
+															}
+															src.tempAttackStat = Math.ceil(obj["stacks"] / 2);
+														})	];
 
 		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
 			this.weaponType = weaponType;

@@ -16,7 +16,7 @@ package {
 		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
-			enemy = new BattleEnemy(8, 8, enemyData);
+			enemy = new BattleEnemy(enemyData.currentHealth, enemyData.maxHealth, enemyData);
 			
 			initializePlayer();
 		}

@@ -11,11 +11,11 @@ package {
 		}
 		
 		override public function getAttackStat():Number {
-			return this.attackStat + (data.currentWeapon() != null ? data.currentWeapon().attack : 0);
+			return this.attackStat + this.tempAttackStat + (data.currentWeapon() != null ? data.currentWeapon().attack : 0);
 		}
 		
 		override public function getDefenseStat():Number {
-			return this.defenseStat + (data.currentWeapon() != null ? data.currentWeapon().defense : 0);
+			return this.defenseStat + this.tempDefenseStat + (data.currentWeapon() != null ? data.currentWeapon().defense : 0);
 		}
 		override public function attack(opponent:BattleCharacter): Number {
 			var damageAmount:int = super.attack(opponent);

@@ -12,7 +12,7 @@ package
 		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.NO_SPECIAL);
 		public var fireWeapon:Weapon = new Weapon("Sword", "Chocolate", 1, 0, Weapon.RED_SPECIAL);
 		public var lsWeapon:Weapon = new Weapon("Star", "Gumdrop", 1, 0, Weapon.WW_SPECIAL);
-		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.RW_SPECIAL);
+		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.WB_SPECIAL);
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
