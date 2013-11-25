@@ -92,9 +92,7 @@ package
 			
 			turnText.size = 10;
 			turnText.color = 0xff000000;
-			
-			inventoryHUD.applyCallbacks(inventoryCallback);
-			
+						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			

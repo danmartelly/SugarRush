@@ -48,6 +48,10 @@ package
 		public function currentWeapon():Weapon {
 			return Inventory.getWeapons()[currentWeaponIndex];
 		}
+		
+		public function changeWeapon(index:int):void {
+			currentWeaponIndex = index;
+		}
 	}
 }
 class SingletonLock{}

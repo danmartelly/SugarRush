@@ -94,7 +94,7 @@ package
 			add(_enemies);
 			add(_chests);
 			add(_player);
-			HUD = new ExploreHUD()
+			HUD = new ExploreHUD();
 			add(HUD);
 			add(craftButton);
 			add(eatButton);
