@@ -6,8 +6,8 @@ package {
 		public var name:String;
 		public var difficulty:Number;
 		
-		public function BattleEnemy(currentHealth:Number, maxHealth:Number, enemyData:EnemyData):void {
-			super(currentHealth, maxHealth);
+		public function BattleEnemy(enemyData:EnemyData):void {
+			super(enemyData.currentHealth, enemyData.maxHealth);
 			this.name = enemyData.name;
 			this.difficulty = enemyData.difficulty;
 		}
