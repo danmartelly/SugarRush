@@ -86,7 +86,7 @@ package
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
 			
-			add(inventoryHUD);
+			//add(inventoryHUD);
 			
 			add(maxEnemyLifeBar);
 			add(enemyLifeBar);
@@ -94,10 +94,11 @@ package
 			add(maxPlayerLifeBar);
 			add(playerLifeBar);
 			add(enemyName);
-			add(attackButton);
+			add(new NewUIHUD());
+			//add(attackButton);
 			//add(switchButton);
-			add(runButton);
-			add(eatButton);
+			//add(runButton);
+			//add(eatButton);
 			//add(candyButton);
 			add(enemySprite);
 			add(playerSprite);
