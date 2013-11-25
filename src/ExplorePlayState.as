@@ -174,7 +174,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(EnemyData.randomEnemyData(899));
+					battle = new BattlePlayState(EnemyData.randomEnemyData(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));

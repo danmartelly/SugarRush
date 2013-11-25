@@ -7,18 +7,19 @@ package
 		public var name:String;
 		public var difficulty:Number;
 		
-		public function EnemyData(maxHealth:int, name:String, difficulty:Number = 1) {
+		public function EnemyData(maxHealth:int, name:String, difficulty:Number = -1) {
 			this.maxHealth = maxHealth;
 			this.currentHealth = this.maxHealth;
 			this.name = name;
 			this.difficulty = difficulty;
 		}
 		
-		public static function randomEnemyData(maxHealth:int):EnemyData {
+		public static function randomEnemyData(difficulty:int):EnemyData {
 			var enemyCount:int = Sources.enemyNames.length;
 			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
 			var enemyType:String = Sources.enemyNames[enemyIndex];
-			return new EnemyData(maxHealth, enemyType);
+			
+			return new EnemyData(5, enemyType, difficulty);
 		}
 		
 		public function hasDied():Boolean {
