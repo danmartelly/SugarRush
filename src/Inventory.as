@@ -52,6 +52,20 @@ package {
 			}
 		}
 		
+		public static function randomCandy():int {
+			var totalCandies:Number = reds + blues + whites;
+			var redProb:Number = reds / totalCandies;
+			var blueProb:Number = (blues / totalCandies) + redProb;
+			var rand:Number = Math.random();
+			if (rand < redProb){
+				return COLOR_RED;
+			} else if (rand < blueProb) {
+				return COLOR_BLUE;
+			} else {
+				return COLOR_WHITE;
+			}
+		}
+		
 		public static function removeCandy(color:int):Boolean {
 			switch(color) {
 				case COLOR_RED:
