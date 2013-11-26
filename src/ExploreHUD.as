@@ -27,6 +27,14 @@ package
 		protected var _killCount:FlxText;
 		protected var _currentWeaponBox:FlxSprite;
 		
+		protected var eatTab:FlxSprite;
+		protected var attackTab:FlxSprite;
+		protected var eatBackground:FlxSprite;
+		protected var attackBackground:FlxSprite;
+		
+		protected var inTab:Boolean=false; //true if a tab (attack, eat) is open
+		protected var isEat:Boolean=false; //true if eat tab is open
+		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public function ExploreHUD()
@@ -38,8 +46,29 @@ package
 			add(_inventoryBox);
 			add(_buttonBar);
 			
+			eatBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xffffb32d);
+			eatBackground.scrollFactor.x=eatBackground.scrollFactor.y=0;
+			eatTab=new FlxSprite(FlxG.width/2-41, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffffb32d);
+			eatTab.scrollFactor.x=eatTab.scrollFactor.y=0;
+
+			attackBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width*0.5, FlxG.height * 0.10, 0xffff2329);
+			attackBackground.scrollFactor.x=attackBackground.scrollFactor.y=0;
+			attackTab=new FlxSprite(1, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffff2329);
+			attackTab.scrollFactor.x=attackTab.scrollFactor.y=0;
+			
+			add(eatTab);
+			add(eatBackground);
+			add(attackTab);
+			add(attackBackground);
+			
+			//start off neutral state
+			eatTab.visible=false;
+			eatBackground.visible=false;
+			attackTab.visible=false;
+			attackBackground.visible=false;
+			
 			_weaponsText = new FlxText(0, FlxG.height * 0.90, FlxG.width, "Weapons:");
-			_candiesText = new FlxText(FlxG.width * 0.50, FlxG.height * 0.90, FlxG.width, "Candies:");
+			_candiesText = new FlxText(FlxG.width * 0.53, FlxG.height * 0.90, FlxG.width, "Candies:");
 			_weaponsText.scrollFactor.x = _weaponsText.scrollFactor.y = 0;
 			_candiesText.scrollFactor.x = _candiesText.scrollFactor.y = 0;
 			_weaponsText.setFormat("COOKIES",15);
@@ -81,6 +110,7 @@ package
 			add(_blueCount);
 			add(_whiteCount);
 			
+			
 			_healthLabel = new FlxText(FlxG.width - 90, FlxG.height - 90, 90, "Health: ");
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			_healthLabel.setFormat("COOKIES",15);
@@ -93,12 +123,42 @@ package
 			add(_killCount);
 		}
 		
-		private function itemCallbackFn(i:int): Function
+		public function openAttack():void{
+			inTab=true;
+			isEat=false;
+			eatTab.visible=false;
+			eatBackground.visible=false;
+			attackTab.visible=true;
+			attackBackground.visible=true;
+		}
+		
+		public function openEat():void{
+			inTab=true;
+			isEat=true;
+			eatTab.visible=true;
+			eatBackground.visible=true;
+			attackTab.visible=false;
+			attackBackground.visible=false;
+		}
+		
+		//closes both tabs, return to neutral state
+		public function closeTab():void{
+			inTab=false;
+			isEat=false;			
+			eatTab.visible=false;
+			eatBackground.visible=false;
+			attackTab.visible=false;
+			attackBackground.visible=false;
+		}
+		
+		
+		private function weaponCallbackFn(i:int): Function
 		{
 			return function():void {
 				PlayerData.instance.changeWeapon(i);
 			};
 		}
+		
 		
 		override public function update():void {
 			_redCount.text = "x" + Inventory.candyCount(0);
@@ -106,6 +166,8 @@ package
 			_whiteCount.text = "x" + Inventory.candyCount(2);
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 			_killCount.text = "Kills: " + PlayerData.instance.killCount;
+			
+			//if isEat, make it possible to select a candy
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
 				var weapon:Weapon = Inventory.getWeapons()[i];
@@ -116,7 +178,11 @@ package
 				//weaponSprite.label = new FlxText(0, 0, 40, weapon.displayName);
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.loadGraphic(weapon.image);
-				weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
+				
+				//only want this to be possible if you are in eat/attack tab
+				if (inTab){
+					weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
+				}
 				
 				if (i == PlayerData.instance.currentWeaponIndex) {
 					_currentWeaponBox.x = weaponSprite.x;

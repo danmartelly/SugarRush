@@ -41,6 +41,7 @@ package
 		Sources.fontCookies;
 		
 		public function eatCallback():void {
+			HUD.openEat();
 			var player:PlayerData = PlayerData.instance; 
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
 				Inventory.removeCandy(Inventory.randomCandy());
