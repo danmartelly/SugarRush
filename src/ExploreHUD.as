@@ -55,7 +55,7 @@ package
 			
 			_currentWeaponBox = new FlxSprite(0,0);
 			_currentWeaponBox.makeGraphic(40, 40);
-			_currentWeaponBox.fill(0xffffffff);
+			_currentWeaponBox.fill(0x99ffffff);
 			_currentWeaponBox.scrollFactor.x = _currentWeaponBox.scrollFactor.y = 0;
 			add(_currentWeaponBox);
 			

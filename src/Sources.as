@@ -21,6 +21,8 @@ package
 		[Embed(source="../assets/rawcandy_whiteb.png")] public static var candyWhiteBig:Class;
 		[Embed(source="../assets/rawcandy_disabledb.png")] public static var candyDisabledBig:Class;
 
+		[Embed(source="../assets/enemies/broccolisprite.png")] public static var Broccoli:Class;	
+		[Embed(source="../assets/enemies/broccoli_small.png")] public static var SmallBroccoli:Class;
 		[Embed(source="../assets/enemies/tomatosprite.png")] public static var Tomato:Class;
 		[Embed(source="../assets/enemies/tomato_small.png")] public static var SmallTomato:Class;
 		[Embed(source="../assets/enemies/carrotsprite.png")] public static var Carrot:Class;
@@ -84,14 +86,16 @@ package
 		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
 		
 		//text
-		public static const enemyNames:Array = ["tomato", "carrot", "eggplant", "lettuce"];
+		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce"];
 		public static const enemyExploreSpriteMap:Object = {
+			"broccoli": SmallBroccoli,
 			"tomato": SmallTomato,
 			"carrot": SmallCarrot,
 			"eggplant": SmallEggplant,
 			"lettuce": SmallLettuce
 		};
 		public static const enemyBattleSpriteMap:Object = {
+			"broccoli": Broccoli,
 			"tomato": Tomato,
 			"carrot": Carrot,
 			"eggplant": Eggplant,
