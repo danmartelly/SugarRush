@@ -35,17 +35,11 @@ package
 			_inventoryBox.scrollFactor.x = _inventoryBox.scrollFactor.y = 0;
 			_buttonBar = new FlxSprite(0, FlxG.height-FlxG.height * 0.10-25).makeGraphic(FlxG.width, 25, 0xffa86d46);
 			_buttonBar.scrollFactor.x = _buttonBar.scrollFactor.y = 0;
-//			_inventoryDividerH = new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, 1);
-//			_inventoryDividerH.scrollFactor.x = _inventoryDividerH.scrollFactor.y = 0;
-//			_inventoryDividerV = new FlxSprite(FlxG.width * 0.60, FlxG.height * 0.90).makeGraphic(1, FlxG.height * 0.10);
-//			_inventoryDividerV.scrollFactor.x = _inventoryDividerV.scrollFactor.y = 0;
 			add(_inventoryBox);
 			add(_buttonBar);
-			//add(_inventoryDividerH);
-			//add(_inventoryDividerV);
 			
 			_weaponsText = new FlxText(0, FlxG.height * 0.90, FlxG.width, "Weapons:");
-			_candiesText = new FlxText(FlxG.width * 0.60, FlxG.height * 0.90, FlxG.width, "Candies:");
+			_candiesText = new FlxText(FlxG.width * 0.50, FlxG.height * 0.90, FlxG.width, "Candies:");
 			_weaponsText.scrollFactor.x = _weaponsText.scrollFactor.y = 0;
 			_candiesText.scrollFactor.x = _candiesText.scrollFactor.y = 0;
 			_weaponsText.setFormat("COOKIES",15);
@@ -64,9 +58,9 @@ package
 			_weaponStatsGroup = new FlxGroup(5);
 			add(_weaponStatsGroup);
 			
-			_redSprite = new FlxSprite(FlxG.width * 0.65, FlxG.height * 0.94, Sources.candyRed);
-			_blueSprite = new FlxSprite(FlxG.width * 0.75, FlxG.height * 0.94, Sources.candyBlue);
-			_whiteSprite = new FlxSprite(FlxG.width * 0.85, FlxG.height * 0.94, Sources.candyWhite);
+			_redSprite = new FlxSprite(FlxG.width * 0.63, FlxG.height * 0.92, Sources.candyRed);
+			_blueSprite = new FlxSprite(FlxG.width * 0.73, FlxG.height * 0.92, Sources.candyBlue);
+			_whiteSprite = new FlxSprite(FlxG.width * 0.83, FlxG.height * 0.92, Sources.candyWhite);
 			_redSprite.scrollFactor.x = _redSprite.scrollFactor.y = 0;
 			_blueSprite.scrollFactor.x = _blueSprite.scrollFactor.y = 0;
 			_whiteSprite.scrollFactor.x = _whiteSprite.scrollFactor.y = 0;

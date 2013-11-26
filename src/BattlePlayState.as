@@ -24,9 +24,7 @@ package
 		private var buttonWidth:int = 80;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", attackCallback); // +2 for margin
 		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", candyCallback);
-		//private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
-		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
@@ -44,6 +42,8 @@ package
 		
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
+		
+		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
 		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
@@ -66,6 +66,7 @@ package
 		}
 		
 		override public function create():void {
+			
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this, enemyData);
@@ -178,6 +179,7 @@ package
 				timerStart = false;
 				enemySprite.play("idle");
 				playerSprite.loadGraphic(Sources.battlePlayer);
+				remove(eatObject);
 			}
 			super.update();
 		}
@@ -239,6 +241,8 @@ package
 			logic.useCandy();
 			inventoryHUD.update();
 			playerSprite.loadGraphic(Sources.battlePlayerEat);
+			//eabOject.loadGraphic( whatever the player just chose to eat );
+			add(eatObject);
 		}
 		
 		private function updateHealthText():void {

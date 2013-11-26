@@ -58,9 +58,9 @@ package
 			doneButton.labelOffset=new FlxPoint(0,0);
 			add(doneButton);
 			
-			var redButton:FlxButton = new FlxButton(FlxG.width * 0.65, FlxG.height * 0.94, "", redCandy);
-			var blueButton:FlxButton = new FlxButton(FlxG.width * 0.75, FlxG.height * 0.94, "", blueCandy);
-			var whiteButton:FlxButton = new FlxButton(FlxG.width * 0.85, FlxG.height * 0.94, "", whiteCandy);
+			var redButton:FlxButton = new FlxButton(FlxG.width * 0.63, FlxG.height * 0.92, "", redCandy);
+			var blueButton:FlxButton = new FlxButton(FlxG.width * 0.73, FlxG.height * 0.92, "", blueCandy);
+			var whiteButton:FlxButton = new FlxButton(FlxG.width * 0.83, FlxG.height * 0.92, "", whiteCandy);
 			redButton.loadGraphic(Sources.candyRed);
 			blueButton.loadGraphic(Sources.candyBlue);
 			whiteButton.loadGraphic(Sources.candyWhite);
