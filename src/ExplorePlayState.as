@@ -51,7 +51,7 @@ package
 			
 			backgroundOpacity=new FlxSprite(0,0);
 			backgroundOpacity.makeGraphic(FlxG.width,FlxG.height,0xff000000);
-			backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
+			backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/2/10;
 			backgroundOpacity.scrollFactor.x=backgroundOpacity.scrollFactor.y=0;
 			add(backgroundOpacity);
 			
@@ -166,7 +166,7 @@ package
 					FlxG.switchState(new WinState());
 				}
 				
-				backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
+				backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/2/10;
 				
 				if (_player.invincibilityTime > 0) {
 					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
