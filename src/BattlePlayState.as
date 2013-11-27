@@ -256,7 +256,8 @@ package
 		
 		public function openCandyTab():void{
 			inventoryHUD.update();
-			inventoryHUD.openEat();
+			inventoryHUD.closeTab(); //for now (no candy-choice functionality) just close all tabs
+			//inventoryHUD.openEat();
 			
 			remove(attackBtnWeapons); //remove invisible button that calls attackCallback
 			
