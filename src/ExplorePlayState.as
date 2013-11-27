@@ -1,6 +1,5 @@
 package
 {
-	import flash.geom.ColorTransform;
 	import org.flixel.FlxBackdrop;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -27,7 +26,6 @@ package
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
-		protected var _gate:FlxSprite;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -101,10 +99,6 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			_gate = new FlxSprite();
-			_gate.makeGraphic(40, 40, 0xff000000);
-			_gate.x = levelX/2 - 20;
-			_gate.y = 60;
 			
 			add(_spawners);
 			add(_enemies);
@@ -115,7 +109,6 @@ package
 			add(craftButton);
 			add(eatButton);
 			add(pauseInstruction);
-			add(_gate);
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -191,13 +184,6 @@ package
 				}
 				
 				FlxG.collide(_player, _chests, triggerCandyChest);
-				
-				if (FlxG.overlap(_player, _gate)){
-					PlayerData.instance.isNearGate = true;
-				} else {
-					PlayerData.instance.isNearGate = false;
-				}
-				_gate.alpha = (10.0 - PlayerData.instance.gateCandies) / 10.0;
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
