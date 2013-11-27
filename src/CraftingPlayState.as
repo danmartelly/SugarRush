@@ -6,14 +6,12 @@ package
 	public class CraftingPlayState extends FlxState
 	{
 		private var cauldron:Array = [-1,-1,-1];
-		private var banner:FlxText = new FlxText(0, 380, 500, "");
+		private var banner:FlxText = new FlxText(0, 390, 500, "");
 		
 		var candies:Array = new Array(); // contains the FlxButtons in the cauldron
 		
 		override public function create():void
-		{
-			banner.setFormat();
-			
+		{			
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
 			
@@ -67,8 +65,8 @@ package
 			add(redButton);
 			add(blueButton);
 			add(whiteButton);
-			
-			banner.color = 0x1199ff
+
+			banner.setFormat("COOKIES",16,0xff000000);
 			add(this.banner);
 			
 			FlxG.mouse.show();
