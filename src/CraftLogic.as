@@ -4,7 +4,7 @@ package
 	public class CraftLogic
 	{
 		
-		private static const probSpecial:Number = .6; // Probability of getting a special when not dealing with same-type candies
+		private static const probSpecial:Number = 1; // Probability of getting a special, period
 		private static const probDoubleSpecial:Number = .1; // Probability of that special being a dual-color special
 		
 		//private static const maxAttack:int = 5;
