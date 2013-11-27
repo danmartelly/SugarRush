@@ -6,18 +6,18 @@ package {
 		public var name:String;
 		public var difficulty:Number;
 		
-		public function BattleEnemy(enemyData:EnemyData, generateRandom:Boolean = true):void {
-			super(enemyData.currentHealth, enemyData.maxHealth);
+		public function BattleEnemy(maxHealth:int, name:String, difficulty:Number = -1, generateRandom:Boolean = true):void {
+			super(maxHealth, maxHealth);
 			
 			if (generateRandom) {
-				var stats:Object = generateStats(enemyData.difficulty);
+				var stats:Object = generateStats(difficulty);
 				
 				this.currentHealth = this.maxHealth = stats["health"];
 				this.attackStat = stats["attack"];
 				this.defenseStat = stats["defense"];
 			}
-			this.name = enemyData.name;
-			this.difficulty = enemyData.difficulty;
+			this.name = name;
+			this.difficulty = difficulty;
 			/*switch (this.difficulty) {
 				case 1 :
 					this.attackStat = 0;
@@ -35,6 +35,15 @@ package {
 					break;
 			}*/
 		}
+		
+		public static function randomBattleEnemy(difficulty:int):BattleEnemy {
+			var enemyCount:int = Sources.enemyNames.length;
+			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
+			var enemyType:String = Sources.enemyNames[enemyIndex];
+			var defaultHealth:Number = 5;
+			return new BattleEnemy(5, enemyType, difficulty, true);
+		}
+		
 		public function generateStats(difficulty:int):Object {
 			// generates random stats for an enemy based on difficulty
 
@@ -66,6 +75,14 @@ package {
 			var theta:Number = 2 * Math.PI * Math.random();
 			var rho:Number = Math.sqrt(-2 * Math.log(1 - Math.random()));
 			return mean + stddev * rho * Math.cos(theta);
+		}
+		
+		public function exploreAsset():Class {
+			return Sources.enemyExploreSpriteMap[this.name];
+		}
+		
+		public function battleAsset():Class {
+			return Sources.enemyBattleSpriteMap[this.name];
 		}
 	}
 }

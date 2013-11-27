@@ -175,7 +175,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(EnemyData.randomEnemyData(1));
+					battle = new BattlePlayState(BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -204,8 +204,6 @@ package
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			
-			// for now just remove all enemies in a certain radius
-			enemy.kill();
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
 //			pause.showing = true;
