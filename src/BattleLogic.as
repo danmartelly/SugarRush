@@ -29,10 +29,11 @@ package {
 			this.state.endBattleCallback(RAN_AWAY);
 		}
 		
-		public function useAttack():void {
-			player.attack(enemy);
+		public function useAttack():Number {
+			var dmg:Number=player.attack(enemy);
 			this.state.healthCallback();
 			endTurn();
+			return dmg;
 		}
 		
 		private static function randomEnemy():String {

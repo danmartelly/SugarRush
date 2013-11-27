@@ -17,9 +17,9 @@ package
 		private var voidFn:Function = function():void {};
 		private var logic:BattleLogic = null;
 		
-		private var hor:int = FlxG.width /2 + 150;
+		private var hor:int = FlxG.width /2 + 50;
 		private var y:int = FlxG.height ;//- 50;
-		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
+		private var invenBarHeight:int = FlxG.height * 0.10 + 25; //25 is height of buttons
 		
 		private var buttonWidth:int = 120;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
@@ -46,7 +46,8 @@ package
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
+		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(hor,295,200,"");
 		
 		private var invulnTime:Number = 1.;
 		
@@ -99,8 +100,8 @@ package
 			eatButton.loadGraphic(Sources.buttonOrange);
 			runButton.loadGraphic(Sources.buttonGreen);
 			
-			turnText.size = 10;
-			turnText.color = 0xff000000;
+			turnText.setFormat("COOKIES",15,0xff000000);
+			dmgInfo.setFormat("COOKIES",20,0xff000000);
 						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -139,6 +140,7 @@ package
 			add(playerSprite);
 			add(playerHealthText);
 			add(enemyHealthText);
+			add(dmgInfo);
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
@@ -232,10 +234,11 @@ package
 		
 		public function attackCallback():void{
 			timerStart = true;
-			logic.useAttack();
+			var dmg:Number=logic.useAttack();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
+			dmgInfo.text="You did " + dmg + " damage!";
 		}
 		
 
@@ -320,7 +323,7 @@ package
 				case BattleLogic.PLAYER_WON:
 					isEndBattle=true;
 					var back:FlxSprite = new FlxSprite(0,0);
-					back.makeGraphic(FlxG.width,FlxG.height,0xbb000000);
+					back.makeGraphic(FlxG.width,FlxG.height,0x77000000);
 					add(back);
 					
 					var candyColor:int = Math.floor(Math.random()*3);
