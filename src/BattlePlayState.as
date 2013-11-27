@@ -201,7 +201,7 @@ package
 		}
 		
 		public function showHealth():void{
-			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
+			//add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
 		}
 		
 		private function healthColor(healthPercent:Number):uint {
