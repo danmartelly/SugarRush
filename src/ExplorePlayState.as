@@ -212,12 +212,13 @@ package
 			
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
-//			pause.showing = true;
+			pause.showing = true;
 			FlxG.play(Sources.battleStart);
 			FlxG.fade(0x00000000, 1, startBattle);	
 
 			function startBattle():void {
 				FlxG.switchState(battle);
+				pause.showing = false;
 			}
 		}
 		
