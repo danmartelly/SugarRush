@@ -12,10 +12,13 @@ package
 		public var playerheight:Number = 60;
 		public var invincibilityTime:Number = 0;
 		
+		private var mapWidth:Number=720; //1200;
+		private var mapHeight:Number=480; //800;
+		
 		public var dirFacing:String="front";
 		
 
-		public function ExplorePlayer(X:Number=50, Y:Number=50)
+		public function ExplorePlayer(X:Number=300, Y:Number=200)
 		{
 			super(X, Y);
 			//makeGraphic(10, 12, 0xffaa11aa);
@@ -46,13 +49,13 @@ package
 				x = 0;
 			}
 			if ( x > (FlxG.worldBounds.width - playerwidth)) {
-				x = 1200 - playerwidth;
+				x = mapWidth - playerwidth;
 			}
 			if (y < 0){
 				y = 0;
 			}
 			if ( y > (FlxG.worldBounds.height - (playerheight+75))) { //75 is lower bar
-				y = (800 - (playerheight+75));
+				y = (mapHeight - (playerheight+75));
 			}
 			
 			if (FlxG.keys.LEFT) {

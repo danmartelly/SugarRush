@@ -17,9 +17,9 @@ package
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
 			[new FlxPoint(10,10)],
-			[new FlxPoint(1150,10)],
-			[new FlxPoint(10,700)],
-			[new FlxPoint(1150,700)]
+			[new FlxPoint(700,10)], //1100,10
+			[new FlxPoint(10,390)], //10, 700
+			[new FlxPoint(700,390)] //1100, 700
 		];
 		
 		protected var _enemies:FlxGroup;
@@ -33,10 +33,11 @@ package
 		
 		public var buttonArray:Array;
 		
-		public var levelX:Number = 1200;
-		public var levelY:Number = 800;
+		public var levelX:Number = 720;//1200;
+		public var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop ;
+		private var backgroundOpacity:FlxSprite;
 		
 		public static const KILLGOAL:int=20;
 		
@@ -47,9 +48,15 @@ package
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			
+			backgroundOpacity=new FlxSprite(0,0);
+			backgroundOpacity.makeGraphic(FlxG.width,FlxG.height,0xff000000);
+			backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
+			backgroundOpacity.scrollFactor.x=backgroundOpacity.scrollFactor.y=0;
+			add(backgroundOpacity);
+			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_player = new ExplorePlayer();
+			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
 			for each (var e in spawnerLocations) {
 				var entry:Array = e as Array;
 				//breakdown
@@ -152,6 +159,9 @@ package
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					FlxG.switchState(new WinState());
 				}
+				
+				backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
+				
 				if (_player.invincibilityTime > 0) {
 					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
 					_player.flicker(_player.invincibilityTime);
@@ -181,7 +191,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(BattleEnemy.randomBattleEnemy(1));
+					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -211,7 +221,7 @@ package
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			
 			//switch to the battle state
-			battle = new BattlePlayState(enemy.enemyData);
+			battle = new BattlePlayState(enemy, enemy.enemyData);
 			pause.showing = true;
 			FlxG.play(Sources.battleStart);
 			FlxG.fade(0x00000000, 1, startBattle);	
@@ -228,7 +238,7 @@ package
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
 			chest.rewardCandy();
-			_chests.remove(chest);
+			//_chests.remove(chest);
 		}
 		
 		public function eatStuff():void{

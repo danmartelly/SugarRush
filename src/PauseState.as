@@ -42,7 +42,7 @@ package
 			_buffBackground = new FlxSprite(60,165);
 			_buffBackground.makeGraphic(FlxG.width-100,140,0xffa86d46);
 			_buffBackground.scrollFactor.x = _buffBackground.scrollFactor.y = 0;
-			add(_buffBackground);
+			//add(_buffBackground);
 			
 			_buffTitles = new FlxText(20,170, 150,
 				"Burn:\n" +
@@ -56,7 +56,7 @@ package
 				"Cascade:");
 			_buffTitles.setFormat("COOKIES", 15, 0xffffffff, "right");
 			_buffTitles.scrollFactor.x = _buffTitles.scrollFactor.y = 0;
-			add(_buffTitles);
+			//add(_buffTitles);
 			
 			_buffInfo = new FlxText(170,170, FlxG.width-170-20,
 				"Chance of burn, damages the enemy over time.\n" +
@@ -70,7 +70,7 @@ package
 				"Stronger with repeated attacks.");
 			_buffInfo.setFormat("COOKIES", 15, 0xffffffff, "left");
 			_buffInfo.scrollFactor.x = _buffInfo.scrollFactor.y = 0;
-			add(_buffInfo);
+			//add(_buffInfo);
 		}
 		
 		public function showPaused():void

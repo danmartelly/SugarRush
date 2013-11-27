@@ -29,11 +29,14 @@ package
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
 			
+		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		
 		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(50, 52, lifeBarWidth, "Health: ?/?");
+		private var buffText:FlxText = new FlxText(150, 30, lifeBarWidth, "");
 		
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50 - invenBarHeight);
 		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50 - invenBarHeight);
@@ -67,7 +70,8 @@ package
 		
 		Sources.fontCookies;
 		
-		public function BattlePlayState(enemyData:BattleEnemy) {
+		public function BattlePlayState(enemy:ExploreEnemy, enemyData:BattleEnemy) {
+			this.enemy = enemy;
 			this.enemyData = enemyData;
 		}
 		
@@ -101,7 +105,8 @@ package
 			runButton.loadGraphic(Sources.buttonGreen);
 			
 			turnText.setFormat("COOKIES",15,0xff000000);
-			dmgInfo.setFormat("COOKIES",20,0xff000000);
+			dmgInfo.setFormat("COOKIES", 20, 0xff000000);
+			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -150,7 +155,7 @@ package
 			
 			
 			add(turnText);
-			
+			add(buffText);
 			
 			drawHealthBar();
 		}
@@ -196,7 +201,7 @@ package
 		}
 		
 		public function showHealth():void{
-			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
+			//add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
 		}
 		
 		private function healthColor(healthPercent:Number):uint {
@@ -298,7 +303,7 @@ package
 					break;
 				
 			}
-			
+			updateBuffText();
 			this.update();
 			
 		}
@@ -309,6 +314,10 @@ package
 		
 		public function updatePlayerText(timer:FlxTimer):void {
 			turnText.text = "Player's turn!";
+		}
+		
+		public function updateBuffText():void {
+			buffText.text = enemyData.getBuff();
 		}
 		
 		public function attackLogicCallback():void {
@@ -371,6 +380,7 @@ package
 		private function endBattle():void
 		{
 			//this.destroy();
+			enemy.kill();
 			logic.player.updatePlayerData();
 			
 			var newExploreState = ExplorePlayState.instance;

@@ -65,6 +65,15 @@ package
 				startText.setFormat("COOKIES",26);
 				startText.alignment="left";
 				add(startText);
+				
+				/*
+				Candyland was a peaceful land of joy and sugary goodness. People of Candyland plucked gumdrops and peppermint patties from treetops and used them to nourish their bodies, to keep their blood sugar level happily high. Children suckled on lollipops, birds drank from honey fountains. All was well. 
+				-click to continue - 
+				Then one day, strange portals spawned in the four corners of Candyland. Out of these portals came strange leafy beasts. They plundered the villages of Candyland, force feeding small children leafy greens and stealing the candy that had nourished the people of Candyland for so long. 
+				-click to continue- 
+				Without their candy, the people of Candyland slowly lost their strength. Only one small boy with a propeller hat, who had gorged on candy the night before the attacks, had enough strength to continue. This boy would now embark on the treacherous journey to eliminate the vegetable monsters and restore peace to Candyland once again…
+				-click s to start-
+				*/
 			}
 		}
 		
