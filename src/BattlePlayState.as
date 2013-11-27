@@ -29,6 +29,7 @@ package
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
 			
+		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
@@ -69,7 +70,8 @@ package
 		
 		Sources.fontCookies;
 		
-		public function BattlePlayState(enemyData:BattleEnemy) {
+		public function BattlePlayState(enemy:ExploreEnemy, enemyData:BattleEnemy) {
+			this.enemy = enemy;
 			this.enemyData = enemyData;
 		}
 		
@@ -378,6 +380,7 @@ package
 		private function endBattle():void
 		{
 			//this.destroy();
+			enemy.kill();
 			logic.player.updatePlayerData();
 			
 			var newExploreState = ExplorePlayState.instance;
