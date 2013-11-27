@@ -32,8 +32,10 @@ package
 		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		
 		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(50, 52, lifeBarWidth, "Health: ?/?");
+		private var buffText:FlxText = new FlxText(150, 30, lifeBarWidth, "");
 		
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50 - invenBarHeight);
 		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50 - invenBarHeight);
@@ -101,7 +103,8 @@ package
 			runButton.loadGraphic(Sources.buttonGreen);
 			
 			turnText.setFormat("COOKIES",15,0xff000000);
-			dmgInfo.setFormat("COOKIES",20,0xff000000);
+			dmgInfo.setFormat("COOKIES", 20, 0xff000000);
+			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -150,7 +153,7 @@ package
 			
 			
 			add(turnText);
-			
+			add(buffText);
 			
 			drawHealthBar();
 		}
@@ -298,7 +301,7 @@ package
 					break;
 				
 			}
-			
+			updateBuffText();
 			this.update();
 			
 		}
@@ -309,6 +312,10 @@ package
 		
 		public function updatePlayerText(timer:FlxTimer):void {
 			turnText.text = "Player's turn!";
+		}
+		
+		public function updateBuffText():void {
+			buffText.text = enemyData.getBuff();
 		}
 		
 		public function attackLogicCallback():void {

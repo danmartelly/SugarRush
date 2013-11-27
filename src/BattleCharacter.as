@@ -63,6 +63,7 @@ package {
 		public function removeAllBuffs():void {
 			this.buffs = [];
 		}
+		/*
 		public function hasBuff(s:String):Boolean {
 			for (var i:Object in this.buffs) {
 				if (i["name"] == s) {
@@ -71,6 +72,15 @@ package {
 			}
 			return false;
 		}
+		public function getBuff():String {
+			for (var i:int; i < Weapon.BUFF_LIST.length; i++) {
+				var name = Buff(Weapon.BUFF_LIST[i]).getDisplayName();
+				if (hasBuff(name)) {
+					return name;
+				}
+			}
+			return "";
+		}
 		public function findBuff(s:String):Object {
 			for (var i:int=0; i<this.buffs.length; ++i) {
 				if (this.buffs[i]["name"] == s) {
@@ -78,6 +88,12 @@ package {
 				}
 			}
 			return null;
+		}*/
+		public function getBuff():String {
+			if (this.buffs.length > 0) {
+				return Weapon.BUFF_LIST[this.buffs[0]["id"]].getDisplayName();
+			}
+			return "";
 		}
 		public function tickBuffs():void {
 			var newBuffs:Array = new Array();
