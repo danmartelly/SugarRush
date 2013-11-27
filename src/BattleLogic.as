@@ -17,7 +17,7 @@ package {
 		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
-			enemy = new BattleEnemy(enemyData.currentHealth, enemyData.maxHealth, enemyData);
+			enemy = new BattleEnemy(enemyData);
 			
 			initializePlayer();
 		}
@@ -57,7 +57,7 @@ package {
 		public function useCandy():void {
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
 				FlxG.play(Sources.gainHealth);
-				Inventory.removeCandy(Math.floor(Math.random()*3));
+				Inventory.removeCandy(Inventory.randomCandy());
 				player.heal(5);
 				this.state.showHealth();
 				this.state.healthCallback();

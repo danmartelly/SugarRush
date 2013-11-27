@@ -22,11 +22,9 @@ package
 		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
 		
 		private var buttonWidth:int = 80;
-		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", attackCallback); // +2 for margin
-		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", candyCallback);
-		//private var switchButton:FlxButton = new FlxButton(x + 85, y-invenBarHeight, "Switch Weapon", switchCallback);
+		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
+		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", openCandyTab);
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
-		//private var candyButton:FlxButton = new FlxButton(x + 85, y + 25-invenBarHeight, "Eat Candy", candyCallback);
 		
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
@@ -45,10 +43,12 @@ package
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
+		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
+		
 		// for turn notification
 		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
 		
-		private var invulnTime:Number = 3.;
+		private var invulnTime:Number = 2.;
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -59,6 +59,9 @@ package
 		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
 		
+		//invisible button, lays on top of weapons so it's clicked when any weapon is clicked
+		private var attackBtnWeapons:FlxButton = new FlxButton(80,FlxG.height-45, "", attackCallback);
+		
 		Sources.fontCookies;
 		
 		public function BattlePlayState(enemyData:EnemyData) {
@@ -66,9 +69,13 @@ package
 		}
 		
 		override public function create():void {
+			
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this, enemyData);
+			
+			var widthOfWeapons:int=Inventory.weaponCount()*50 - 10;
+			attackBtnWeapons.makeGraphic(widthOfWeapons,45,0x00ffffff);
 			
 			maxEnemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight,0xff00aa00);
 			enemyLifeBar.makeGraphic(lifeBarWidth,lifeBarHeight, healthColor(logic.enemyHealthPercent()));
@@ -92,15 +99,13 @@ package
 			
 			turnText.size = 10;
 			turnText.color = 0xff000000;
-			
-			inventoryHUD.applyCallbacks(inventoryCallback);
-			
+						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
 			var attackLabel:FlxText=new FlxText(0,0,80,"ATTACK");
 			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
-			var runLabel:FlxText=new FlxText(0,0,80,"RUN");
+			var runLabel:FlxText=new FlxText(0,0,80,"RUN -1 HP");
 			attackLabel.setFormat("COOKIES", 16, 0xffffffff);
 			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
 			runLabel.setFormat("COOKIES", 16, 0xffffffff);
@@ -126,10 +131,8 @@ package
 			add(playerLifeBar);
 			add(enemyName);
 			add(attackButton);
-			//add(switchButton);
 			add(runButton);
 			add(eatButton);
-			//add(candyButton);
 			add(enemySprite);
 			add(playerSprite);
 			add(playerHealthText);
@@ -137,10 +140,9 @@ package
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
-			//buttonGroup.add(switchButton);
 			buttonGroup.add(eatButton);
 			buttonGroup.add(runButton);
-			//buttonGroup.add(candyButton);
+			
 			
 			add(turnText);
 			
@@ -152,9 +154,6 @@ package
 		{
 			//Reduce Number
 			timer -= FlxG.elapsed;
-			
-			
-			
 		}
 		
 		override public function update():void {
@@ -180,6 +179,7 @@ package
 				timerStart = false;
 				enemySprite.play("idle");
 				playerSprite.loadGraphic(Sources.battlePlayer);
+				remove(eatObject);
 			}
 			super.update();
 		}
@@ -188,7 +188,7 @@ package
 			add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
 		}
 		
-		private function healthColor(healthPercent:int):uint {
+		private function healthColor(healthPercent:Number):uint {
 			if (healthPercent > 50){
 				return 0xff00ff00;
 			} else if (healthPercent > 25) {
@@ -200,18 +200,28 @@ package
 		
 		private function drawHealthBar():void {
 			var health:Number = logic.playerHealthPercent();
+			
+			var playerBarColor:uint = healthColor(health);
 			playerLifeBar.scale.x = health / 100.0;
+			//playerLifeBar.fill(playerBarColor);
 			// change color based on health!
-			playerLifeBar.fill(healthColor(health));
 			
 			var e_health:Number = logic.enemyHealthPercent();
-			enemyLifeBar.scale.x = e_health / 100.0;
-			enemyLifeBar.fill(healthColor(e_health));
 			
+			var enemyBarColor:uint = healthColor(e_health);
+			enemyLifeBar.scale.x = e_health / 100.0;
+			//enemyLifeBar.fill(enemyBarColor);
+						
 			updateHealthText();
 		}
 		
-		public function attackCallback():void {
+		public function openAttackTab():void {
+			inventoryHUD.openAttack();
+			inventoryHUD.update(); //makes it so switching weapons is doable
+			add(attackBtnWeapons); //add the invisible button that actually does the attack
+		}
+		
+		public function attackCallback():void{
 			timerStart = true;
 			logic.useAttack();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
@@ -232,11 +242,24 @@ package
 			logic.useRun();
 		}
 		
+		public function openCandyTab():void{
+			inventoryHUD.update();
+			inventoryHUD.openEat();
+			
+			remove(attackBtnWeapons); //remove invisible button that calls attackCallback
+			
+			//right now it's just calling the candy callback
+			//eventually candycallback should only be called when an object is selected to eat
+			candyCallback();
+		}
+		
 		public function candyCallback():void{
 			timerStart = true;
 			logic.useCandy();
-			inventoryHUD.update();
+			inventoryHUD.update(); //updates candy count
 			playerSprite.loadGraphic(Sources.battlePlayerEat);
+			//eatOject.loadGraphic( whatever the player just chose to eat );
+			add(eatObject);
 		}
 		
 		private function updateHealthText():void {

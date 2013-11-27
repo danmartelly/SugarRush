@@ -10,6 +10,7 @@ package
 
 		public var playerwidth:Number = 35;
 		public var playerheight:Number = 60;
+		public var invincibilityTime:Number = 0;
 		
 
 		public function ExplorePlayer(X:Number=50, Y:Number=50)

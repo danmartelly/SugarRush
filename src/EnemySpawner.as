@@ -11,9 +11,9 @@ package
 		private var _player:ExplorePlayer;
 		private var _enemiesFromThisSpawner:Array;
 		public var spawnRate:Number = 3;
-		public var maxEnemy:Number = 10;
+		public var maxEnemy:Number = 5;
 		
-		private const enemyHealth:int = 8;
+		private const enemyDifficulty:int = 1;
 		
 		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{
@@ -46,7 +46,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, EnemyData.randomEnemyData(enemyHealth), _enemies, _player);
+			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, EnemyData.randomEnemyData(enemyDifficulty), _enemies, _player);
 			_enemiesFromThisSpawner.push(enemy);
 			_enemies.add(enemy);
 		}
