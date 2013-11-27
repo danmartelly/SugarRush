@@ -23,6 +23,10 @@ package
 		
 		public function PauseState()
 		{
+			var cover:FlxSprite = new FlxSprite(0,0);
+			cover.makeGraphic(FlxG.width,FlxG.height,0x88ffffff);
+			cover.scrollFactor.x=cover.scrollFactor.y=0;
+			add(cover);
 			
 			_field = new FlxText(0,80, FlxG.width, "Paused");
 			_field.setFormat("COOKIES", 30, 0xff000000, "center");

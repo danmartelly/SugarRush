@@ -3,14 +3,17 @@ package
 	public class Sources 
 	{                
 		//images and spritesheets 
-		[Embed(source="../assets/player_back.png")] public static var playerBack:Class;
-		[Embed(source="../assets/player_front.png")] public static var playerFront:Class;
-		[Embed(source="../assets/player_left.png")] public static var playerLeft:Class;
-		[Embed(source="../assets/player_right.png")] public static var playerRight:Class;
-		[Embed(source="../assets/playerb_fight.png")] public static var battlePlayer:Class;
-		[Embed(source="../assets/playerb_hurt.png")] public static var battlePlayerHurt:Class;	
-		[Embed(source="../assets/playerb_eat.png")] public static var battlePlayerEat:Class;	
-		[Embed(source="../assets/playerb_attack.png")] public static var battlePlayerAttack:Class;	
+		[Embed(source="../assets/player/player_back.png")] public static var playerBack:Class;
+		[Embed(source="../assets/player/player_front.png")] public static var playerFront:Class;
+		[Embed(source="../assets/player/player_left.png")] public static var playerLeft:Class;
+		[Embed(source="../assets/player/player_right.png")] public static var playerRight:Class;
+		
+		[Embed(source="../assets/player/playerb_fight.png")] public static var battlePlayer:Class;
+		[Embed(source="../assets/player/playerb_hurt.png")] public static var battlePlayerHurt:Class;	
+		[Embed(source="../assets/player/playerb_eat.png")] public static var battlePlayerEat:Class;	
+		[Embed(source="../assets/player/playerb_attack.png")] public static var battlePlayerAttack:Class;	
+		
+		[Embed(source="../assets/player/playerwalk.png")] public static var playerWalk:Class;
 		
 		[Embed(source="../assets/rawcandy_blue.png")] public static var candyBlue:Class;	
 		[Embed(source="../assets/rawcandy_red.png")] public static var candyRed:Class;	
@@ -57,6 +60,11 @@ package
 		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
 		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
 		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
+		
+		[Embed(source="../assets/button_red.png")] public static var buttonRed:Class;	
+		[Embed(source="../assets/button_blue.png")] public static var buttonBlue:Class;	
+		[Embed(source="../assets/button_green.png")] public static var buttonGreen:Class;	
+		[Embed(source="../assets/button_orange.png")] public static var buttonOrange:Class;
 
 		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
 		

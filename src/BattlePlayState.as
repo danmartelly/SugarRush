@@ -21,7 +21,7 @@ package
 		private var y:int = FlxG.height ;//- 50;
 		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
 		
-		private var buttonWidth:int = 80;
+		private var buttonWidth:int = 120;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
 		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", openCandyTab);
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
@@ -48,7 +48,7 @@ package
 		// for turn notification
 		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
 		
-		private var invulnTime:Number = 2.;
+		private var invulnTime:Number = 1.;
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -93,9 +93,9 @@ package
 			playerName.setFormat("COOKIES",20,0x01000000);
 			enemyName.setFormat("COOKIES",20,0x01000000);
 			
-			attackButton.loadGraphic(Sources.buttonAttack);
-			eatButton.loadGraphic(Sources.buttonEat);
-			runButton.loadGraphic(Sources.buttonRun);
+			attackButton.loadGraphic(Sources.buttonRed);
+			eatButton.loadGraphic(Sources.buttonOrange);
+			runButton.loadGraphic(Sources.buttonGreen);
 			
 			turnText.size = 10;
 			turnText.color = 0xff000000;
@@ -103,12 +103,12 @@ package
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
-			var attackLabel:FlxText=new FlxText(0,0,80,"ATTACK");
-			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
-			var runLabel:FlxText=new FlxText(0,0,80,"RUN -1 HP");
-			attackLabel.setFormat("COOKIES", 16, 0xffffffff);
-			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
-			runLabel.setFormat("COOKIES", 16, 0xffffffff);
+			var attackLabel:FlxText=new FlxText(0,0,buttonWidth,"ATTACK");
+			var eatLabel:FlxText=new FlxText(0,0,buttonWidth,"EAT");
+			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN -1 HP");
+			attackLabel.setFormat("COOKIES", 17, 0xffffffff);
+			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
+			runLabel.setFormat("COOKIES", 17, 0xffffffff);
 			attackLabel.alignment = "center";
 			eatLabel.alignment = "center";
 			runLabel.alignment = "center";

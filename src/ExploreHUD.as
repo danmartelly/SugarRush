@@ -49,12 +49,12 @@ package
 			
 			_eatBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xffffb32d);
 			_eatBackground.scrollFactor.x=_eatBackground.scrollFactor.y=0;
-			_eatTab=new FlxSprite(FlxG.width/2-41, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffffb32d);
+			_eatTab=new FlxSprite(FlxG.width/2-60, 420).makeGraphic(120, 15, 0xffffb32d);
 			_eatTab.scrollFactor.x=_eatTab.scrollFactor.y=0;
 
 			_attackBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width*0.5, FlxG.height * 0.10, 0xffff2329);
 			_attackBackground.scrollFactor.x=_attackBackground.scrollFactor.y=0;
-			_attackTab=new FlxSprite(1, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffff2329);
+			_attackTab=new FlxSprite(2, 420).makeGraphic(120, 15, 0xffff2329);
 			_attackTab.scrollFactor.x=_attackTab.scrollFactor.y=0;
 			
 			add(_eatTab);
@@ -77,7 +77,7 @@ package
 			add(_weaponsText);
 			add(_candiesText);
 			
-			_weaponInfo = new FlxText(85,FlxG.height-70,200, Inventory.getWeapons()[0].displayName);
+			_weaponInfo = new FlxText(125,FlxG.height-75,130, "");
 			_weaponInfo.setFormat("COOKIES",15);
 			_weaponInfo.color=0xffffffff;
 			_weaponInfo.scrollFactor.x = _weaponInfo.scrollFactor.y = 0;
@@ -88,6 +88,7 @@ package
 			_currentWeaponBox.fill(0x99ffffff);
 			_currentWeaponBox.scrollFactor.x = _currentWeaponBox.scrollFactor.y = 0;
 			add(_currentWeaponBox);
+			_currentWeaponBox.visible=false;
 			
 			_weaponSlots = new FlxGroup(5);
 			add(_weaponSlots);
@@ -210,12 +211,18 @@ package
 				//only want this to be possible if you are in eat/attack tab
 				if (_inTab){
 					weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
+					
+					//only show selection if we're in a tab
+					if (i == PlayerData.instance.currentWeaponIndex) {
+						_currentWeaponBox.visible=true;
+						_currentWeaponBox.x = weaponSprite.x;
+						_currentWeaponBox.y = weaponSprite.y;
+					}
+				}else{
+					_currentWeaponBox.visible=false;
 				}
 				
-				if (i == PlayerData.instance.currentWeaponIndex) {
-					_currentWeaponBox.x = weaponSprite.x;
-					_currentWeaponBox.y = weaponSprite.y;
-				}
+
 				
 			}
 			
