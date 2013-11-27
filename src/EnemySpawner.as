@@ -31,9 +31,9 @@ package
 				// clean up the _enemiesFromThisSpawner array
 				for(var i=0 ; i < _enemiesFromThisSpawner.length ; i++) {
 					var enemy:ExploreEnemy = _enemiesFromThisSpawner[i];
-					if (enemy == null || !enemy.alive) {
+					if (enemy == null || enemy.enemyData.currentHealth <= 0) {
 						// get rid of the reference by putting enemy at the end of array in its place and then popping
-						_enemiesFromThisSpawner[i] = _enemiesFromThisSpawner[_enemiesFromThisSpawner.length];
+						_enemiesFromThisSpawner[i] = _enemiesFromThisSpawner[_enemiesFromThisSpawner.length-1];
 						_enemiesFromThisSpawner.pop();
 					}
 				}
