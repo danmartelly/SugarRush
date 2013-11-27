@@ -171,7 +171,7 @@ package
 					/* i haven't looked into the source to see how collision works exactly.
 					however, it only seems to trigger on the first frame of a collision,
 					rather than on every frame of a collision, so the above FlxG.overlap seems necessary to me. */
-					FlxG.collide(_player, _enemies, triggerBattleState);
+					FlxG.overlap(_player, _enemies, triggerBattleState);
 				}
 				
 				FlxG.collide(_player, _chests, triggerCandyChest);
