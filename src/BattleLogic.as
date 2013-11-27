@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxTimer;
 	import flash.utils.describeType;
 	import org.flixel.FlxG;
 	/**
@@ -84,11 +85,15 @@ package {
 				this.state.turnCallback(turn);
 			}
 			
-			if (turn == ENEMY_TURN && !enemy.isDead){
-				enemy.attack(player);
-				this.state.healthCallback();
-				endTurn();
-			}
+			// 1-second delay on turn-change
+			var timer:FlxTimer = new FlxTimer();
+			timer.start(1,1, function(timer:FlxTimer):void {
+				if (turn == ENEMY_TURN && !enemy.isDead){
+					enemy.attack(player);
+					state.healthCallback();
+					endTurn();
+				}
+			});
 		}
 		
 		// WALTER, USE THESE
