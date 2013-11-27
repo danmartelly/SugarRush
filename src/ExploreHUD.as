@@ -33,8 +33,6 @@ package
 		protected var _eatBackground:FlxSprite;
 		protected var _attackBackground:FlxSprite;
 		
-		protected var _gateFeeder:FlxButton;
-		
 		protected var _inTab:Boolean=false; //true if a tab (attack, eat) is open
 		protected var _isEat:Boolean=false; //true if eat tab is open
 		
@@ -131,21 +129,6 @@ package
 			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
 			_killCount.setFormat("COOKIES", 15, 0xff000000);
 			add(_killCount);
-			
-			_gateFeeder = new FlxButton();
-			_gateFeeder.origin.x = 0;
-			_gateFeeder.scale.x = 2;
-			_gateFeeder.label = new FlxText(10, 10, 400, "Feed the Gate!");
-			_gateFeeder.label.color = 0xff000000;
-			_gateFeeder.onDown = function():void {
-				if (Inventory.hasCandy()){
-					Inventory.removeCandy(Inventory.randomCandy());
-					PlayerData.instance.gateCandies += 1;
-				}
-			}
-			_gateFeeder.scrollFactor.x = _gateFeeder.scrollFactor.y = 0;
-			_gateFeeder.visible = false;
-			add(_gateFeeder);
 		}
 		
 		public function openAttack():void{
@@ -214,14 +197,6 @@ package
 			_killCount.text = "Kills: " + PlayerData.instance.killCount;
 			
 			//if _isEat, make it possible to select a candy
-			
-			
-			if (PlayerData.instance.isNearGate == true){
-				_gateFeeder.visible = true;
-				_gateFeeder.label.text = "Feed Gate, need " + (10 - PlayerData.instance.gateCandies) + " to close.";
-			} else {
-				_gateFeeder.visible = false;
-			}
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
 				var weapon:Weapon = Inventory.getWeapons()[i];
