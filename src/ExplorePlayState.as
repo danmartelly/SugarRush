@@ -227,7 +227,7 @@ package
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
 			chest.rewardCandy();
-			_chests.remove(chest);
+			//_chests.remove(chest);
 		}
 		
 		public function eatStuff():void{
