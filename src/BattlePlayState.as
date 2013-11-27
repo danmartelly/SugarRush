@@ -59,6 +59,8 @@ package
 		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
 		
+		private var isEndBattle:Boolean=false;
+		
 		//invisible button, lays on top of weapons so it's clicked when any weapon is clicked
 		private var attackBtnWeapons:FlxButton = new FlxButton(80,FlxG.height-45, "", attackCallback);
 		
@@ -142,6 +144,7 @@ package
 			buttonGroup.add(attackButton);
 			buttonGroup.add(eatButton);
 			buttonGroup.add(runButton);
+			buttonGroup.add(attackBtnWeapons);
 			
 			
 			add(turnText);
@@ -170,6 +173,12 @@ package
 				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().displayName + " buffs: " + s1);
 				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
 
+			}
+			if (FlxG.keys.SPACE){
+				if (isEndBattle){
+					//same as the button press
+					endBattle();
+				}
 			}
 			if (timerStart == true){
 				runTime();
@@ -275,16 +284,12 @@ package
 			switch(turn){
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
-					//switchButton.active = false;
 					runButton.active = false;
-					//candyButton.active = false;
 					updateEnemyText();
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
-					//switchButton.active = true;
 					runButton.active = true;
-					//candyButton.active = true;
 					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
 				
@@ -313,14 +318,37 @@ package
 					FlxG.switchState(new EndState());
 				
 				case BattleLogic.PLAYER_WON:
+					isEndBattle=true;
+					var back:FlxSprite = new FlxSprite(0,0);
+					back.makeGraphic(FlxG.width,FlxG.height,0xbb000000);
+					add(back);
+					
 					var candyColor:int = Math.floor(Math.random()*3);
 					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
-					var earningsText:FlxText=new FlxText(260, 200, 200, "You win!");
-					earningsText.color = 0x01000000;
-					earningsText.text = "You have earned " + Helper.getCandyName(candyColor) + " candy!";
+					var earningsText:FlxText=new FlxText(0, 180, FlxG.width, 
+						"You win!\n" +
+						"You have earned " + Helper.getCandyName(candyColor) + " candy!");
+					earningsText.setFormat("COOKIES",20,0xffffffff,"center");
 					add(earningsText);
-					add(new FlxButton(260,220,"End battle",endBattle));
+					
+					//i just want a picture :<
+					var candyPic:FlxSprite = new FlxSprite(FlxG.width/2-15,230);
+					if(Helper.getCandyName(candyColor)=="red"){
+						candyPic.loadGraphic(Sources.candyRed);
+					}else if (Helper.getCandyName(candyColor)=="blue"){
+						candyPic.loadGraphic(Sources.candyBlue);
+					}else{
+						candyPic.loadGraphic(Sources.candyWhite);
+					}
+					add(candyPic);
+					
+					var instructions:FlxText=new FlxText(0,270, FlxG.width, "press SPACE to end battle");
+					instructions.setFormat("COOKIES",15,0xffffffff,"center");
+					add(instructions)
+					
+					//add(new FlxButton(260,220,"End battle",endBattle));
+					
 					buttonGroup.setAll("active",false);
 					break;
 				
@@ -328,7 +356,6 @@ package
 					logic.player.currentHealth -= 1;
 					logic.player.updatePlayerData();
 					
-					//FlxG.mouse.hide();
 					var newExploreState = ExplorePlayState.instance;
 					newExploreState.setInvincibility(invulnTime);
 					
