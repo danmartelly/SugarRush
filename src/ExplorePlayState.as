@@ -38,6 +38,8 @@ package
 		
 		private var background:FlxBackdrop ;
 		
+		public static const KILLGOAL:int=20;
+		
 		Sources.fontCookies;
 		
 
@@ -146,6 +148,9 @@ package
 				
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());
+				}
+				if(PlayerData.instance.killCount>=KILLGOAL){
+					FlxG.switchState(new WinState());
 				}
 				if (_player.invincibilityTime > 0) {
 					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
