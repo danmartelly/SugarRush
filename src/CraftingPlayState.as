@@ -108,7 +108,7 @@ package
 			else {
 				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
-				banner.text = "You got a " + weapon.displayName + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
+				banner.text = "You got a " + weapon.displayName;// + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
 				Inventory.addWeapon(weapon);
 				cauldron = [ -1, -1, -1];
 				for (var i:int = 0; i < 3; i++) {

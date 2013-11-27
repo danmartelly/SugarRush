@@ -40,15 +40,6 @@ package
 		
 		Sources.fontCookies;
 		
-		public function eatCallback():void {
-			HUD.openEat();
-			var player:PlayerData = PlayerData.instance; 
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
-			}
-		}
-		
 		public function ExplorePlayState(lock:SingletonLock) {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
@@ -191,6 +182,15 @@ package
 				}
 			} else {
 				pause.update();
+			}
+		}
+		
+		public function eatCallback():void {
+			HUD.openEat();
+			var player:PlayerData = PlayerData.instance; 
+			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
+				Inventory.removeCandy(Inventory.randomCandy());
+				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
 			}
 		}
 		

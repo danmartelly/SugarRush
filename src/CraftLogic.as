@@ -9,7 +9,7 @@ package
 		
 		//private static const maxAttack:int = 5;
 		
-		private static const adjectives:Array = ['Sweet', 'Hot', 'Sour', 'Bitter', 'Salty', 'Juicy', 'Dreamy', 'Sugary', 'Tasty'];
+		private static const adjectives:Array = ['Sweet', 'Hot', 'Juicy', 'Dreamy', 'Sugary'];
 		public static const weaponTypes:Array = ["Axe", "Scythe", "Star", "Sword"];
 		public static const weaponMods:Array = ["Cane", "Chocolate", "Cotton", "Gumdrop", "Marsh"];
 		

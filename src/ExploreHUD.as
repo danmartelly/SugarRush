@@ -26,14 +26,15 @@ package
 		protected var _whiteCount:FlxText;
 		protected var _killCount:FlxText;
 		protected var _currentWeaponBox:FlxSprite;
+		protected var _weaponInfo:FlxText;
 		
-		protected var eatTab:FlxSprite;
-		protected var attackTab:FlxSprite;
-		protected var eatBackground:FlxSprite;
-		protected var attackBackground:FlxSprite;
+		protected var _eatTab:FlxSprite;
+		protected var _attackTab:FlxSprite;
+		protected var _eatBackground:FlxSprite;
+		protected var _attackBackground:FlxSprite;
 		
-		protected var inTab:Boolean=false; //true if a tab (attack, eat) is open
-		protected var isEat:Boolean=false; //true if eat tab is open
+		protected var _inTab:Boolean=false; //true if a tab (attack, eat) is open
+		protected var _isEat:Boolean=false; //true if eat tab is open
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
@@ -46,26 +47,26 @@ package
 			add(_inventoryBox);
 			add(_buttonBar);
 			
-			eatBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xffffb32d);
-			eatBackground.scrollFactor.x=eatBackground.scrollFactor.y=0;
-			eatTab=new FlxSprite(FlxG.width/2-41, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffffb32d);
-			eatTab.scrollFactor.x=eatTab.scrollFactor.y=0;
+			_eatBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xffffb32d);
+			_eatBackground.scrollFactor.x=_eatBackground.scrollFactor.y=0;
+			_eatTab=new FlxSprite(FlxG.width/2-41, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffffb32d);
+			_eatTab.scrollFactor.x=_eatTab.scrollFactor.y=0;
 
-			attackBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width*0.5, FlxG.height * 0.10, 0xffff2329);
-			attackBackground.scrollFactor.x=attackBackground.scrollFactor.y=0;
-			attackTab=new FlxSprite(1, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffff2329);
-			attackTab.scrollFactor.x=attackTab.scrollFactor.y=0;
+			_attackBackground=new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width*0.5, FlxG.height * 0.10, 0xffff2329);
+			_attackBackground.scrollFactor.x=_attackBackground.scrollFactor.y=0;
+			_attackTab=new FlxSprite(1, FlxG.height-FlxG.height * 0.10-25).makeGraphic(82, 25, 0xffff2329);
+			_attackTab.scrollFactor.x=_attackTab.scrollFactor.y=0;
 			
-			add(eatTab);
-			add(eatBackground);
-			add(attackTab);
-			add(attackBackground);
+			add(_eatTab);
+			add(_eatBackground);
+			add(_attackTab);
+			add(_attackBackground);
 			
 			//start off neutral state
-			eatTab.visible=false;
-			eatBackground.visible=false;
-			attackTab.visible=false;
-			attackBackground.visible=false;
+			_eatTab.visible=false;
+			_eatBackground.visible=false;
+			_attackTab.visible=false;
+			_attackBackground.visible=false;
 			
 			_weaponsText = new FlxText(0, FlxG.height * 0.90, FlxG.width, "Weapons:");
 			_candiesText = new FlxText(FlxG.width * 0.53, FlxG.height * 0.90, FlxG.width, "Candies:");
@@ -75,6 +76,12 @@ package
 			_candiesText.setFormat("COOKIES",15);
 			add(_weaponsText);
 			add(_candiesText);
+			
+			_weaponInfo = new FlxText(85,FlxG.height-70,200, Inventory.getWeapons()[0].displayName);
+			_weaponInfo.setFormat("COOKIES",15);
+			_weaponInfo.color=0xffffffff;
+			_weaponInfo.scrollFactor.x = _weaponInfo.scrollFactor.y = 0;
+			add(_weaponInfo);
 			
 			_currentWeaponBox = new FlxSprite(0,0);
 			_currentWeaponBox.makeGraphic(40, 40);
@@ -124,31 +131,31 @@ package
 		}
 		
 		public function openAttack():void{
-			inTab=true;
-			isEat=false;
-			eatTab.visible=false;
-			eatBackground.visible=false;
-			attackTab.visible=true;
-			attackBackground.visible=true;
+			_inTab=true;
+			_isEat=false;
+			_eatTab.visible=false;
+			_eatBackground.visible=false;
+			_attackTab.visible=true;
+			_attackBackground.visible=true;
 		}
 		
 		public function openEat():void{
-			inTab=true;
-			isEat=true;
-			eatTab.visible=true;
-			eatBackground.visible=true;
-			attackTab.visible=false;
-			attackBackground.visible=false;
+			_inTab=true;
+			_isEat=true;
+			_eatTab.visible=true;
+			_eatBackground.visible=true;
+			_attackTab.visible=false;
+			_attackBackground.visible=false;
 		}
 		
 		//closes both tabs, return to neutral state
 		public function closeTab():void{
-			inTab=false;
-			isEat=false;			
-			eatTab.visible=false;
-			eatBackground.visible=false;
-			attackTab.visible=false;
-			attackBackground.visible=false;
+			_inTab=false;
+			_isEat=false;			
+			_eatTab.visible=false;
+			_eatBackground.visible=false;
+			_attackTab.visible=false;
+			_attackBackground.visible=false;
 		}
 		
 		
@@ -159,6 +166,27 @@ package
 			};
 		}
 		
+		//checks if mouse is over a weapon
+		//if yes, returns which weapon it is
+		//if no, returns -1
+		private function mouseHover():int{
+			var x:int=FlxG.mouse.screenX;
+			var y:int=FlxG.mouse.screenY;
+			//check for each weapon if there's an overlap
+			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
+				var weapon:Weapon = Inventory.getWeapons()[i];
+				if (y>FlxG.height*0.91){
+					var xPos:int=(FlxG.width/2) - ((4-i)*50) - 40;
+					if (x>xPos && x<xPos+40){
+						_weaponInfo.text=weapon.displayName;
+						return i;
+					}
+				}
+				
+				if (i>4) return -1; //only displays 5 weapons
+			}
+			return -1;
+		}
 		
 		override public function update():void {
 			_redCount.text = "x" + Inventory.candyCount(0);
@@ -167,7 +195,7 @@ package
 			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 			_killCount.text = "Kills: " + PlayerData.instance.killCount;
 			
-			//if isEat, make it possible to select a candy
+			//if _isEat, make it possible to select a candy
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
 				var weapon:Weapon = Inventory.getWeapons()[i];
@@ -180,7 +208,7 @@ package
 				weaponSprite.loadGraphic(weapon.image);
 				
 				//only want this to be possible if you are in eat/attack tab
-				if (inTab){
+				if (_inTab){
 					weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
 				}
 				
@@ -190,6 +218,8 @@ package
 				}
 				
 			}
+			
+			mouseHover();
 			
 			super.update();
 		}
