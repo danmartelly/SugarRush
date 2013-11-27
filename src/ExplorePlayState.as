@@ -194,7 +194,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(BattleEnemy.randomBattleEnemy(1));
+					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -224,7 +224,7 @@ package
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			
 			//switch to the battle state
-			battle = new BattlePlayState(enemy.enemyData);
+			battle = new BattlePlayState(enemy, enemy.enemyData);
 			pause.showing = true;
 			FlxG.play(Sources.battleStart);
 			FlxG.fade(0x00000000, 1, startBattle);	
