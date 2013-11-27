@@ -29,7 +29,7 @@ package
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
 			
-		private var enemyData:EnemyData;
+		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
@@ -64,7 +64,7 @@ package
 		
 		Sources.fontCookies;
 		
-		public function BattlePlayState(enemyData:EnemyData) {
+		public function BattlePlayState(enemyData:BattleEnemy) {
 			this.enemyData = enemyData;
 		}
 		

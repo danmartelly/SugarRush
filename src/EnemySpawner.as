@@ -46,7 +46,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, EnemyData.randomEnemyData(enemyDifficulty), _enemies, _player);
+			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, BattleEnemy.randomBattleEnemy(enemyDifficulty), _enemies, _player);
 			_enemiesFromThisSpawner.push(enemy);
 			_enemies.add(enemy);
 		}
