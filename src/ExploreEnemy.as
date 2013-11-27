@@ -14,12 +14,12 @@ package
 		private const avoidOtherEnemyDistance:Number = 80;
 		private const ambleSpeed:Number = 10;
 		
-		public var enemyData:EnemyData;
+		public var enemyData:BattleEnemy;
 		
 		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
 		
-		public function ExploreEnemy(X:Number, Y:Number, enemyData:EnemyData, enemyGroup:FlxGroup, player:ExplorePlayer)
+		public function ExploreEnemy(X:Number, Y:Number, enemyData:BattleEnemy, enemyGroup:FlxGroup, player:ExplorePlayer)
 		{	
 			this.enemyData = enemyData;
 			super(X, Y, this.enemyData.exploreAsset());
@@ -60,7 +60,7 @@ package
 			var velocityVector:Point = new Point();
 			var enemyArray:Array = _enemies.members;
 			for each (var otherEnemy:ExploreEnemy in enemyArray) {
-				if (this == otherEnemy) {continue;}
+				if (this == otherEnemy || otherEnemy == null) {continue;}
 				var otherPoint:Point = new Point();
 				otherEnemy.getMidpoint().copyToFlash(otherPoint);
 				var vectorFromOther:Point = selfPoint.subtract(otherPoint);
@@ -85,6 +85,10 @@ package
 				_timer = 0;
 				velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
 				velocity.x = FlxG.random()*2*ambleSpeed - ambleSpeed;
+			}
+			
+			if (enemyData.currentHealth <= 0) {
+				_enemies.remove(this);
 			}
 		}
 	}

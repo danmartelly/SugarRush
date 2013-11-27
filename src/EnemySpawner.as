@@ -31,9 +31,9 @@ package
 				// clean up the _enemiesFromThisSpawner array
 				for(var i=0 ; i < _enemiesFromThisSpawner.length ; i++) {
 					var enemy:ExploreEnemy = _enemiesFromThisSpawner[i];
-					if (enemy == null || !enemy.alive) {
+					if (enemy == null || enemy.enemyData.currentHealth <= 0) {
 						// get rid of the reference by putting enemy at the end of array in its place and then popping
-						_enemiesFromThisSpawner[i] = _enemiesFromThisSpawner[_enemiesFromThisSpawner.length];
+						_enemiesFromThisSpawner[i] = _enemiesFromThisSpawner[_enemiesFromThisSpawner.length-1];
 						_enemiesFromThisSpawner.pop();
 					}
 				}
@@ -46,7 +46,7 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, EnemyData.randomEnemyData(enemyDifficulty), _enemies, _player);
+			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, BattleEnemy.randomBattleEnemy(enemyDifficulty), _enemies, _player);
 			_enemiesFromThisSpawner.push(enemy);
 			_enemies.add(enemy);
 		}

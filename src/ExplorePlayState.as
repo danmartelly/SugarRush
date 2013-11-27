@@ -60,20 +60,20 @@ package
 			
 			_chests = new ExploreChestManager();
 			
-			var craftButton:FlxButton = new FlxButton(560-2, 410, "", triggerCraftingState); //-2 for margin
-			craftButton.loadGraphic(Sources.buttonCraft);
-			var craftLabel:FlxText=new FlxText(0,0,80,"CRAFT");
-			craftLabel.setFormat("COOKIES", 16, 0xffffffff);
+			var craftButton:FlxButton = new FlxButton(FlxG.width-120-2, 410, "", triggerCraftingState); //-2 for margin
+			craftButton.loadGraphic(Sources.buttonBlue);
+			var craftLabel:FlxText=new FlxText(0,0,120,"CRAFT");
+			craftLabel.setFormat("COOKIES", 17, 0xffffffff);
 			craftLabel.alignment = "center";
 			craftButton.label=craftLabel;
 			craftButton.labelOffset=new FlxPoint(0,0);
 			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
 
-			var eatButton:FlxButton = new FlxButton(FlxG.width/2-40, 410, "EAT", eatStuff);
+			var eatButton:FlxButton = new FlxButton(FlxG.width/2-60, 410, "EAT", eatStuff);
 
-			eatButton.loadGraphic(Sources.buttonEat);
-			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
-			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
+			eatButton.loadGraphic(Sources.buttonOrange);
+			var eatLabel:FlxText=new FlxText(0,0,120,"EAT");
+			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
 			eatLabel.alignment = "center";
 			eatButton.label=eatLabel;
 			eatButton.labelOffset=new FlxPoint(0,0);
@@ -176,7 +176,7 @@ package
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(EnemyData.randomEnemyData(1));
+					battle = new BattlePlayState(BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
@@ -187,7 +187,11 @@ package
 		}
 		
 		public function eatCallback():void {
-			HUD.openEat();
+			//this opens the eat tab 
+			//seeing as how opening the tab doesn't matter now (no eat-choice functionality)
+			//it's commented out to avoid UI confusion
+			//HUD.openEat();
+			
 			var player:PlayerData = PlayerData.instance; 
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
 				Inventory.removeCandy(Inventory.randomCandy());
@@ -201,8 +205,6 @@ package
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
 			
-			// for now just remove all enemies in a certain radius
-			enemy.kill();
 			//switch to the battle state
 			battle = new BattlePlayState(enemy.enemyData);
 //			pause.showing = true;

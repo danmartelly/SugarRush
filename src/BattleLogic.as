@@ -14,10 +14,10 @@ package {
 		var itemsPerPage:int;
 		var inventoryPage:int;
 		
-		public function BattleLogic(state:BattlePlayState, enemyData:EnemyData, itemsPerPage:int=5){
+		public function BattleLogic(state:BattlePlayState, enemyData:BattleEnemy, itemsPerPage:int=5){
 			this.itemsPerPage = itemsPerPage;
 			this.state = state;
-			enemy = new BattleEnemy(enemyData);
+			enemy = enemyData;
 			
 			initializePlayer();
 		}
@@ -29,10 +29,11 @@ package {
 			this.state.endBattleCallback(RAN_AWAY);
 		}
 		
-		public function useAttack():void {
-			player.attack(enemy);
+		public function useAttack():Number {
+			var dmg:Number=player.attack(enemy);
 			this.state.healthCallback();
 			endTurn();
+			return dmg;
 		}
 		
 		private static function randomEnemy():String {

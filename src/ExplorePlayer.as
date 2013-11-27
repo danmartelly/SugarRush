@@ -12,19 +12,30 @@ package
 		public var playerheight:Number = 60;
 		public var invincibilityTime:Number = 0;
 		
+		public var dirFacing:String="front";
+		
 
 		public function ExplorePlayer(X:Number=50, Y:Number=50)
 		{
 			super(X, Y);
-			makeGraphic(10, 12, 0xffaa11aa);
+			//makeGraphic(10, 12, 0xffaa11aa);
 			velocity.x = 0;
 			velocity.y = 0;
 			maxVelocity.x = 90;
 			maxVelocity.y = 90;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
-			loadGraphic(Sources.playerFront);
+			loadGraphic(Sources.playerWalk, true, true,35,60);
 			
+			addAnimation("left", [0]); //name of animation, used frames, frames per second
+			addAnimation("right", [5]);
+			addAnimation("front", [10]);
+			addAnimation("back", [16]);
+			
+			addAnimation("walkLeft", [1,2,3,4], 10);
+			addAnimation("walkRight", [6,7,8,9], 10);
+			addAnimation("walkFront", [11,12,13,14,15], 10);
+			addAnimation("walkBack", [16,17,18,19,20], 10);
 			
 		}
 		
@@ -46,19 +57,27 @@ package
 			
 			if (FlxG.keys.LEFT) {
 				velocity.x = -maxVelocity.x * 4;
-				loadGraphic(Sources.playerLeft);
+				dirFacing="left";
+				play('walkLeft');
 			}
-			if (FlxG.keys.RIGHT) {
+			else if (FlxG.keys.RIGHT) {
 				velocity.x = maxVelocity.x * 4;
-				loadGraphic(Sources.playerRight);
+				dirFacing="right";
+				play('walkRight');
 			}
-			if (FlxG.keys.UP) {
+			else if (FlxG.keys.UP) {
 				velocity.y = -maxVelocity.y * 4;
-				loadGraphic(Sources.playerBack);
+				dirFacing="back";
+				play('walkBack');
 			}
-			if (FlxG.keys.DOWN) {
+			else if (FlxG.keys.DOWN) {
 				velocity.y = maxVelocity.y * 4;
-				loadGraphic(Sources.playerFront);
+				dirFacing="front";
+				play('walkFront');
+			}
+			
+			else{
+				play(dirFacing);
 			}
 		}
 	}

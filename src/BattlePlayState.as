@@ -17,11 +17,11 @@ package
 		private var voidFn:Function = function():void {};
 		private var logic:BattleLogic = null;
 		
-		private var hor:int = FlxG.width /2 + 150;
+		private var hor:int = FlxG.width /2 + 50;
 		private var y:int = FlxG.height ;//- 50;
-		private var invenBarHeight:int = FlxG.height * 0.1 + 25; //25 is height of buttons
+		private var invenBarHeight:int = FlxG.height * 0.10 + 25; //25 is height of buttons
 		
-		private var buttonWidth:int = 80;
+		private var buttonWidth:int = 120;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
 		private var eatButton:FlxButton = new FlxButton(FlxG.width/2-buttonWidth/2, 410, "EAT", openCandyTab);
 		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
@@ -29,7 +29,7 @@ package
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
 			
-		private var enemyData:EnemyData;
+		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
 		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
@@ -46,9 +46,10 @@ package
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(470,320,100,"Player's turn!");
+		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(hor,295,200,"");
 		
-		private var invulnTime:Number = 2.;
+		private var invulnTime:Number = 1.;
 		
 		private var timer:Number = 1;
 		private var timerStart:Boolean = false;		
@@ -59,12 +60,14 @@ package
 		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
 		
+		private var isEndBattle:Boolean=false;
+		
 		//invisible button, lays on top of weapons so it's clicked when any weapon is clicked
 		private var attackBtnWeapons:FlxButton = new FlxButton(80,FlxG.height-45, "", attackCallback);
 		
 		Sources.fontCookies;
 		
-		public function BattlePlayState(enemyData:EnemyData) {
+		public function BattlePlayState(enemyData:BattleEnemy) {
 			this.enemyData = enemyData;
 		}
 		
@@ -93,22 +96,22 @@ package
 			playerName.setFormat("COOKIES",20,0x01000000);
 			enemyName.setFormat("COOKIES",20,0x01000000);
 			
-			attackButton.loadGraphic(Sources.buttonAttack);
-			eatButton.loadGraphic(Sources.buttonEat);
-			runButton.loadGraphic(Sources.buttonRun);
+			attackButton.loadGraphic(Sources.buttonRed);
+			eatButton.loadGraphic(Sources.buttonOrange);
+			runButton.loadGraphic(Sources.buttonGreen);
 			
-			turnText.size = 10;
-			turnText.color = 0xff000000;
+			turnText.setFormat("COOKIES",15,0xff000000);
+			dmgInfo.setFormat("COOKIES",20,0xff000000);
 						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
-			var attackLabel:FlxText=new FlxText(0,0,80,"ATTACK");
-			var eatLabel:FlxText=new FlxText(0,0,80,"EAT");
-			var runLabel:FlxText=new FlxText(0,0,80,"RUN -1 HP");
-			attackLabel.setFormat("COOKIES", 16, 0xffffffff);
-			eatLabel.setFormat("COOKIES", 16, 0xffffffff);
-			runLabel.setFormat("COOKIES", 16, 0xffffffff);
+			var attackLabel:FlxText=new FlxText(0,0,buttonWidth,"ATTACK");
+			var eatLabel:FlxText=new FlxText(0,0,buttonWidth,"EAT");
+			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN -1 HP");
+			attackLabel.setFormat("COOKIES", 17, 0xffffffff);
+			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
+			runLabel.setFormat("COOKIES", 17, 0xffffffff);
 			attackLabel.alignment = "center";
 			eatLabel.alignment = "center";
 			runLabel.alignment = "center";
@@ -137,11 +140,13 @@ package
 			add(playerSprite);
 			add(playerHealthText);
 			add(enemyHealthText);
+			add(dmgInfo);
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
 			buttonGroup.add(eatButton);
 			buttonGroup.add(runButton);
+			buttonGroup.add(attackBtnWeapons);
 			
 			
 			add(turnText);
@@ -170,6 +175,12 @@ package
 				trace("player: " + logic.player.currentHealth + "/" + logic.player.maxHealth + " weapon: " + logic.player.data.currentWeapon().displayName + " buffs: " + s1);
 				trace("enemy: " + logic.enemy.currentHealth + "/" + logic.enemy.maxHealth + " buffs: " + s2);
 
+			}
+			if (FlxG.keys.SPACE){
+				if (isEndBattle){
+					//same as the button press
+					endBattle();
+				}
 			}
 			if (timerStart == true){
 				runTime();
@@ -223,10 +234,11 @@ package
 		
 		public function attackCallback():void{
 			timerStart = true;
-			logic.useAttack();
+			var dmg:Number=logic.useAttack();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
+			dmgInfo.text="You did " + dmg + " damage!";
 		}
 		
 
@@ -275,16 +287,12 @@ package
 			switch(turn){
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
-					//switchButton.active = false;
 					runButton.active = false;
-					//candyButton.active = false;
 					updateEnemyText();
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
-					//switchButton.active = true;
 					runButton.active = true;
-					//candyButton.active = true;
 					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
 				
@@ -313,14 +321,37 @@ package
 					FlxG.switchState(new EndState());
 				
 				case BattleLogic.PLAYER_WON:
+					isEndBattle=true;
+					var back:FlxSprite = new FlxSprite(0,0);
+					back.makeGraphic(FlxG.width,FlxG.height,0x77000000);
+					add(back);
+					
 					var candyColor:int = Math.floor(Math.random()*3);
 					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
-					var earningsText:FlxText=new FlxText(260, 200, 200, "You win!");
-					earningsText.color = 0x01000000;
-					earningsText.text = "You have earned " + Helper.getCandyName(candyColor) + " candy!";
+					var earningsText:FlxText=new FlxText(0, 180, FlxG.width, 
+						"You win!\n" +
+						"You have earned " + Helper.getCandyName(candyColor) + " candy!");
+					earningsText.setFormat("COOKIES",20,0xffffffff,"center");
 					add(earningsText);
-					add(new FlxButton(260,220,"End battle",endBattle));
+					
+					//i just want a picture :<
+					var candyPic:FlxSprite = new FlxSprite(FlxG.width/2-15,230);
+					if(Helper.getCandyName(candyColor)=="red"){
+						candyPic.loadGraphic(Sources.candyRed);
+					}else if (Helper.getCandyName(candyColor)=="blue"){
+						candyPic.loadGraphic(Sources.candyBlue);
+					}else{
+						candyPic.loadGraphic(Sources.candyWhite);
+					}
+					add(candyPic);
+					
+					var instructions:FlxText=new FlxText(0,270, FlxG.width, "press SPACE to end battle");
+					instructions.setFormat("COOKIES",15,0xffffffff,"center");
+					add(instructions)
+					
+					//add(new FlxButton(260,220,"End battle",endBattle));
+					
 					buttonGroup.setAll("active",false);
 					break;
 				
@@ -328,7 +359,6 @@ package
 					logic.player.currentHealth -= 1;
 					logic.player.updatePlayerData();
 					
-					//FlxG.mouse.hide();
 					var newExploreState = ExplorePlayState.instance;
 					newExploreState.setInvincibility(invulnTime);
 					
