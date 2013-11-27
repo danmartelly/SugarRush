@@ -370,7 +370,7 @@ package
 		
 		private function endBattle():void
 		{
-			this.destroy();
+			//this.destroy();
 			logic.player.updatePlayerData();
 			
 			var newExploreState = ExplorePlayState.instance;
