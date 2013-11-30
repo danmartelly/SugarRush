@@ -88,6 +88,12 @@ package {
 			}
 			return null;
 		}
+		/*public function getBuff():String {
+			if (this.buffs.length > 0) {
+				return Weapon.BUFF_LIST[this.buffs[0]["id"]].getDisplayName();
+			}
+			return "";
+		}*/
 		public function tickBuffs():void {
 			var newBuffs:Array = new Array();
 			for (var i:int=0; i<this.buffs.length; ++i) {
