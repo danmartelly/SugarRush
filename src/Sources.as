@@ -34,6 +34,8 @@ package
 		[Embed(source="../assets/enemies/eggplant_small.png")] public static var SmallEggplant:Class;
 		[Embed(source="../assets/enemies/lettucesprite.png")] public static var Lettuce:Class;	
 		[Embed(source="../assets/enemies/lettuce_small.png")] public static var SmallLettuce:Class;
+		[Embed(source="../assets/enemies/onionsprite.png")] public static var Onion:Class;	
+		[Embed(source="../assets/enemies/onion_small.png")] public static var SmallOnion:Class;
 		
 		[Embed(source="../assets/weapons/axe_candycane.png")] public static var AxeCane:Class;
 		[Embed(source="../assets/weapons/axe_chocolate.png")] public static var AxeChocolate:Class;
@@ -96,20 +98,22 @@ package
 		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
 		
 		//text
-		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce"];
+		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce", "onion"];
 		public static const enemyExploreSpriteMap:Object = {
 			"broccoli": SmallBroccoli,
 			"tomato": SmallTomato,
 			"carrot": SmallCarrot,
 			"eggplant": SmallEggplant,
-			"lettuce": SmallLettuce
+			"lettuce": SmallLettuce,
+			"onion": SmallOnion
 		};
 		public static const enemyBattleSpriteMap:Object = {
 			"broccoli": Broccoli,
 			"tomato": Tomato,
 			"carrot": Carrot,
 			"eggplant": Eggplant,
-			"lettuce": Lettuce
+			"lettuce": Lettuce,
+			"onion": Onion
 		};
 	}
 }
