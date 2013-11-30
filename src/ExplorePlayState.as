@@ -182,7 +182,7 @@ package
 					FlxG.collide(_player, _enemies, triggerBattleState);
 				}
 				
-				FlxG.collide(_player, _chests, triggerCandyChest);
+				FlxG.overlap(_player, _chests, triggerCandyChest);
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
