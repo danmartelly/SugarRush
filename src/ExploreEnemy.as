@@ -1,7 +1,6 @@
 package
 {
 	import flash.geom.*;
-	
 	import org.flixel.*;
 	
 	public class ExploreEnemy extends FlxSprite
@@ -9,28 +8,38 @@ package
 		
 		private var _timer:Number = 0;
 		private const changeWalkDirectionRate:Number = 5;
-		private const aggroDistance:Number = 80; // distance for when enemy starts charging towards you
-		private const aggroSpeed:Number = 50;
+		private const playerAggroDistance:Number = 80; // distance for when enemy starts charging towards you
+		private const playerAggroSpeed:Number = 50;
 		private const avoidOtherEnemyDistance:Number = 80;
 		private const ambleSpeed:Number = 10;
+		private const chestAggroDistance:Number = 80; // this should be smaller than chestBufferDistance
+		private const chestAggroSpeed:Number = 30;
+		private const chestBufferDistance:Number = 100;
 		
 		public var enemyData:BattleEnemy;
 		
 		private var _player:ExplorePlayer;
 		private var _enemies:FlxGroup;
+		private var _chests:FlxGroup;
 		
-		public function ExploreEnemy(X:Number, Y:Number, enemyData:BattleEnemy, enemyGroup:FlxGroup, player:ExplorePlayer)
+		public function ExploreEnemy(X:Number, Y:Number, enemyData:BattleEnemy, 
+									 enemyGroup:FlxGroup, chests:FlxGroup, player:ExplorePlayer)
 		{	
 			this.enemyData = enemyData;
 			super(X, Y, this.enemyData.exploreAsset());
 			_enemies = enemyGroup;
 			_player = player;
+			_chests = chests;
 			velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
 			velocity.x = FlxG.random()*2*ambleSpeed - ambleSpeed;
 			maxVelocity = new FlxPoint(200, 200);
 		}
 		
 		override public function update():void {
+			if (enemyData.currentHealth <= 0) {
+				_enemies.remove(this);
+			}
+			
 			if (x < 0){
 				x = 0;
 			}
@@ -51,15 +60,37 @@ package
 			_player.getMidpoint().copyToFlash(playerPoint);
 			var vectorToPlayer:Point = playerPoint.subtract(selfPoint);
 			var playerDistance:Number = vectorToPlayer.length;
-			if (_player.invincibilityTime == 0 && playerDistance < aggroDistance) {
-				vectorToPlayer.normalize(aggroSpeed)
+			if (_player.invincibilityTime == 0 && playerDistance < playerAggroDistance) {
+				vectorToPlayer.normalize(playerAggroSpeed)
 				velocity.copyFromFlash(vectorToPlayer);
 				return;
 			}
+			// surround a nearby chest
+			for each (var chest:ExploreCandyChest in _chests.members) {
+				if (chest == null) {continue;}
+				var otherPoint:Point = new Point();
+				chest.getMidpoint().copyToFlash(otherPoint);
+				var vectorToChest:Point = otherPoint.subtract(selfPoint);
+				var distance:Number = vectorToChest.length;
+				// if you're within aggro distance always aggro
+				if (distance < chestAggroDistance) {
+					vectorToChest.normalize(chestAggroSpeed);
+					velocity.copyFromFlash(vectorToChest);
+					return;
+				}
+				// if the chest is already being attacked by enough enemies and you're
+				// starting to get too close (but not within aggro distance)
+				if (chest.enemySlotsOccupied && distance < chestBufferDistance) {
+					vectorToChest.normalize(ambleSpeed);
+					velocity.copyFromFlash((new Point()).subtract(vectorToChest));
+					return;
+				}
+				
+			}
+			
 			// try to be as far away from all enemies that are close by
 			var velocityVector:Point = new Point();
-			var enemyArray:Array = _enemies.members;
-			for each (var otherEnemy:ExploreEnemy in enemyArray) {
+			for each (var otherEnemy:ExploreEnemy in _enemies.members) {
 				if (this == otherEnemy || otherEnemy == null) {continue;}
 				var otherPoint:Point = new Point();
 				otherEnemy.getMidpoint().copyToFlash(otherPoint);
@@ -80,15 +111,11 @@ package
 			}
 			
 			
-			//random behavior when no enemies or player is close by
+			//random behavior when nothing of interest is close by
 			if (_timer > changeWalkDirectionRate) {
 				_timer = 0;
 				velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
 				velocity.x = FlxG.random()*2*ambleSpeed - ambleSpeed;
-			}
-			
-			if (enemyData.currentHealth <= 0) {
-				_enemies.remove(this);
 			}
 		}
 	}
