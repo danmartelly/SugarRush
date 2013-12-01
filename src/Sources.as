@@ -71,6 +71,7 @@ package
 		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
 		
 		[Embed(source="../assets/treasure.png")] public static var TreasureChest:Class;
+		[Embed(source="../assets/crafthouse.png")] public static var CraftHouse:Class;
 		
 		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
