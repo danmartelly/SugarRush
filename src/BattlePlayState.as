@@ -51,7 +51,7 @@ package
 		
 		// for turn notification
 		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(hor,295,200,"");
+		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 200, FlxG.height - 100, 400, "");
 		
 		private var invulnTime:Number = 3.0;
 		
@@ -107,7 +107,7 @@ package
 			runButton.loadGraphic(Sources.buttonGreen);
 			
 			turnText.setFormat("COOKIES",15,0xff000000);
-			dmgInfo.setFormat("COOKIES", 20, 0xff000000);
+			dmgInfo.setFormat("COOKIES", 20, 0xff000000, "center");
 			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 						
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -131,7 +131,7 @@ package
 		
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
-			
+						
 			add(inventoryHUD);
 			
 			add(maxEnemyLifeBar);
@@ -162,6 +162,7 @@ package
 			drawHealthBar();
 		}
 		
+		// handle key presses (cheats/debugging)
 		override public function update():void {
 			if (FlxG.keys.justPressed("B")) {
 				var s1:String = "", s2:String = "";
@@ -187,21 +188,25 @@ package
 			super.update();
 		}
 		
+		// return enemy and player sprites to idle state
 		public function returnToIdle():void {
-			// show the appropriate idle frame based on enemy condition
-//			if (logic.enemy.hasBuff("burn")){
-//				enemySprite.play("burn", true);
-//			} else if (logic.enemy.hasBuff("freeze")){
-//				enemySprite.play("freeze", true);
-//			} else {
-//				enemySprite.play("idle", true);
-//			}
-			enemySprite.play("idle");
-			
+			dmgInfo.text = "";
 			playerSprite.loadGraphic(Sources.battlePlayer);
 			if (eatObject.visible){
 				remove(eatObject);
-			}	
+			}
+			
+			enemySprite.play("idle");
+			
+			//show the appropriate idle frame based on enemy condition
+			// NOT WORKING, DUNNO WHY	
+			if (logic.enemy.hasBuff('burn')){
+				enemySprite.play("burn");
+			} else if (logic.enemy.hasBuff('freeze')){
+				enemySprite.play("freeze");
+			} else {
+				enemySprite.play("idle");
+			}
 		}
 		
 		public function showHealth():void{
@@ -291,10 +296,12 @@ package
 		}
 		
 		public function healthCallback():void {
-			if (logic.turn == BattleLogic.ENEMY_TURN){
-				enemySprite.play("attack");
-			}
 			drawHealthBar();
+		}
+		
+		public function enemyAttackCallback(damage:Number):void {
+			enemySprite.play("attack");
+			dmgInfo.text= logic.enemy.name + " did " + damage + " damage!";
 		}
 		
 		public function turnCallback(turn:int):void {
@@ -309,7 +316,8 @@ package
 					runButton.active = true;
 					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
-				
+				default:
+					break;
 			}
 			updateBuffText();
 			this.update();
@@ -326,10 +334,6 @@ package
 		
 		public function updateBuffText():void {
 			buffText.text = enemyData.getBuff();
-		}
-		
-		public function attackLogicCallback():void {
-			
 		}
 		
 		public function endBattleCallback(status:int):void {			
