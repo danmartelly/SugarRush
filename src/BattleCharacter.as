@@ -82,11 +82,16 @@ package {
 			return null;
 		}
 
-		public function getBuff():String {
+		public function getBuffText():String {
+			var output:String = "";
 			if (this.buffs.length > 0) {
-				return Weapon.BUFF_LIST[this.buffs[0]["id"]].getDisplayName();
+				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
+				output = buff.getDisplayName();
+				if (buff.name = 'burn') {
+					output += " (-1)";
+				}
 			}
-			return "";
+			return output;
 		}
 		
 		public function tickBuffs():void {
