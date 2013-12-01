@@ -333,7 +333,7 @@ package
 		}
 		
 		public function updateBuffText():void {
-			buffText.text = enemyData.getBuff();
+			buffText.text = enemyData.getBuffText();
 		}
 		
 		public function endBattleCallback(status:int):void {			
