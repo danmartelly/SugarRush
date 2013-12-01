@@ -53,8 +53,8 @@ package
 		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
 		private var dmgInfo:FlxText = new FlxText(hor,295,200,"");
 		
-		private var invulnTime:Number = 1.;
-				
+		private var invulnTime:Number = 3.0;
+		
 		private var background:FlxBackdrop;
 		
 		private var buttonGroup:FlxGroup = new FlxGroup();
