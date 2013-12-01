@@ -4,13 +4,13 @@ package
 	
 	public class SplashScreenState extends FlxState
 	{
-		[Embed(source="../assets/backdrops/title.png")] protected var backgroundImg:Class;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public var background:FlxSprite;
 		private var startText:FlxText;
 		private var instrText:FlxText;
+		private var creditText:FlxText;
 		
 		public function SplashScreenState()
 		{
@@ -21,15 +21,22 @@ package
 			
 			
 			background = new FlxSprite(0,0);
-			background.loadGraphic(backgroundImg);
+			background.loadGraphic(Sources.SplashScreenBackground);
 			add(background);
 			
-			startText = new FlxText(10, (FlxG.height)-45, FlxG.width, "Press ENTER to start!");
+			startText = new FlxText(10, (FlxG.height)-65, FlxG.width, "Press ENTER to start!");
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;
 			startText.setFormat("COOKIES",26);
 			startText.alignment = "center";
 			add(startText);
+			
+			creditText = new FlxText(10, (FlxG.height)-35, FlxG.width, "Press C for credits");
+			creditText.color = 0x01FFFFFF;
+			creditText.shadow = 0x01000000;
+			creditText.setFormat("COOKIES",16);
+			creditText.alignment = "center";
+			add(creditText);
 			
 			instrText = new FlxText(10, (FlxG.height)-25, FlxG.width, "press SPACE for instructions");
 			instrText.color = 0x01FFFFFF;
@@ -74,12 +81,21 @@ package
 				Without their candy, the people of Candyland slowly lost their strength. Only one small boy with a propeller hat, who had gorged on candy the night before the attacks, had enough strength to continue. This boy would now embark on the treacherous journey to eliminate the vegetable monsters and restore peace to Candyland once again…
 				-press ENTER to start-
 				*/
+			} else if (FlxG.keys.C) 
+			{
+				creditsScreen();
+				
 			}
 		}
 		
 		private function startGame():void {
 			trace("hi");
 			FlxG.switchState(ExplorePlayState.instance);
+		}
+		
+		private function creditsScreen():void {
+			var credits:CreditsState = new CreditsState();
+			FlxG.switchState(credits);
 		}
 	}
 }
