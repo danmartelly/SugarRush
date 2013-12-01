@@ -17,7 +17,7 @@ package
 		private var voidFn:Function = function():void {};
 		private var logic:BattleLogic = null;
 		
-		private var hor:int = FlxG.width /2 + 50;
+		private var hor:int = FlxG.width - 210;
 		private var y:int = FlxG.height ;//- 50;
 		private var invenBarHeight:int = FlxG.height * 0.10 + 25; //25 is height of buttons
 		
