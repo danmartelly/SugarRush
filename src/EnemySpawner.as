@@ -8,6 +8,7 @@ package
 	{
 		private var _timer:Number;
 		private var _enemies:FlxGroup;
+		private var _chests:FlxGroup;
 		private var _player:ExplorePlayer;
 		private var _enemiesFromThisSpawner:Array;
 		public var spawnRate:Number = 3;
@@ -15,9 +16,10 @@ package
 		
 		private const enemyDifficulty:int = 1;
 		
-		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, player:ExplorePlayer)
+		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, chests:FlxGroup, player:ExplorePlayer)
 		{
 			_enemies = enemyGroup;
+			_chests = chests;
 			_enemiesFromThisSpawner = new Array();
 			_timer = Math.random()*spawnRate;
 			_player = player;
@@ -46,7 +48,8 @@ package
 		}
 		
 		private function spawnEnemy():void {
-			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, BattleEnemy.randomBattleEnemy(enemyDifficulty), _enemies, _player);
+			var enemy:ExploreEnemy = new ExploreEnemy(this.x, this.y, 
+				BattleEnemy.randomBattleEnemy(enemyDifficulty), _enemies, _chests, _player);
 			_enemiesFromThisSpawner.push(enemy);
 			_enemies.add(enemy);
 		}

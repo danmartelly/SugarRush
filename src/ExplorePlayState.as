@@ -56,18 +56,17 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
+			_chests = new ExploreChestManager(_enemies);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
 			for each (var e in spawnerLocations) {
 				var entry:Array = e as Array;
 				//breakdown
 				var spawnPoint:FlxPoint = entry[0];
 				//make new Spawner
-				var spawner:EnemySpawner = new EnemySpawner(spawnPoint.x, spawnPoint.y, _enemies, _player);
+				var spawner:EnemySpawner = new EnemySpawner(spawnPoint.x, spawnPoint.y, _enemies, _chests, _player);
 				//add to State
 				_spawners.add(spawner);
 			}
-			
-			_chests = new ExploreChestManager();
 			
 			var craftButton:FlxButton = new FlxButton(FlxG.width-120-2, 410, "", triggerCraftingState); //-2 for margin
 			craftButton.loadGraphic(Sources.buttonBlue);
@@ -102,8 +101,8 @@ package
 			
 			
 			add(_spawners);
-			add(_enemies);
 			add(_chests);
+			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
 			add(HUD);
@@ -184,14 +183,14 @@ package
 					FlxG.overlap(_player, _enemies, triggerBattleState);
 				}
 				
-				FlxG.collide(_player, _chests, triggerCandyChest);
+				FlxG.overlap(_player, _chests, triggerCandyChest);
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
 					add(pause);
 				} else if (FlxG.keys.B){
-					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _enemies, _player), BattleEnemy.randomBattleEnemy(1));
+					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.C){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
