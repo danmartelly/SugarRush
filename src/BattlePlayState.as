@@ -228,7 +228,7 @@ package
 			
 			var playerBarColor:uint = healthColor(health);
 			playerLifeBar.scale.x = health / 100.0;
-			//playerLifeBar.fill(playerBarColor);
+			playerLifeBar.fill(playerBarColor);
 			// change color based on health!
 			
 			var e_health:Number = logic.enemyHealthPercent();
@@ -370,7 +370,7 @@ package
 					
 					var instructions:FlxText=new FlxText(0,270, FlxG.width, "press SPACE to end battle");
 					instructions.setFormat("COOKIES",15,0xffffffff,"center");
-					add(instructions)
+					add(instructions);
 					
 					//add(new FlxButton(260,220,"End battle",endBattle));
 					
