@@ -34,13 +34,11 @@ package
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
-		
-		public var buttonArray:Array;
-		
+				
 		public var levelX:Number = 720;//1200;
 		public var levelY:Number = 480;//800;
 		
-		private var background:FlxBackdrop ;
+		private var background:FlxBackdrop;
 		private var backgroundOpacity:FlxSprite;
 		
 		public static const KILLGOAL:int=20;
@@ -73,24 +71,7 @@ package
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
-			
-			
-
-			var eatButton:FlxButton = new FlxButton(FlxG.width/2-60, 410, "EAT", eatStuff);
-
-			eatButton.loadGraphic(Sources.buttonOrange);
-			var eatLabel:FlxText=new FlxText(0,0,120,"EAT");
-			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
-			eatLabel.alignment = "center";
-			eatButton.label=eatLabel;
-			eatButton.labelOffset=new FlxPoint(0,0);
-			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
-			eatButton.onDown = eatCallback;
-			
-			buttonArray = new Array();
-
-			buttonArray.push(eatButton);
-			
+						
 			pause = new PauseState();
 			
 			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
@@ -111,10 +92,9 @@ package
 			add(_player);
 			HUD = new ExploreHUD();
 			add(HUD);
-
-			add(eatButton);
+			
 			add(pauseInstruction);
-			add(craftInstructions)
+			add(craftInstructions);
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -136,20 +116,9 @@ package
 			
 			FlxG.camera.follow(_player);
 			FlxG.mouse.show();
-			
-			//enable all buttons
-			for(var i=0 ; i < buttonArray.length ; i++) {
-				var button:FlxButton = buttonArray[i];
-				button.active = true;
-			}
 		}
 		
 		override public function destroy():void {
-			//disable all buttons
-			for(var i=0 ; i < buttonArray.length ; i++) {
-				var button:FlxButton = buttonArray[i];
-				button.active = false;
-			}
 		}
 		
 		override public function update():void
@@ -172,8 +141,8 @@ package
 					_player.flicker(_player.invincibilityTime);
 					
 					if (_player.invincibilityTime == 0) {
-						for (var i=0; i<_enemies.length; ++i) {
-							var enemy = _enemies.members[i];
+						for (var i:int=0; i<_enemies.length; ++i) {
+							var enemy:ExploreEnemy = _enemies.members[i];
 							if (FlxG.overlap(_player, enemy, triggerBattleState)) {
 								break;
 							}
@@ -219,20 +188,7 @@ package
 			}
 		}
 		
-		public function eatCallback():void {
-			//this opens the eat tab 
-			//seeing as how opening the tab doesn't matter now (no eat-choice functionality)
-			//it's commented out to avoid UI confusion
-			//HUD.openEat();
-			
-			var player:PlayerData = PlayerData.instance; 
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
-			}
-		}
-		
-		public function setInvincibility(duration:Number) {
+		public function setInvincibility(duration:Number):void {
 			_player.invincibilityTime = duration;
 		}
 		
@@ -257,9 +213,6 @@ package
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
 			chest.rewardCandy();
 			//_chests.remove(chest);
-		}
-		
-		public function eatStuff():void{
 		}
 	}
 }

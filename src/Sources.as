@@ -95,8 +95,10 @@ package
 		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
 		[Embed(source="../assets/sound/error.mp3")] public static var error:Class;
 		
-		//buff stuff
+		// candy stuff
+		public static const candies:Array = [candyRed, candyBlue, candyWhite];
 		
+		//buff stuff
 		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
 		
 		//text

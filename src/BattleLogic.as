@@ -1,7 +1,8 @@
 package {
-	import org.flixel.FlxTimer;
 	import flash.utils.describeType;
+	
 	import org.flixel.FlxG;
+	import org.flixel.FlxTimer;
 	/**
 	 * @author ethanis
 	 */
@@ -57,28 +58,30 @@ package {
 		}
 		
 		public function useCandy():void {
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				FlxG.play(Sources.gainHealth);
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.heal(5);
-				this.state.showHealth();
-				this.state.healthCallback();
-				endTurn();
-			}
-			else {
-				FlxG.play(Sources.error);
-			}
+			this.state.showHealth();
+			this.state.healthCallback();
+			endTurn();
 		}
 		
-		private function endTurn():void {
+		public function enemyTurn():void {
+			var enemyDamage:Number = this.enemy.attack(player);
+			this.state.enemyAttackCallback(enemyDamage);
+			this.state.healthCallback();
+			this.endTurn();
+		}
+		
+		public function endTurn():void {
 			turn = (turn + 1) % 2;
 			
-			if (turn == ENEMY_TURN) player.removeTempStats();
-			else enemy.removeTempStats();
+			if (turn == ENEMY_TURN){
+				player.removeTempStats();
+			} else { 
+				enemy.removeTempStats();
+			}
 			
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);
-			}else if (enemy.isDead) {
+			} else if (enemy.isDead) {
 				player.data.killCount += 1;
 				this.state.endBattleCallback(PLAYER_WON);
 			} else {
@@ -86,15 +89,9 @@ package {
 			}
 			
 			// 1-second delay on turn-change
-			var timer:FlxTimer = new FlxTimer();
-			timer.start(1,1, function():void {
-				if (turn == ENEMY_TURN && !enemy.isDead){
-					var enemyDamage:Number = enemy.attack(player);
-					state.enemyAttackCallback(enemyDamage);
-					state.healthCallback();
-					endTurn();
-				}
-			});
+			if (turn == ENEMY_TURN && !enemy.isDead){
+				enemyTurn();
+			}
 		}
 		
 		// WALTER, USE THESE
