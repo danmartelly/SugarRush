@@ -30,19 +30,21 @@ package
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
-		private var candyMessage:FlxText
+		private var inGameMessage:FlxText
+		private var temporaryInstructions:FlxSprite;
+		private const instructionShowTime:Number = 10;
+		private var _timer:Number;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
-		
-		public var buttonArray:Array;
-		
+				
 		public var levelX:Number = 720;//1200;
 		public var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop;
-		private var backgroundOpacity:FlxSprite;
+		private var oldMap:FlxSprite;
+		private var currentMap:FlxSprite;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -50,6 +52,7 @@ package
 		
 
 		public function ExplorePlayState(lock:SingletonLock) {
+			_timer = 0;
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			background.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(background);
@@ -57,13 +60,17 @@ package
 			FlxG.mouse.load(Sources.cursor);
 			
 			//map stuff
-			backgroundOpacity=new FlxSprite(0,0);
-			backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
-			add(backgroundOpacity);
+			currentMap=new FlxSprite(0,0);
+			currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
+			add(currentMap);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_chests = new ExploreChestManager(_enemies);
+			inGameMessage = new FlxText(FlxG.width/2.0, 0, 300, "test");
+			inGameMessage.setFormat("COOKIES",20);
+			inGameMessage.color = 0xff000000;
+			inGameMessage.visible = false;
+			_chests = new ExploreChestManager(_enemies, inGameMessage);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
 			for each (var e in spawnerLocations) {
 				var entry:Array = e as Array;
@@ -79,22 +86,6 @@ package
 			craftHouse.height -= 20; 
 			craftHouse.width -= 20;
 			
-
-			var eatButton:FlxButton = new FlxButton(FlxG.width/2-60, 410, "EAT", eatStuff);
-
-			eatButton.loadGraphic(Sources.buttonOrange);
-			var eatLabel:FlxText=new FlxText(0,0,120,"EAT");
-			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
-			eatLabel.alignment = "center";
-			eatButton.label=eatLabel;
-			eatButton.labelOffset=new FlxPoint(0,0);
-			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
-			eatButton.onDown = eatCallback;
-			
-			buttonArray = new Array();
-
-			buttonArray.push(eatButton);
-			
 			pause = new PauseState();
 			
 			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
@@ -102,20 +93,24 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
-			add(candyMessage);
-			candyMessage.visible = false;
+			//very specific code for putting the instruction signboard in the game
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
+			
 			
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
+			add(temporaryInstructions);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
+			add(inGameMessage);
 			add(HUD);
-
-			add(eatButton);
-			add(pauseInstruction);
+			
+			add(pauseInstruction); 
+			
+			HUD.eatFunction = function(healAmount:Number):void{};
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -137,22 +132,9 @@ package
 			
 			FlxG.camera.follow(_player);
 			FlxG.mouse.show();
-			
-			//enable all buttons
-			for(var i=0 ; i < buttonArray.length ; i++) {
-				var button:FlxButton = buttonArray[i];
-				button.active = true;
-			}
-			
-			
 		}
 		
 		override public function destroy():void {
-			//disable all buttons
-			for(var i=0 ; i < buttonArray.length ; i++) {
-				var button:FlxButton = buttonArray[i];
-				button.active = false;
-			}
 		}
 		
 		override public function update():void
@@ -160,6 +142,11 @@ package
 			if (!pause.showing){
 
 				super.update();
+				
+				_timer += FlxG.elapsed;
+				if (_timer > instructionShowTime) {
+					remove(temporaryInstructions)
+				}
 				
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());
@@ -169,7 +156,7 @@ package
 				}
 				
 				//map changey stuff
-				backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
+				currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
 				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
@@ -177,8 +164,8 @@ package
 					_player.flicker(_player.invincibilityTime);
 					
 					if (_player.invincibilityTime == 0) {
-						for (var i=0; i<_enemies.length; ++i) {
-							var enemy = _enemies.members[i];
+						for (var i:int=0; i<_enemies.length; ++i) {
+							var enemy:ExploreEnemy = _enemies.members[i];
 							if (FlxG.overlap(_player, enemy, triggerBattleState)) {
 								break;
 							}
@@ -201,7 +188,8 @@ package
 					_player.x = FlxG.width/2.0; 
 					_player.y = FlxG.height/2.0;
 				} 
-
+				FlxG.overlap(_enemies, _chests);
+				
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
@@ -214,19 +202,6 @@ package
 				}
 			} else {
 				pause.update();
-			}
-		}
-		
-		public function eatCallback():void {
-			//this opens the eat tab 
-			//seeing as how opening the tab doesn't matter now (no eat-choice functionality)
-			//it's commented out to avoid UI confusion
-			//HUD.openEat();
-			
-			var player:PlayerData = PlayerData.instance; 
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
 			}
 		}
 		
@@ -252,7 +227,6 @@ package
 		}
 		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
-			
 			//switch to the battle state
 			battle = new BattlePlayState(enemy, enemy.enemyData);
 			pause.showing = true;
@@ -270,18 +244,7 @@ package
 		}
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
-			chest.rewardCandy();
-			
-			candyMessage.visible = true;
-			var timer:FlxTimer = new FlxTimer(); 
-			timer.start(1,1,function(timer:FlxTimer){
-				candyMessage.visible = false;
-			});
-			
-			//_chests.remove(chest);
-		}
-		
-		public function eatStuff():void{
+			chest.rewardTreasure();
 		}
 	}
 }

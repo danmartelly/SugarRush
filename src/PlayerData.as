@@ -9,10 +9,9 @@ package
 		public var maxHealth:int;
 		public var killCount:int;
 		
-		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.RED_SPECIAL);
-		//public var fireWeapon:Weapon = new Weapon("Sword", "Chocolate", 1, 0, Weapon.RED_SPECIAL);
+		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.RB_SPECIAL);
 		//public var lsWeapon:Weapon = new Weapon("Star", "Gumdrop", 1, 0, Weapon.WW_SPECIAL);
-		//public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.WB_SPECIAL);
+		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.BB_SPECIAL);
 		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
@@ -30,9 +29,7 @@ package
 			if (initialWeapons == null) {
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				Inventory.addWeapon(startingWeapon);
-				//Inventory.addWeapon(fireWeapon);
-				//Inventory.addWeapon(lsWeapon);
-				//Inventory.addWeapon(dispelWeapon);
+				Inventory.addWeapon(dispelWeapon);
 			}
 			currentHealth = initialHealth;
 			maxHealth = initialHealth;
@@ -54,6 +51,18 @@ package
 		
 		public function changeWeapon(index:int):void {
 			currentWeaponIndex = index;
+		}
+		
+		public function removeWeapon():void {
+			
+		}
+		
+		public function hasFullHealth():Boolean {
+			return this.currentHealth == this.maxHealth;
+		}
+		
+		public function heal(amount:Number):void {
+			this.currentHealth = Math.min((this.currentHealth + amount), this.maxHealth);
 		}
 	}
 }

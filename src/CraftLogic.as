@@ -41,8 +41,13 @@ package
 			var adjective:String = adjectives[(int)(adjectives.length * Math.random())];
 			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
 			var weaponMod:String = weaponMods[(int)(weaponMods.length * Math.random())];
-			var attack:int = .1 / Math.random() + 1;
-			var defense:int = .1 / Math.random();
+			
+			var attack:int = .2 / Math.random() + 1;
+			var defense:int = .2 / Math.random();
+			
+			if (attack > 3) attack = 3;
+			if (defense > 2) defense = 2;
+			
 			return new Weapon(weaponType, weaponMod, attack, defense, buff);
 		}
 	}

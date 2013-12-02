@@ -1,53 +1,60 @@
 package
 {
-	import flash.geom.Point;
+	import flash.geom.*;
 	
-	import org.flixel.FlxGroup;
-	import org.flixel.FlxPoint;
-	import org.flixel.FlxSprite;
-	import org.flixel.FlxText;
-	import org.flixel.FlxTimer;
+	import org.flixel.*;
 	
 	public class ExploreCandyChest extends FlxSprite
 	{
 		private var isEnabled:Boolean = true;
+		private const maxEnemiesAttacking:Number = 2;
+		private const attackTimeUntilBroken:Number = 3;
 		public var enemySlotsOccupied:Boolean = false;
 		
-		private const maxEnemiesAttacking:Number = 2;
-		private const occupyDistance:Number = 90;
-	
-		private var _enemies:FlxGroup;
+		private const occupyDistance:Number = 80;
 		
-		public function ExploreCandyChest(X:Number, Y:Number, enemies:FlxGroup) {
+		private var _enemies:FlxGroup;
+		private var _chests:FlxGroup;
+		private var _inGameMessage:FlxText;
+		
+		public function ExploreCandyChest(X:Number, Y:Number, chests:FlxGroup, enemies:FlxGroup, inGameMessage:FlxText) {
 			super(X, Y, null);
 			_enemies = enemies;
+			_chests = chests;
+			_inGameMessage = inGameMessage;
 			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
 			addAnimation("open", [1]); 
+			immovable = true;
+			health = attackTimeUntilBroken; // your health is actually time
 		}
 		
-		public function rewardCandy():void {
+		public function rewardTreasure():void {
 			if (isEnabled) {
 				Inventory.addCandy(Inventory.COLOR_BLUE);
 				
 				play("open");
 				isEnabled = false;
-				
+				createGotCandyMessage();
 				var timer:FlxTimer = new FlxTimer(); 
+				var that:FlxBasic = this;
 				timer.start(1,1,function(timer:FlxTimer){
-					visible = false;
+					_chests.remove(that);
 				});
 				
 			}
 		}
 		
-		public static function CreateGotCandyMessage(position:FlxPoint):FlxText {
-			var getCandyTxt:FlxText = new FlxText(position.x, position.y, 300, "You got 1 candy!"); 
-			getCandyTxt.setFormat("COOKIES",20);
-			getCandyTxt.color = 0xffffffff;
-			return getCandyTxt;
+		public function createGotCandyMessage():void {	
+			_inGameMessage.visible = true;
+			_inGameMessage.text = "You got 1 candy!";
+			var timer:FlxTimer = new FlxTimer();
+			timer.start(1,1,function(timer:FlxTimer){
+				_inGameMessage.visible = false;
+			});
 		}
 		
 		override public function update():void {
+			//decide whether there are enough enemies close by or not
 			var selfPoint:Point = new Point();
 			this.getMidpoint().copyToFlash(selfPoint);
 			var occupiedEnemiesCount:Number = 0;
@@ -64,7 +71,7 @@ package
 					}
 				}
 			}
-			if (occupiedEnemiesCount > maxEnemiesAttacking) {
+			if (occupiedEnemiesCount >= maxEnemiesAttacking) {
 				enemySlotsOccupied = true;
 			} else {
 				enemySlotsOccupied = false;
