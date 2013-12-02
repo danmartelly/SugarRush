@@ -43,7 +43,9 @@ package {
 		override public function update():void {
 			if (_isFading == true){
 				_fromImage.alpha -= _increment;
-				_toImage.alpha += _increment;
+				if (_toImage){
+					_toImage.alpha += _increment;
+				}
 			}
 			
 			if (_fromImage.alpha <= 0){
