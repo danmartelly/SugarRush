@@ -84,6 +84,13 @@ package
 		
 		public static const intros:Array=[intro1, intro2, intro3, Instructions];
 		
+		[Embed(source="../assets/backdrops/map1.png")] public static var map1:Class;
+		[Embed(source="../assets/backdrops/map2.png")] public static var map2:Class;
+		[Embed(source="../assets/backdrops/map3.png")] public static var map3:Class;
+		[Embed(source="../assets/backdrops/map4.png")] public static var map4:Class;
+		[Embed(source="../assets/backdrops/map5.png")] public static var map5:Class;
+		
+		public static const maps:Array=[map1, map2, map3, map4, map5];
 		
 		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
 		

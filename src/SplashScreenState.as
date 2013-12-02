@@ -59,11 +59,6 @@ package
 				FlxG.fade(0x00000000, 1, startGame);
 			} else if (FlxG.keys.ENTER && currentScreen==4){
 				FlxG.fade(0x00000000, 1, startGame);
-//			} else if (FlxG.keys.SPACE){
-//				background.loadGraphic(Sources.Instructions);
-//				add(background);
-//				startText.text="";
-//				remove(instrText);
 			} else if (FlxG.keys.C) {
 				creditsScreen();
 			}else if ((FlxG.keys.ENTER && currentScreen==0)|| (FlxG.mouse.justReleased() && currentScreen!=0)){
