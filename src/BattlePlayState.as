@@ -29,7 +29,8 @@ package
 		
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
-			
+		
+		private var dmgFlickerTime:Number = 1.0; 
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
 		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, y - 50 - invenBarHeight);
@@ -253,6 +254,7 @@ package
 				playerSprite.loadGraphic(Sources.battlePlayerAttack);
 				FlxG.play(Sources.vegetableHurt1);
 				enemySprite.play("attacked");
+				enemyLifeBar.flicker(dmgFlickerTime);
 				dmgInfo.text="You did " + dmg + " damage!";
 			}
 		}
@@ -302,7 +304,8 @@ package
 		
 		public function enemyAttackCallback(damage:Number):void {
 			enemySprite.play("attack");
-			dmgInfo.text= logic.enemy.name + " did " + damage + " damage!";
+			playerLifeBar.flicker(dmgFlickerTime);
+			dmgInfo.text = logic.enemy.name + " did " + damage + " damage!";
 		}
 		
 		public function turnCallback(turn:int):void {
