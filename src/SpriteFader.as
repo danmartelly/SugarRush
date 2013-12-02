@@ -56,6 +56,12 @@ package {
 			super.update();
 		}
 		
+		public function replaceImages(from:FlxSprite, to:FlxSprite):void{
+			_fromImage=from;
+			_toImage=to;
+			reset();
+		}
+		
 		public function animate(seconds:Number = 1.0):void {
 			_increment = 1.0 / (seconds * FlxG.framerate);
 			_isFading = true;

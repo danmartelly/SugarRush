@@ -44,7 +44,9 @@ package
 		
 		private var background:FlxBackdrop;
 		private var oldMap:FlxSprite;
+		private var oldMapIndex:int=4; //starts at last map out of 5 (4 since index starts at 0)
 		private var currentMap:FlxSprite;
+		private var fader:SpriteFader;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -59,9 +61,11 @@ package
 			FlxG.mouse.load(Sources.cursor);
 			
 			//map stuff
-			currentMap=new FlxSprite(0,0);
-			currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
-			add(currentMap);
+			currentMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
+			oldMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
+			fader = new SpriteFader(oldMap, currentMap);
+			add(fader);
+			//add(currentMap);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
@@ -96,11 +100,10 @@ package
 			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
-			
+			add(temporaryInstructions);
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
-			add(temporaryInstructions);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
@@ -155,7 +158,14 @@ package
 				}
 				
 				//map changey stuff
-				currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
+				var currentMapIndex:int = getCurrentMap();
+				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
+				if (currentMapIndex!=oldMapIndex){ //if the map changed
+					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
+					oldMapIndex=currentMapIndex;
+					fader.replaceImages(oldMap,currentMap);
+					fader.animate(2.0);
+				}
 				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
@@ -198,6 +208,8 @@ package
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.A){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
+				}else if (FlxG.keys.K){ //killcount cheathax
+					PlayerData.instance.killCount++;
 				}
 			} else {
 				pause.update();
