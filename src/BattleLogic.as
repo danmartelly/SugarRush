@@ -85,9 +85,9 @@ package {
 				this.state.turnCallback(turn);
 			}
 			
-			// 1-second delay on turn-change
+			// 2-second delay on turn-change
 			var timer:FlxTimer = new FlxTimer();
-			timer.start(1,1, function(timer:FlxTimer):void {
+			timer.start(2,1, function(timer:FlxTimer):void {
 				if (turn == ENEMY_TURN && !enemy.isDead){
 					enemy.attack(player);
 					state.healthCallback();
