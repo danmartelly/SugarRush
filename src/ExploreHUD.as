@@ -149,8 +149,11 @@ package
 			add(_killCount);
 			
 			_red.makeGraphic(25,25,0xaaffffff);
+			_red.scrollFactor.x = _red.scrollFactor.y = 0;
 			_blue.makeGraphic(25,25,0xaaffffff);
+			_blue.scrollFactor.x = _blue.scrollFactor.y = 0;
 			_white.makeGraphic(25,25,0xaaffffff);
+			_white.scrollFactor.x = _white.scrollFactor.y = 0;
 			
 			eatGroup.add(_red);
 			eatGroup.add(_blue);
@@ -280,14 +283,6 @@ package
 				} else {
 					_currentWeaponBox.visible=false;
 				}
-				
-//				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
-//				weaponStats.x = weaponSprite.x+10;
-//				weaponStats.y = weaponSprite.y-12;
-//				weaponStats.width = weaponSprite.width;
-//				//weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
-//				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-//				weaponStats.makeGraphic(40, 40, 0x00000000);
 			}
 			
 			mouseHover();

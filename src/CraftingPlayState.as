@@ -69,6 +69,7 @@ package
 			banner.setFormat("COOKIES",16,0xff000000);
 			add(this.banner);
 			
+			FlxG.mouse.load(Sources.cursor);
 			FlxG.mouse.show();
 		}
 		

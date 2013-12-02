@@ -28,20 +28,22 @@ package
 		
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
-			
+		
+		private var dmgFlickerTime:Number = 1.0; 
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
-		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, y - 50 - invenBarHeight);
+		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
+		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
-		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
-		private var enemyHealthText:FlxText = new FlxText(50, 52, lifeBarWidth, "Health: ?/?");
-		private var buffText:FlxText = new FlxText(150, 30, lifeBarWidth, "");
+		private var enemyName:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-20, lifeBarWidth,"Enemy Name");
+		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
+		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50 - invenBarHeight);
-		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50 - invenBarHeight);
-		private var playerName:FlxText = new FlxText(hor,y-75-invenBarHeight,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(hor, y - 48 - invenBarHeight, lifeBarWidth, "Blood Sugar: ?/?");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var playerLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
+		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
 		
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
@@ -49,8 +51,8 @@ package
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 200, FlxG.height - 100, 400, "");
+		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
 		
 		private var invulnTime:Number = 3.0;
 		
@@ -74,7 +76,6 @@ package
 		}
 		
 		override public function create():void {
-			
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this, enemyData);
@@ -191,14 +192,17 @@ package
 			enemySprite.play("idle");
 			
 			//show the appropriate idle frame based on enemy condition
-//			// NOT WORKING, DUNNO WHY	
-//			if (logic.enemy.hasBuff('burn')){
-//				enemySprite.play("burn");
-//			} else if (logic.enemy.hasBuff('freeze')){
-//				enemySprite.play("freeze");
-//			} else {
-//				enemySprite.play("idle");
-//			}
+			// NOT WORKING, DUNNO WHY	
+			if (logic.enemy.hasBuff('burn')){
+				enemySprite.play("burn");
+			} else if (logic.enemy.hasBuff('freeze')){
+				enemySprite.play("freeze");
+			} else {
+				enemySprite.play("idle");
+				playerSprite.loadGraphic(Sources.battlePlayer);
+				remove(eatObject);
+				dmgInfo.text="";
+			}
 		}
 		
 		public function showHealth():void{
@@ -283,7 +287,8 @@ package
 		
 		public function enemyAttackCallback(damage:Number):void {
 			enemySprite.play("attack");
-			dmgInfo.text= logic.enemy.name + " did " + damage + " damage!";
+			playerLifeBar.flicker(dmgFlickerTime);
+			dmgInfo.text = logic.enemy.name + " did " + damage + " damage!";
 		}
 		
 		public function turnCallback(turn:int):void {
@@ -291,11 +296,13 @@ package
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
 					runButton.active = false;
+					attackBtnWeapons.active = false;
 					updateEnemyText();
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
 					runButton.active = true;
+					attackBtnWeapons.active = true;
 					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
 				default:

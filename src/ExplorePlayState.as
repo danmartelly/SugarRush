@@ -9,6 +9,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	
 	public class ExplorePlayState extends FlxState
 	{	
@@ -30,6 +31,7 @@ package
 		protected var _chests:ExploreChestManager;
 		
 		protected var craftInstructions:FlxText;
+		private var candyMessage:FlxText
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -41,19 +43,21 @@ package
 		private var background:FlxBackdrop;
 		private var backgroundOpacity:FlxSprite;
 		
-		public static const KILLGOAL:int=20;
+		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
 		Sources.fontCookies;
 		
 
 		public function ExplorePlayState(lock:SingletonLock) {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
+			background.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(background);
 			
+			FlxG.mouse.load(Sources.cursor);
+			
+			//map stuff
 			backgroundOpacity=new FlxSprite(0,0);
-			backgroundOpacity.makeGraphic(FlxG.width,FlxG.height,0xff000000);
-			backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
-			backgroundOpacity.scrollFactor.x=backgroundOpacity.scrollFactor.y=0;
+			backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(backgroundOpacity);
 			
 			_spawners = new FlxGroup();
@@ -79,11 +83,14 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			craftInstructions = new FlxText(0,FlxG.height - 100,500, "Press C to enter and craft weapons");
+			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
 			craftInstructions.setFormat("COOKIES",15);
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
+			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
+			add(candyMessage);
+			candyMessage.visible = false;
 			
 			add(craftHouse);
 			add(_spawners);
@@ -134,7 +141,9 @@ package
 					FlxG.switchState(new WinState());
 				}
 				
-				backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
+				//map changey stuff
+				backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
+				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
 					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
@@ -192,8 +201,24 @@ package
 			_player.invincibilityTime = duration;
 		}
 		
+		//returns the current map
+		private function getCurrentMap():int{
+			var currentMap:int=4;
+			var kills:int = PlayerData.instance.killCount;
+			var killRatio:Number = kills/KILLGOAL;
+			if (killRatio >= .8){
+				currentMap=0;
+			}else if (killRatio >= .6){
+				currentMap=1;
+			}else if (killRatio >= .4){
+				currentMap=2;
+			}else if (killRatio >= .2){
+				currentMap=3;
+			}
+			return currentMap;
+		}
+		
 		public function triggerBattleState(player:FlxSprite, enemy:ExploreEnemy):void {
-			
 			//switch to the battle state
 			battle = new BattlePlayState(enemy, enemy.enemyData);
 			pause.showing = true;
@@ -212,6 +237,13 @@ package
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
 			chest.rewardCandy();
+			
+			candyMessage.visible = true;
+			var timer:FlxTimer = new FlxTimer(); 
+			timer.start(1,1,function(timer:FlxTimer){
+				candyMessage.visible = false;
+			});
+			
 			//_chests.remove(chest);
 		}
 	}

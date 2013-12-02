@@ -32,7 +32,7 @@ package
 		[Embed(source="../assets/enemies/carrot_small.png")] public static var SmallCarrot:Class;
 		[Embed(source="../assets/enemies/eggplantsprite.png")] public static var Eggplant:Class;
 		[Embed(source="../assets/enemies/eggplant_small.png")] public static var SmallEggplant:Class;
-		[Embed(source="../assets/enemies/lettucesprite.png")] public static var Lettuce:Class;	
+		[Embed(source="../assets/enemies/cabbagesprite.png")] public static var Lettuce:Class;	
 		[Embed(source="../assets/enemies/lettuce_small.png")] public static var SmallLettuce:Class;
 		[Embed(source="../assets/enemies/onionsprite.png")] public static var Onion:Class;	
 		[Embed(source="../assets/enemies/onion_small.png")] public static var SmallOnion:Class;
@@ -58,10 +58,10 @@ package
 		[Embed(source="../assets/weapons/sword_gumdrop.png")] public static var SwordGumdrop:Class;
 		[Embed(source="../assets/weapons/sword_marshmallow.png")] public static var SwordMarsh:Class;
 		
-		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
-		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
-		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
-		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
+//		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
+//		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
+//		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
+//		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
 		
 		[Embed(source="../assets/button_red.png")] public static var buttonRed:Class;	
 		[Embed(source="../assets/button_blue.png")] public static var buttonBlue:Class;	
@@ -78,7 +78,24 @@ package
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
+		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
+		[Embed(source="../assets/backdrops/intro2.png")] public static var intro2:Class;
+		[Embed(source="../assets/backdrops/intro3.png")] public static var intro3:Class;
+		
+		public static const intros:Array=[intro1, intro2, intro3, Instructions];
+		
+		[Embed(source="../assets/backdrops/map1.png")] public static var map1:Class;
+		[Embed(source="../assets/backdrops/map2.png")] public static var map2:Class;
+		[Embed(source="../assets/backdrops/map3.png")] public static var map3:Class;
+		[Embed(source="../assets/backdrops/map4.png")] public static var map4:Class;
+		[Embed(source="../assets/backdrops/map5.png")] public static var map5:Class;
+		
+		public static const maps:Array=[map1, map2, map3, map4, map5];
+		
+		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
+		
 		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
+		[Embed(source="../assets/backdrops/instructions_small.png")] public static var instrucSmall:Class;
 		[Embed(source="../assets/backdrops/title.png")] public static var SplashScreenBackground:Class;
 		
 		//fonts
