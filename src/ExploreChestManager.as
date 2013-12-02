@@ -10,10 +10,12 @@ package
 		private var firstTime:Boolean = true;
 		
 		private var _enemies:FlxGroup
+		private var _inGameMessage:FlxText;
 		
-		public function ExploreChestManager(enemies:FlxGroup, MaxSize:uint=0)
+		public function ExploreChestManager(enemies:FlxGroup, inGameMessage:FlxText, MaxSize:uint=0)
 		{
 			super(MaxSize);
+			_inGameMessage = inGameMessage;
 			_enemies = enemies;
 		}
 		
@@ -35,7 +37,7 @@ package
 		public function spawnRandomChest():void {
 			var x:Number = Math.floor(Math.random()*FlxG.worldBounds.width);
 			var y:Number = Math.floor(Math.random()*(FlxG.worldBounds.height-75)); // 75 is lower bar
-			add(new ExploreCandyChest(x, y, _enemies));
+			add(new ExploreCandyChest(x, y, this, _enemies, _inGameMessage));
 		}
 	}
 }

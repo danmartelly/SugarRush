@@ -1,7 +1,8 @@
 package {
-	import org.flixel.FlxTimer;
 	import flash.utils.describeType;
+	
 	import org.flixel.FlxG;
+	import org.flixel.FlxTimer;
 	/**
 	 * @author ethanis
 	 */
@@ -36,11 +37,8 @@ package {
 			endTurn();
 			return dmg;
 		}
-		
-		private static function randomEnemy():String {
-			var enemyCount:int = Sources.enemyNames.length;
-			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
-			return Sources.enemyNames[enemyIndex];
+		public function getPlayerFlags():Array {
+			return player.flags;
 		}
 		
 		// couldn't name it just switch() because it's a reserved word
@@ -56,35 +54,40 @@ package {
 			}
 		}
 		
-		public function useCandy():void {
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				FlxG.play(Sources.gainHealth);
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.heal(5);
-				this.state.showHealth();
-				this.state.healthCallback();
-				endTurn();
-			}
-			else {
-				FlxG.play(Sources.error);
-			}
+		public function useCandy(healAmount:Number):void {
+			this.player.heal(healAmount);
+			this.state.healthCallback();
+			endTurn();
 		}
 		
-		private function endTurn():void {
+		public function enemyTurn(self:BattleLogic):Function {
+			return function():void {
+				var enemyDamage:Number = self.enemy.attack(player);
+				self.state.enemyAttackCallback(enemyDamage);
+				self.state.healthCallback();
+				self.endTurn();
+			};
+		}
+		
+		public function endTurn():void {
 			turn = (turn + 1) % 2;
 			
-			if (turn == ENEMY_TURN) player.removeTempStats();
-			else enemy.removeTempStats();
+			if (turn == ENEMY_TURN){
+				player.removeTempStats();
+			} else { 
+				enemy.removeTempStats();
+			}
 			
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);
-			}else if (enemy.isDead) {
+			} else if (enemy.isDead) {
 				player.data.killCount += 1;
 				this.state.endBattleCallback(PLAYER_WON);
 			} else {
 				this.state.turnCallback(turn);
 			}
 			
+<<<<<<< HEAD
 			// 2-second delay on turn-change
 			var timer:FlxTimer = new FlxTimer();
 			timer.start(2,1, function(timer:FlxTimer):void {
@@ -94,6 +97,13 @@ package {
 					endTurn();
 				}
 			});
+=======
+			var self:BattleLogic = this;
+			// 1-second delay on turn-change
+			if (turn == ENEMY_TURN && !enemy.isDead){
+				(new FlxTimer).start(1, 1, enemyTurn(this));
+			}
+>>>>>>> 87d5846f842927778946ae86deef01b51fc1541c
 		}
 		
 		// WALTER, USE THESE

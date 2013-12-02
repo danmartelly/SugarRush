@@ -15,7 +15,7 @@ package
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
 			
-			add(new ExploreHUD());
+			add(new ExploreHUD(false));
 			
 			var cauldronWidth:int = 400;
 			var cauldronImage:FlxSprite = new FlxSprite(FlxG.width / 2 - cauldronWidth / 2, -50, Sources.Cauldron);
@@ -69,6 +69,7 @@ package
 			banner.setFormat("COOKIES",16,0xff000000);
 			add(this.banner);
 			
+			FlxG.mouse.load(Sources.cursor);
 			FlxG.mouse.show();
 		}
 		
