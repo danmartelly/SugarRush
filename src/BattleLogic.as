@@ -40,6 +40,9 @@ package {
 		public function getPlayerFlags():Array {
 			return player.flags;
 		}
+		public function getEnemyFlags():Array {
+			return enemy.flags;
+		}
 		
 		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
