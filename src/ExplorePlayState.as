@@ -32,6 +32,9 @@ package
 		
 		protected var craftInstructions:FlxText;
 		private var inGameMessage:FlxText
+		private var temporaryInstructions:FlxSprite;
+		private const instructionShowTime:Number = 10;
+		private var _timer:Number;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -50,6 +53,7 @@ package
 		
 
 		public function ExplorePlayState(lock:SingletonLock) {
+			_timer = 0;
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			background.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(background);
@@ -93,19 +97,22 @@ package
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
-			
-			add(inGameMessage);
+			//very specific code for putting the instruction signboard in the game
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
 			
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
+			add(temporaryInstructions);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
+			add(inGameMessage);
 			add(HUD);
 			
-			add(pauseInstruction);
+			add(pauseInstruction); 
 			add(craftInstructions);
 			
 			HUD.eatFunction = function(healAmount:Number):void{};
@@ -140,6 +147,11 @@ package
 			if (!pause.showing){
 
 				super.update();
+				
+				_timer += FlxG.elapsed;
+				if (_timer > instructionShowTime) {
+					remove(temporaryInstructions)
+				}
 				
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());

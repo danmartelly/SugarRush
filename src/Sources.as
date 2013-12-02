@@ -76,6 +76,7 @@ package
 		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
+		[Embed(source="../assets/backdrops/instructions_small.png")] public static var InstructionsSmall:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
 		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
