@@ -31,7 +31,7 @@ package
 		protected var _chests:ExploreChestManager;
 		
 		protected var craftInstructions:FlxText;
-		private var candyMessage:FlxText
+		private var inGameMessage:FlxText
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -41,7 +41,8 @@ package
 		public var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop;
-		private var backgroundOpacity:FlxSprite;
+		private var oldMap:FlxSprite;
+		private var currentMap:FlxSprite;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -56,13 +57,17 @@ package
 			FlxG.mouse.load(Sources.cursor);
 			
 			//map stuff
-			backgroundOpacity=new FlxSprite(0,0);
-			backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
-			add(backgroundOpacity);
+			currentMap=new FlxSprite(0,0);
+			currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
+			add(currentMap);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_chests = new ExploreChestManager(_enemies);
+			inGameMessage = new FlxText(FlxG.width/2.0, 0, 300, "test");
+			inGameMessage.setFormat("COOKIES",20);
+			inGameMessage.color = 0xff000000;
+			inGameMessage.visible = false;
+			_chests = new ExploreChestManager(_enemies, inGameMessage);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
 			for each (var e in spawnerLocations) {
 				var entry:Array = e as Array;
@@ -88,9 +93,9 @@ package
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
-			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
-			add(candyMessage);
-			candyMessage.visible = false;
+			
+			add(inGameMessage);
+			
 			
 			add(craftHouse);
 			add(_spawners);
@@ -144,7 +149,7 @@ package
 				}
 				
 				//map changey stuff
-				backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
+				currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
 				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
@@ -239,15 +244,7 @@ package
 		}
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
-			chest.rewardCandy();
-			
-			candyMessage.visible = true;
-			var timer:FlxTimer = new FlxTimer(); 
-			timer.start(1,1,function(timer:FlxTimer){
-				candyMessage.visible = false;
-			});
-			
-			//_chests.remove(chest);
+			chest.rewardTreasure();
 		}
 	}
 }

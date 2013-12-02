@@ -54,7 +54,11 @@ package {
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }),
 			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
-					src.tempAttackStat = Math.ceil(7 - 7 * src.currentHealth / src.maxHealth);
+					var critChance:Number = 0.8 - 0.8 * src.currentHealth / src.maxHealth;
+					
+					if (Math.random() < critChance) {
+						src.flags = ['crit'];
+					}
 				}),
 			new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(3 * src.buffs.length); trg.buffs = []; }),

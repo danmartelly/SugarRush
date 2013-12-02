@@ -15,23 +15,26 @@ package
 		
 		private var _enemies:FlxGroup;
 		private var _chests:FlxGroup;
+		private var _inGameMessage:FlxText;
 		
-		public function ExploreCandyChest(X:Number, Y:Number, chests:FlxGroup, enemies:FlxGroup) {
+		public function ExploreCandyChest(X:Number, Y:Number, chests:FlxGroup, enemies:FlxGroup, inGameMessage:FlxText) {
 			super(X, Y, null);
 			_enemies = enemies;
 			_chests = chests;
+			_inGameMessage = inGameMessage;
 			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
 			addAnimation("open", [1]); 
 			immovable = true;
 			health = attackTimeUntilBroken; // your health is actually time
 		}
 		
-		public function rewardCandy():void {
+		public function rewardTreasure():void {
 			if (isEnabled) {
 				Inventory.addCandy(Inventory.COLOR_BLUE);
 				
 				play("open");
 				isEnabled = false;
+				createGotCandyMessage();
 				var timer:FlxTimer = new FlxTimer(); 
 				var that:FlxBasic = this;
 				timer.start(1,1,function(timer:FlxTimer){
@@ -41,11 +44,13 @@ package
 			}
 		}
 		
-		public static function CreateGotCandyMessage(position:FlxPoint):FlxText {
-			var getCandyTxt:FlxText = new FlxText(position.x, position.y, 300, "You got 1 candy!"); 
-			getCandyTxt.setFormat("COOKIES",20);
-			getCandyTxt.color = 0xffffffff;
-			return getCandyTxt;
+		public function createGotCandyMessage():void {	
+			_inGameMessage.visible = true;
+			_inGameMessage.text = "You got 1 candy!";
+			var timer:FlxTimer = new FlxTimer();
+			timer.start(1,1,function(timer:FlxTimer){
+				_inGameMessage.visible = false;
+			});
 		}
 		
 		override public function update():void {
