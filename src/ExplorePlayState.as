@@ -41,7 +41,8 @@ package
 		public var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop;
-		private var backgroundOpacity:FlxSprite;
+		private var oldMap:FlxSprite;
+		private var currentMap:FlxSprite;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -56,9 +57,9 @@ package
 			FlxG.mouse.load(Sources.cursor);
 			
 			//map stuff
-			backgroundOpacity=new FlxSprite(0,0);
-			backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
-			add(backgroundOpacity);
+			currentMap=new FlxSprite(0,0);
+			currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
+			add(currentMap);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
@@ -168,7 +169,7 @@ package
 				}
 				
 				//map changey stuff
-				backgroundOpacity.loadGraphic(Sources.maps[getCurrentMap()]);
+				currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
 				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
