@@ -297,7 +297,7 @@ package
 					dmgInfo.text = "The carrot tried to stab you! \n You took " + damage + " damage!";
 					break;
 				case "eggplant":
-					dmgInfo.text = "The eggplant used butt bump! \n You took " + damage + " damage!";
+					dmgInfo.text = "The eggplant used booty bump! \n You took " + damage + " damage!";
 					break;
 				case "lettuce":
 					dmgInfo.text = "The lettuce used razor leaf! \n You took " + damage + " damage!";
