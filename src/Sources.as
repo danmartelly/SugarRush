@@ -95,6 +95,7 @@ package
 		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
 		
 		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
+		[Embed(source="../assets/backdrops/instructions_small.png")] public static var instrucSmall:Class;
 		[Embed(source="../assets/backdrops/title.png")] public static var SplashScreenBackground:Class;
 		
 		//fonts
