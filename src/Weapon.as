@@ -22,7 +22,7 @@ package {
 			"Cotton" : "Cotton Candy",
 			"Chocolate": "Chocolate",
 			"Gumdrop": "Gumdrop",
-			"Marsh": "Marshmalllow"
+			"Marsh": "Marshmallow"
 		};
 		
 		// 1-3 match Candy constants.
