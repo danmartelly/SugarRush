@@ -30,7 +30,6 @@ package
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
-		protected var craftInstructions:FlxText;
 		private var candyMessage:FlxText
 
 		public var HUD:ExploreHUD;
@@ -77,7 +76,8 @@ package
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
-			
+			craftHouse.height -= 20; 
+			craftHouse.width -= 20;
 			
 
 			var eatButton:FlxButton = new FlxButton(FlxG.width/2-60, 410, "EAT", eatStuff);
@@ -102,11 +102,6 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
-			craftInstructions.setFormat("COOKIES",15);
-			craftInstructions.color=0x01000000;
-			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
-			
 			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
 			add(candyMessage);
 			candyMessage.visible = false;
@@ -121,7 +116,6 @@ package
 
 			add(eatButton);
 			add(pauseInstruction);
-			add(craftInstructions)
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -203,18 +197,11 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					craftInstructions.visible = true; 
-					
-					if (FlxG.keys.C)
-					{
-						triggerCraftingState();
-					}
+					triggerCraftingState();
+					_player.x = FlxG.width/2.0; 
+					_player.y = FlxG.height/2.0;
 				} 
-				else 
-				{
-					craftInstructions.visible = false;
-				}
-				
+
 				if (FlxG.keys.P){
 					pause = new PauseState;
 					pause.showPaused();
