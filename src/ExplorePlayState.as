@@ -9,6 +9,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	
 	public class ExplorePlayState extends FlxState
 	{	
@@ -30,6 +31,7 @@ package
 		protected var _chests:ExploreChestManager;
 		
 		protected var craftInstructions:FlxText;
+		private var candyMessage:FlxText
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -103,6 +105,9 @@ package
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
+			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
+			add(candyMessage);
+			candyMessage.visible = false;
 			
 			add(craftHouse);
 			add(_spawners);
@@ -142,6 +147,8 @@ package
 				var button:FlxButton = buttonArray[i];
 				button.active = true;
 			}
+			
+			
 		}
 		
 		override public function destroy():void {
@@ -256,6 +263,13 @@ package
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
 			chest.rewardCandy();
+			
+			candyMessage.visible = true;
+			var timer:FlxTimer = new FlxTimer(); 
+			timer.start(1,1,function(timer:FlxTimer){
+				candyMessage.visible = false;
+			});
+			
 			//_chests.remove(chest);
 		}
 		

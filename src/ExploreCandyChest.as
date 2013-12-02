@@ -1,34 +1,50 @@
 package
 {
-	import flash.geom.*;
-	import org.flixel.*;
+	import flash.geom.Point;
+	
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	
 	public class ExploreCandyChest extends FlxSprite
 	{
 		private var isEnabled:Boolean = true;
-		private const maxEnemiesAttacking:Number = 2;
 		public var enemySlotsOccupied:Boolean = false;
-		private const occupyDistance:Number = 90;
 		
+		private const maxEnemiesAttacking:Number = 2;
+		private const occupyDistance:Number = 90;
+	
 		private var _enemies:FlxGroup;
 		
 		public function ExploreCandyChest(X:Number, Y:Number, enemies:FlxGroup) {
 			super(X, Y, null);
 			_enemies = enemies;
-			this.loadGraphic(Sources.TreasureChest, true, false, 40, 40);
+			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
+			addAnimation("open", [1]); 
 		}
 		
 		public function rewardCandy():void {
 			if (isEnabled) {
 				Inventory.addCandy(Inventory.COLOR_BLUE);
-				this.frame = 1;
+				
+				play("open");
 				isEnabled = false;
-				var timer:FlxTimer = new FlxTimer();
-				var that:FlxSprite = this;
-				timer.start(1, 1, function(timer:FlxTimer){
-					that.visible = false;
+				
+				var timer:FlxTimer = new FlxTimer(); 
+				timer.start(1,1,function(timer:FlxTimer){
+					visible = false;
 				});
+				
 			}
+		}
+		
+		public static function CreateGotCandyMessage(position:FlxPoint):FlxText {
+			var getCandyTxt:FlxText = new FlxText(position.x, position.y, 300, "You got 1 candy!"); 
+			getCandyTxt.setFormat("COOKIES",20);
+			getCandyTxt.color = 0xffffffff;
+			return getCandyTxt;
 		}
 		
 		override public function update():void {
