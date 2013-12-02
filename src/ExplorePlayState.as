@@ -48,7 +48,6 @@ package
 		
 		Sources.fontCookies;
 		
-
 		public function ExplorePlayState(lock:SingletonLock) {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			background.loadGraphic(Sources.maps[getCurrentMap()]);
