@@ -44,6 +44,8 @@ package
 		public var _isEat:Boolean=false; //true if eat tab is open
 		public var eatButton:FlxButton;
 		
+		// eatFunction expects 2 args: function(candy:int, healAmount:Number){}
+		// baby type system is baby
 		public var eatFunction:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
@@ -219,7 +221,7 @@ package
 					PlayerData.instance.heal(healAmount);
 					that.update();
 					// here, call battle / overworld specific callback (eg: to change turn, etc)
-					eatFunction(healAmount);
+					eatFunction(color, healAmount);
 				} else {
 					FlxG.play(Sources.error);
 				}

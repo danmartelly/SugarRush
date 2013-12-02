@@ -54,7 +54,7 @@ package
 		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
 		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
 		
-		private var invulnTime:Number = 3.0;
+		private var invulnTime:Number = 2.0;
 		
 		private var background:FlxBackdrop;
 		
@@ -183,7 +183,10 @@ package
 		}
 		
 		public function useCandyFn(self:BattlePlayState):Function {
-			return function(healAmount:Number):void {
+			return function(candy:int, healAmount:Number):void {
+				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
+				self.eatObject.loadGraphic(Sources.candies[candy]);
+				add(eatObject);
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -271,13 +274,7 @@ package
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}
-
-		public function eatCallback(candy:int):void {
-			playerSprite.loadGraphic(Sources.battlePlayerEat);
-			eatObject.loadGraphic(Sources.candies[candy]);
-			add(eatObject);
-		}
-		
+				
 		private function updateHealthText():void {
 			playerHealthText.text = "Blood Sugar: "+ logic.player.currentHealth + "/" + logic.player.maxHealth;
 			enemyHealthText.text = "Health: "+ logic.enemy.currentHealth + "/" + logic.enemy.maxHealth;
@@ -290,7 +287,27 @@ package
 		public function enemyAttackCallback(damage:Number):void {
 			enemySprite.play("attack");
 			playerLifeBar.flicker(dmgFlickerTime);
-			dmgInfo.text = logic.enemy.name + " did " + damage + " damage!";
+			switch(logic.enemy.name){
+				case "broccoli":
+					dmgInfo.text = "The broccoli used arm thrust! \n You took " + damage + " damage!";
+					break;
+				case "tomato":
+					dmgInfo.text = "The tomato pukes in your face! \n You took " + damage + " damage!";
+					break;
+				case "carrot":
+					dmgInfo.text = "The carrot tried to stab you! \n You took " + damage + " damage!";
+					break;
+				case "eggplant":
+					dmgInfo.text = "The eggplant used butt bump! \n You took " + damage + " damage!";
+					break;
+				case "lettuce":
+					dmgInfo.text = "The lettuce used razor leaf! \n You took " + damage + " damage!";
+					break;
+				case "onion":
+					dmgInfo.text = "The onion made a sad puppy face!  \n You took " + damage + " damage!";
+					break;
+			}
+			
 		}
 		
 		public function turnCallback(turn:int):void {
