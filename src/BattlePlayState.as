@@ -286,12 +286,16 @@ package
 		}
 		
 		public function candyCallback():void {
-			if (Inventory.hasCandy()){
+			if (Inventory.hasCandy() && logic.playerHealthPercent() != 100){
+				FlxG.play(Sources.gainHealth);
 				logic.useCandy();
 				inventoryHUD.update(); //updates candy count
 				playerSprite.loadGraphic(Sources.battlePlayerEat);
 				//eatOject.loadGraphic( whatever the player just chose to eat );
 				add(eatObject);
+			}
+			else {
+				FlxG.play(Sources.error);
 			}
 		}
 		
