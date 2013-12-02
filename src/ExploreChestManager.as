@@ -35,7 +35,7 @@ package
 		public function spawnRandomChest():void {
 			var x:Number = Math.floor(Math.random()*FlxG.worldBounds.width);
 			var y:Number = Math.floor(Math.random()*(FlxG.worldBounds.height-75)); // 75 is lower bar
-			add(new ExploreCandyChest(x, y, _enemies));
+			add(new ExploreCandyChest(x, y, this, _enemies));
 		}
 	}
 }
