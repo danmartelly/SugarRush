@@ -186,7 +186,7 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
-				add(eatObject);
+				add(eatObject);	
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -199,8 +199,6 @@ package
 				remove(eatObject);
 			}
 			
-			enemySprite.play("idle");
-			
 			//show the appropriate idle frame based on enemy condition
 			// NOT WORKING, DUNNO WHY	
 			if (logic.enemy.hasBuff('burn')){
@@ -209,10 +207,11 @@ package
 				enemySprite.play("freeze");
 			} else {
 				enemySprite.play("idle");
-				playerSprite.loadGraphic(Sources.battlePlayer);
 				remove(eatObject);
-				dmgInfo.text="";
 			}
+			
+			playerSprite.loadGraphic(Sources.battlePlayer);
+			dmgInfo.text="";
 		}
 		
 		private function healthColor(healthPercent:Number):uint {

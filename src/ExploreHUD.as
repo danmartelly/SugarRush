@@ -50,7 +50,7 @@ package
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
-		public function ExploreHUD()
+		public function ExploreHUD(hasEat:Boolean = true)
 		{	
 			_inventoryBox = new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xFF7b421c);
 			_inventoryBox.scrollFactor.x = _inventoryBox.scrollFactor.y = 0;
@@ -69,8 +69,6 @@ package
 			_attackTab=new FlxSprite(2, 420).makeGraphic(120, 15, 0xffff2329);
 			_attackTab.scrollFactor.x=_attackTab.scrollFactor.y=0;
 			
-			add(_eatTab);
-			add(_eatBackground);
 			add(_attackTab);
 			add(_attackBackground);
 			
@@ -89,7 +87,12 @@ package
 			eatButton.labelOffset=new FlxPoint(0,0);
 			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
 			eatButton.onDown = openCandyTab;
-			add(eatButton);
+			
+			if (hasEat){
+				add(_eatTab);
+				add(_eatBackground);
+				add(eatButton);
+			}
 			
 			_weaponsText = new FlxText(0, FlxG.height * 0.90, FlxG.width, "Weapons:");
 			_candiesText = new FlxText(FlxG.width * 0.53, FlxG.height * 0.90, FlxG.width, "Candies:");
@@ -152,16 +155,18 @@ package
 			_killCount.setFormat("COOKIES", 15, 0xff000000);
 			add(_killCount);
 			
-			_red.makeGraphic(25,25,0xaaffffff);
-			_red.scrollFactor.x = _red.scrollFactor.y = 0;
-			_blue.makeGraphic(25,25,0xaaffffff);
-			_blue.scrollFactor.x = _blue.scrollFactor.y = 0;
-			_white.makeGraphic(25,25,0xaaffffff);
-			_white.scrollFactor.x = _white.scrollFactor.y = 0;
-			
-			eatGroup.add(_red);
-			eatGroup.add(_blue);
-			eatGroup.add(_white);
+			if (hasEat) {
+				_red.makeGraphic(25,25,0xaaffffff);
+				_red.scrollFactor.x = _red.scrollFactor.y = 0;
+				_blue.makeGraphic(25,25,0xaaffffff);
+				_blue.scrollFactor.x = _blue.scrollFactor.y = 0;
+				_white.makeGraphic(25,25,0xaaffffff);
+				_white.scrollFactor.x = _white.scrollFactor.y = 0;
+				
+				eatGroup.add(_red);
+				eatGroup.add(_blue);
+				eatGroup.add(_white);
+			}
 		}
 		
 		public function openAttack():void{
