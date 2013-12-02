@@ -31,7 +31,7 @@ package
 		protected var _chests:ExploreChestManager;
 		
 		protected var craftInstructions:FlxText;
-		private var candyMessage:FlxText
+		private var inGameMessage:FlxText
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -62,7 +62,11 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_chests = new ExploreChestManager(_enemies);
+			inGameMessage = new FlxText(FlxG.width/2.0, 0, 300, "test");
+			inGameMessage.setFormat("COOKIES",20);
+			inGameMessage.color = 0xff000000;
+			inGameMessage.visible = false;
+			_chests = new ExploreChestManager(_enemies, inGameMessage);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
 			for each (var e in spawnerLocations) {
 				var entry:Array = e as Array;
@@ -88,9 +92,9 @@ package
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
-			candyMessage = ExploreCandyChest.CreateGotCandyMessage(new FlxPoint(FlxG.width/2.0, 0));
-			add(candyMessage);
-			candyMessage.visible = false;
+			
+			add(inGameMessage);
+			
 			
 			add(craftHouse);
 			add(_spawners);
@@ -239,15 +243,7 @@ package
 		}
 		
 		public function triggerCandyChest(player:FlxSprite, chest:ExploreCandyChest):void {
-			chest.rewardCandy();
-			
-			candyMessage.visible = true;
-			var timer:FlxTimer = new FlxTimer(); 
-			timer.start(1,1,function(timer:FlxTimer){
-				candyMessage.visible = false;
-			});
-			
-			//_chests.remove(chest);
+			chest.rewardTreasure();
 		}
 	}
 }
