@@ -62,7 +62,7 @@ package {
 			var defenseValue:Number = Math.round(sampleFromNormal(defensePower * 0.5, 0.4));
 			var healthValue:Number = Math.round(sampleFromNormal(3 + 5 * healthPower, 0.33));
 			
-			if (attackValue < 0) attackValue = 0;
+			if (attackValue < 1) attackValue = 1;
 			if (defenseValue < 0) defenseValue = 0;
 			if (healthValue < 3) healthValue = 3;
 			
