@@ -44,7 +44,7 @@ package
 		public static function CreateGotCandyMessage(position:FlxPoint):FlxText {
 			var getCandyTxt:FlxText = new FlxText(position.x, position.y, 300, "You got 1 candy!"); 
 			getCandyTxt.setFormat("COOKIES",20);
-			getCandyTxt.color = 0xffffffff;
+			getCandyTxt.color = 0x00000000;
 			return getCandyTxt;
 		}
 		
