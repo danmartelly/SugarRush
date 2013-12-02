@@ -183,6 +183,7 @@ package
 				{
 					craftInstructions.visible = false;
 				}
+				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
