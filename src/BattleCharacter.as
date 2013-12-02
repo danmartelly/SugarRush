@@ -126,6 +126,8 @@ package {
 			
 			if (this.getAttackStat() == 0)
 				damageAmount = 0;
+			if (this.flags[0] == 'crit')
+				damageAmount *= 2;
 			
 			opponent.hurt(damageAmount);
 			
