@@ -96,8 +96,8 @@ package
 			enemySprite.addAnimation("idle", [0]);
 			enemySprite.addAnimation("attacked", [1]);
 			enemySprite.addAnimation("attack", [2]);
-			enemySprite.addAnimation("freeze", [3]);
-			enemySprite.addAnimation("burn", [4]);
+			enemySprite.addAnimation("freeze", [4]);
+			enemySprite.addAnimation("burn", [5]);
 			
 			playerName.setFormat("COOKIES",20,0x01000000);
 			enemyName.setFormat("COOKIES",20,0x01000000);
@@ -189,14 +189,23 @@ package
 		
 		public function returnToIdle():void {
 			// show the appropriate idle frame based on enemy condition
-//			if (logic.enemy.hasBuff("burn")){
-//				enemySprite.play("burn", true);
-//			} else if (logic.enemy.hasBuff("freeze")){
-//				enemySprite.play("freeze", true);
-//			} else {
-//				enemySprite.play("idle", true);
-//			}
-			enemySprite.play("idle");
+			var condition:String = "idle";
+			switch (enemyData.getBuffText()) {
+				case "Burn":
+					condition = "burn";
+				case "Freeze":
+					condition = "freeze";
+			}
+			enemySprite.play(condition);
+			/*
+			if (logic.enemy.hasBuff("burn")){
+				enemySprite.play("burn", true);
+			} else if (logic.enemy.hasBuff("freeze")){
+				enemySprite.play("freeze", true);
+			} else {
+				enemySprite.play("idle", true);
+			}
+			*/
 			
 			playerSprite.loadGraphic(Sources.battlePlayer);
 			if (eatObject.visible){
@@ -326,6 +335,9 @@ package
 		
 		public function updateBuffText():void {
 			buffText.text = enemyData.getBuffText();
+			if (buffText.text == 'Burn') {
+				buffText.text += " (-1)";
+			}
 		}
 		
 		public function attackLogicCallback():void {

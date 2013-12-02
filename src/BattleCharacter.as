@@ -87,9 +87,6 @@ package {
 			if (this.buffs.length > 0) {
 				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
 				output = buff.getDisplayName();
-				if (output == 'Burn') {
-					output += " (-1)";
-				}
 			}
 			return output;
 		}
