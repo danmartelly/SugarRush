@@ -44,6 +44,8 @@ package
 		public var _isEat:Boolean=false; //true if eat tab is open
 		public var eatButton:FlxButton;
 		
+		public var eatFunction:Function;
+		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public function ExploreHUD()
@@ -213,9 +215,11 @@ package
 				if (!PlayerData.instance.hasFullHealth() && Inventory.candyCount(color) > 0 ){
 					FlxG.play(Sources.gainHealth);
 					Inventory.removeCandy(color);
-					PlayerData.instance.heal(5);
+					var healAmount:Number = 5;
+					PlayerData.instance.heal(healAmount);
 					that.update();
 					// here, call battle / overworld specific callback (eg: to change turn, etc)
+					eatFunction(healAmount);
 				} else {
 					FlxG.play(Sources.error);
 				}

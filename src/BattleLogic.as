@@ -38,12 +38,6 @@ package {
 			return dmg;
 		}
 		
-		private static function randomEnemy():String {
-			var enemyCount:int = Sources.enemyNames.length;
-			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
-			return Sources.enemyNames[enemyIndex];
-		}
-		
 		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
 			player.data.currentWeaponIndex = index;
@@ -57,17 +51,19 @@ package {
 			}
 		}
 		
-		public function useCandy():void {
-			this.state.showHealth();
+		public function useCandy(healAmount:Number):void {
+			this.player.heal(healAmount);
 			this.state.healthCallback();
 			endTurn();
 		}
 		
-		public function enemyTurn():void {
-			var enemyDamage:Number = this.enemy.attack(player);
-			this.state.enemyAttackCallback(enemyDamage);
-			this.state.healthCallback();
-			this.endTurn();
+		public function enemyTurn(self:BattleLogic):Function {
+			return function():void {
+				var enemyDamage:Number = self.enemy.attack(player);
+				self.state.enemyAttackCallback(enemyDamage);
+				self.state.healthCallback();
+				self.endTurn();
+			};
 		}
 		
 		public function endTurn():void {
@@ -88,9 +84,10 @@ package {
 				this.state.turnCallback(turn);
 			}
 			
+			var self:BattleLogic = this;
 			// 1-second delay on turn-change
 			if (turn == ENEMY_TURN && !enemy.isDead){
-				enemyTurn();
+				(new FlxTimer).start(1, 1, enemyTurn(this));
 			}
 		}
 		

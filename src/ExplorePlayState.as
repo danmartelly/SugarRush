@@ -102,6 +102,8 @@ package
 			
 			add(pauseInstruction);
 			add(craftInstructions);
+			
+			HUD.eatFunction = function(healAmount:Number):void{};
 		}
 		
 		public static function get instance():ExplorePlayState {

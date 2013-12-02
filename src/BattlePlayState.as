@@ -153,6 +153,7 @@ package
 			add(buffText);
 			
 			drawHealthBar();
+			inventoryHUD.eatFunction = useCandyFn(this);
 		}
 		
 		// handle key presses (cheats/debugging)
@@ -181,6 +182,12 @@ package
 			super.update();
 		}
 		
+		public function useCandyFn(self:BattlePlayState):Function {
+			return function(healAmount:Number):void {
+				self.logic.useCandy(healAmount);
+			};
+		}
+		
 		// return enemy and player sprites to idle state
 		public function returnToIdle():void {
 			dmgInfo.text = "";
@@ -205,10 +212,6 @@ package
 			}
 		}
 		
-		public function showHealth():void{
-			//add(new FlxText(150, 150, 100, logic.player.currentHealth.toString()));
-		}
-		
 		private function healthColor(healthPercent:Number):uint {
 			if (healthPercent > 50){
 				return 0xff00ff00;
@@ -228,7 +231,6 @@ package
 			// change color based on health!
 			
 			var e_health:Number = logic.enemyHealthPercent();
-			
 			enemyLifeBar.scale.x = e_health / 100.0;
 			//var enemyBarColor:uint = healthColor(e_health);
 			//enemyLifeBar.fill(enemyBarColor);
@@ -282,7 +284,7 @@ package
 		}
 		
 		public function healthCallback():void {
-			drawHealthBar();
+			this.drawHealthBar();
 		}
 		
 		public function enemyAttackCallback(damage:Number):void {
@@ -292,6 +294,8 @@ package
 		}
 		
 		public function turnCallback(turn:int):void {
+			var self:BattlePlayState = this;
+			
 			switch(turn){
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
@@ -303,11 +307,12 @@ package
 					attackButton.active = true;
 					runButton.active = true;
 					attackBtnWeapons.active = true;
-					(new FlxTimer()).start(1,1,updatePlayerText);
+					(new FlxTimer()).start(1,1,updatePlayerText(self));
 					break;
 				default:
 					break;
 			}
+			
 			updateBuffText();
 			this.update();
 		}
@@ -316,9 +321,11 @@ package
 			turnText.text = "Enemy's turn!";
 		}
 		
-		public function updatePlayerText():void {
-			turnText.text = "Player's turn!";
-			returnToIdle();
+		public function updatePlayerText(self:BattlePlayState):Function {
+			return function(): void {
+				self.turnText.text = "Player's turn!";
+				self.returnToIdle();
+			};
 		}
 		
 		public function updateBuffText():void {
