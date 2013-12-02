@@ -238,8 +238,12 @@ package
 			
 			var player:PlayerData = PlayerData.instance; 
 			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
+				FlxG.play(Sources.gainHealth);
 				Inventory.removeCandy(Inventory.randomCandy());
 				player.currentHealth = Math.min((player.currentHealth + 5), player.maxHealth);
+			}
+			else {
+				FlxG.play(Sources.error);
 			}
 		}
 		
