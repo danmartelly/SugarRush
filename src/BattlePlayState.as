@@ -307,7 +307,27 @@ package
 		public function enemyAttackCallback(damage:Number):void {
 			enemySprite.play("attack");
 			playerLifeBar.flicker(dmgFlickerTime);
-			dmgInfo.text = logic.enemy.name + " did " + damage + " damage!";
+			switch(logic.enemy.name){
+				case "broccoli":
+					dmgInfo.text = "The broccoli used arm thrust! \n You took " + damage + " damage!";
+					break;
+				case "tomato":
+					dmgInfo.text = "The tomato pukes in your face! \n You took " + damage + " damage!";
+					break;
+				case "carrot":
+					dmgInfo.text = "The carrot tried to stab you! \n You took " + damage + " damage!";
+					break;
+				case "eggplant":
+					dmgInfo.text = "The eggplant used butt bump! \n You took " + damage + " damage!";
+					break;
+				case "lettuce":
+					dmgInfo.text = "The lettuce used razor leaf! \n You took " + damage + " damage!";
+					break;
+				case "onion":
+					dmgInfo.text = "The onion made a sad puppy face!  \n You took " + damage + " damage!";
+					break;
+			}
+			
 		}
 		
 		public function turnCallback(turn:int):void {
