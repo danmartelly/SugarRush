@@ -117,7 +117,7 @@ package
 		public static const candies:Array = [candyRed, candyBlue, candyWhite];
 		
 		//buff stuff
-		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
+		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "equip", "hit", "hit", "equip", "equip", "equip", "equip"];
 		
 		//text
 		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce", "onion"];

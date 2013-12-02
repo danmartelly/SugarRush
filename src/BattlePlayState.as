@@ -309,8 +309,6 @@ package
 		}
 		
 		public function enemyAttackCallback(damage:Number):void {
-			enemySprite.play("attack");
-			playerLifeBar.flicker(dmgFlickerTime);
 			switch(logic.enemy.name){
 				case "broccoli":
 					dmgInfo.text = "The broccoli used arm thrust! \n You took " + damage + " damage!";
@@ -332,6 +330,14 @@ package
 					break;
 			}
 			
+			var enemyFlags = logic.getEnemyFlags();
+			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
+				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
+			}
+			else {
+				enemySprite.play("attack");
+				playerLifeBar.flicker(dmgFlickerTime);
+			}
 		}
 		
 		public function turnCallback(turn:int):void {
