@@ -1,7 +1,8 @@
 package {
-	import org.flixel.FlxTimer;
 	import flash.utils.describeType;
+	
 	import org.flixel.FlxG;
+	import org.flixel.FlxTimer;
 	/**
 	 * @author ethanis
 	 */
@@ -37,12 +38,6 @@ package {
 			return dmg;
 		}
 		
-		private static function randomEnemy():String {
-			var enemyCount:int = Sources.enemyNames.length;
-			var enemyIndex:int = Math.floor(Math.random()*enemyCount);
-			return Sources.enemyNames[enemyIndex];
-		}
-		
 		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
 			player.data.currentWeaponIndex = index;
@@ -56,41 +51,44 @@ package {
 			}
 		}
 		
-		public function useCandy():void {
-			if (Inventory.hasCandy() && player.currentHealth !== player.maxHealth) {
-				Inventory.removeCandy(Inventory.randomCandy());
-				player.heal(5);
-				this.state.showHealth();
-				this.state.healthCallback();
-				endTurn();
-			}
+		public function useCandy(healAmount:Number):void {
+			this.player.heal(healAmount);
+			this.state.healthCallback();
+			endTurn();
 		}
 		
-		private function endTurn():void {
+		public function enemyTurn(self:BattleLogic):Function {
+			return function():void {
+				var enemyDamage:Number = self.enemy.attack(player);
+				self.state.enemyAttackCallback(enemyDamage);
+				self.state.healthCallback();
+				self.endTurn();
+			};
+		}
+		
+		public function endTurn():void {
 			turn = (turn + 1) % 2;
 			
-			if (turn == ENEMY_TURN) player.removeTempStats();
-			else enemy.removeTempStats();
+			if (turn == ENEMY_TURN){
+				player.removeTempStats();
+			} else { 
+				enemy.removeTempStats();
+			}
 			
 			if (player.isDead) {
 				this.state.endBattleCallback(ENEMY_WON);
-			}else if (enemy.isDead) {
+			} else if (enemy.isDead) {
 				player.data.killCount += 1;
 				this.state.endBattleCallback(PLAYER_WON);
 			} else {
 				this.state.turnCallback(turn);
 			}
 			
+			var self:BattleLogic = this;
 			// 1-second delay on turn-change
-			var timer:FlxTimer = new FlxTimer();
-			timer.start(1,1, function():void {
-				if (turn == ENEMY_TURN && !enemy.isDead){
-					var enemyDamage:Number = enemy.attack(player);
-					state.enemyAttackCallback(enemyDamage);
-					state.healthCallback();
-					endTurn();
-				}
-			});
+			if (turn == ENEMY_TURN && !enemy.isDead){
+				(new FlxTimer).start(1, 1, enemyTurn(this));
+			}
 		}
 		
 		// WALTER, USE THESE

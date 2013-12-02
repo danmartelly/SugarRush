@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
+	import org.flixel.FlxPoint;
 	
 	public class ExploreHUD extends FlxGroup
 	{
@@ -33,8 +34,19 @@ package
 		protected var _eatBackground:FlxSprite;
 		protected var _attackBackground:FlxSprite;
 		
+		//eating button
+		public var eatGroup:FlxGroup = new FlxGroup();
+		public var _red:FlxButton = new FlxButton(FlxG.width * 0.635, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_RED));
+		public var _blue:FlxButton = new FlxButton(FlxG.width * 0.735, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_BLUE));
+		public var _white:FlxButton = new FlxButton(FlxG.width * 0.835, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_WHITE));
+		
 		protected var _inTab:Boolean=false; //true if a tab (attack, eat) is open
-		protected var _isEat:Boolean=false; //true if eat tab is open
+		public var _isEat:Boolean=false; //true if eat tab is open
+		public var eatButton:FlxButton;
+		
+		// eatFunction expects 2 args: function(candy:int, healAmount:Number){}
+		// baby type system is baby
+		public var eatFunction:Function;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
@@ -67,6 +79,17 @@ package
 			_eatBackground.visible=false;
 			_attackTab.visible=false;
 			_attackBackground.visible=false;
+			
+			eatButton = new FlxButton(FlxG.width/2-60, 410, "EAT");
+			eatButton.loadGraphic(Sources.buttonOrange);
+			var eatLabel:FlxText=new FlxText(0,0,120,"EAT");
+			eatLabel.setFormat("COOKIES", 17, 0xffffffff);
+			eatLabel.alignment = "center";
+			eatButton.label=eatLabel;
+			eatButton.labelOffset=new FlxPoint(0,0);
+			eatButton.scrollFactor.x = eatButton.scrollFactor.y = 0;
+			eatButton.onDown = openCandyTab;
+			add(eatButton);
 			
 			_weaponsText = new FlxText(0, FlxG.height * 0.90, FlxG.width, "Weapons:");
 			_candiesText = new FlxText(FlxG.width * 0.53, FlxG.height * 0.90, FlxG.width, "Candies:");
@@ -118,7 +141,6 @@ package
 			add(_blueCount);
 			add(_whiteCount);
 			
-			
 			_healthLabel = new FlxText(FlxG.width - 90, FlxG.height - 90, 90, "Health: ");
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			_healthLabel.setFormat("COOKIES",15);
@@ -129,9 +151,21 @@ package
 			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
 			_killCount.setFormat("COOKIES", 15, 0xff000000);
 			add(_killCount);
+			
+			_red.makeGraphic(25,25,0xaaffffff);
+			_red.scrollFactor.x = _red.scrollFactor.y = 0;
+			_blue.makeGraphic(25,25,0xaaffffff);
+			_blue.scrollFactor.x = _blue.scrollFactor.y = 0;
+			_white.makeGraphic(25,25,0xaaffffff);
+			_white.scrollFactor.x = _white.scrollFactor.y = 0;
+			
+			eatGroup.add(_red);
+			eatGroup.add(_blue);
+			eatGroup.add(_white);
 		}
 		
 		public function openAttack():void{
+			remove(eatGroup);
 			_inTab=true;
 			_isEat=false;
 			_eatTab.visible=false;
@@ -141,6 +175,7 @@ package
 		}
 		
 		public function openEat():void{
+			add(eatGroup);
 			_inTab=true;
 			_isEat=true;
 			_eatTab.visible=true;
@@ -152,18 +187,44 @@ package
 		//closes both tabs, return to neutral state
 		public function closeTab():void{
 			_inTab=false;
-			_isEat=false;			
+			_isEat=false;
 			_eatTab.visible=false;
 			_eatBackground.visible=false;
 			_attackTab.visible=false;
 			_attackBackground.visible=false;
 		}
 		
+		private function openCandyTab():void {
+			this.openEat();
+			this.update();
+		}
 		
 		private function weaponCallbackFn(i:int): Function
 		{
 			return function():void {
+				//if(_isEat){
+				//	PlayerData.instance.changeWeapon(0);
+				//	Inventory.removeWeaponAt(i);
+				/*}else*/
 				PlayerData.instance.changeWeapon(i);
+			};		
+		}
+		
+		public function candyCallback(color:int):Function {
+			var that:ExploreHUD = this;
+			
+			return function():void {
+				if (!PlayerData.instance.hasFullHealth() && Inventory.candyCount(color) > 0 ){
+					FlxG.play(Sources.gainHealth);
+					Inventory.removeCandy(color);
+					var healAmount:Number = 5;
+					PlayerData.instance.heal(healAmount);
+					that.update();
+					// here, call battle / overworld specific callback (eg: to change turn, etc)
+					eatFunction(color, healAmount);
+				} else {
+					FlxG.play(Sources.error);
+				}
 			};
 		}
 		
@@ -213,35 +274,21 @@ package
 				weaponSprite.loadGraphic(weapon.image);
 
 				//weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
-				
-				//only want this to be possible if you are in eat/attack tab
-				if (_inTab){
-					weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
-					
-					//only show selection if we're in a tab
-					if (i == PlayerData.instance.currentWeaponIndex) {
-						_currentWeaponBox.visible=true;
-						_currentWeaponBox.x = weaponSprite.x;
-						_currentWeaponBox.y = weaponSprite.y;
-					}
-				}else{
-					_currentWeaponBox.visible=false;
-				}
-				
-				
 				if (i == PlayerData.instance.currentWeaponIndex) {
 					_currentWeaponBox.x = weaponSprite.x;
 					_currentWeaponBox.y = weaponSprite.y;
 				}
-					
-				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
-				weaponStats.x = weaponSprite.x+10;
-				weaponStats.y = weaponSprite.y-12;
-				weaponStats.width = weaponSprite.width;
-				//weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
-				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
-				weaponStats.makeGraphic(40, 40, 0x00000000);
-
+				
+				//only want this to be possible if you are in eat/attack tab
+				if (_inTab){
+					if(!_isEat){
+						weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
+						//only show selection if we're in a tab
+						_currentWeaponBox.visible=true;
+					}
+				} else {
+					_currentWeaponBox.visible=false;
+				}
 			}
 			
 			mouseHover();
