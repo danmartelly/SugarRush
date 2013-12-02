@@ -47,6 +47,8 @@ package
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
 			
+			FlxG.mouse.load(Sources.cursor);
+			
 			backgroundOpacity=new FlxSprite(0,0);
 			backgroundOpacity.makeGraphic(FlxG.width,FlxG.height,0xff000000);
 			backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;

@@ -56,10 +56,10 @@ package
 		[Embed(source="../assets/weapons/sword_gumdrop.png")] public static var SwordGumdrop:Class;
 		[Embed(source="../assets/weapons/sword_marshmallow.png")] public static var SwordMarsh:Class;
 		
-		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
-		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
-		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
-		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
+//		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
+//		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
+//		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
+//		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
 		
 		[Embed(source="../assets/button_red.png")] public static var buttonRed:Class;	
 		[Embed(source="../assets/button_blue.png")] public static var buttonBlue:Class;	
@@ -75,7 +75,14 @@ package
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
-		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
+		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
+		[Embed(source="../assets/backdrops/intro2.png")] public static var intro2:Class;
+		[Embed(source="../assets/backdrops/intro3.png")] public static var intro3:Class;
+		
+		public static const intros:Array=[intro1, intro2, intro3, Instructions];
+		
+		
+		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
 		
 		//fonts
 		// Even if we comment this out it seems to still work?

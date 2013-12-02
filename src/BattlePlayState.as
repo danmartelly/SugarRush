@@ -76,7 +76,6 @@ package
 		}
 		
 		override public function create():void {
-			
 			FlxG.debug = true;
 			FlxG.bgColor = 0xffaaaaaa;
 			logic = new BattleLogic(this, enemyData);
@@ -196,6 +195,7 @@ package
 				enemySprite.play("idle");
 				playerSprite.loadGraphic(Sources.battlePlayer);
 				remove(eatObject);
+				dmgInfo.text="";
 			}
 			super.update();
 		}
@@ -294,11 +294,13 @@ package
 				case BattleLogic.ENEMY_TURN:
 					attackButton.active = false;
 					runButton.active = false;
+					attackBtnWeapons.active = false;
 					updateEnemyText();
 					break;
 				case BattleLogic.PLAYER_TURN:
 					attackButton.active = true;
 					runButton.active = true;
+					attackBtnWeapons.active = true;
 					(new FlxTimer()).start(1,1,updatePlayerText);
 					break;
 				
