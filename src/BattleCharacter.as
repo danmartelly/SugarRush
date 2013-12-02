@@ -116,12 +116,11 @@ package {
 			}
 			var opponentDefense:int = opponent.getDefenseStat();
 			
-			if (this.flags.indexOf("true") != -1) {
-				opponentDefense = 0;
-			}
-			
 			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
 				Math.floor(Math.random()*2*opponentDefense)));
+			
+			if (this.getAttackStat() == 0)
+				damageAmount = 0;
 			
 			opponent.hurt(damageAmount);
 			
