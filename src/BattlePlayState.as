@@ -32,17 +32,18 @@ package
 			
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(50, 50);
-		private var enemyLifeBar:FlxSprite = new FlxSprite(50, 50);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, y - 50 - invenBarHeight);
+		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
+		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
-		private var enemyName:FlxText = new FlxText(50,25, lifeBarWidth,"Enemy Name");
-		private var enemyHealthText:FlxText = new FlxText(50, 52, lifeBarWidth, "Health: ?/?");
-		private var buffText:FlxText = new FlxText(150, 30, lifeBarWidth, "");
+		private var enemyName:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-20, lifeBarWidth,"Enemy Name");
+		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
+		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(hor,y - 50 - invenBarHeight);
-		private var playerLifeBar:FlxSprite = new FlxSprite(hor, y - 50 - invenBarHeight);
-		private var playerName:FlxText = new FlxText(hor,y-75-invenBarHeight,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(hor, y - 48 - invenBarHeight, lifeBarWidth, "Blood Sugar: ?/?");
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var playerLifeBar:FlxSprite = new FlxSprite(50,50);
+		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
+		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
 		
 		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
@@ -50,8 +51,8 @@ package
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(hor,315,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 200, FlxG.height - 100, 400, "");
+		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
 		
 		private var invulnTime:Number = 3.0;
 		

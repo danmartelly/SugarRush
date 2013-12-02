@@ -32,7 +32,7 @@ package
 		[Embed(source="../assets/enemies/carrot_small.png")] public static var SmallCarrot:Class;
 		[Embed(source="../assets/enemies/eggplantsprite.png")] public static var Eggplant:Class;
 		[Embed(source="../assets/enemies/eggplant_small.png")] public static var SmallEggplant:Class;
-		[Embed(source="../assets/enemies/lettucesprite.png")] public static var Lettuce:Class;	
+		[Embed(source="../assets/enemies/cabbagesprite.png")] public static var Lettuce:Class;	
 		[Embed(source="../assets/enemies/lettuce_small.png")] public static var SmallLettuce:Class;
 		[Embed(source="../assets/enemies/onionsprite.png")] public static var Onion:Class;	
 		[Embed(source="../assets/enemies/onion_small.png")] public static var SmallOnion:Class;

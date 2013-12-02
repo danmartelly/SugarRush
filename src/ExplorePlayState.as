@@ -98,7 +98,7 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			craftInstructions = new FlxText(0,FlxG.height - 100,500, "Press C to enter and craft weapons");
+			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
 			craftInstructions.setFormat("COOKIES",15);
 			craftInstructions.color=0x01000000;
 			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
