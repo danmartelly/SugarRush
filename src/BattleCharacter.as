@@ -88,19 +88,9 @@ package {
 			var output:String = "";
 			if (this.buffs.length > 0) {
 				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
-<<<<<<< HEAD
-				output = buff.getDisplayName();
-=======
-				var buffName = buff.getDisplayName();
-				if (buffName == 'Burn') {
-					buffName += " (-1)";
-				}
-				else if (buffName == 'Ignite') {
-					buffName += " (-2)";
-				}
-				output += (output != "" ? " " : ""); //puts a space before any additional buffs
+				var buffName:String = buff.getDisplayName();
+				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
->>>>>>> 87d5846f842927778946ae86deef01b51fc1541c
 			}
 			return output;
 		}
