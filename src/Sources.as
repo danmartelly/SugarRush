@@ -32,8 +32,10 @@ package
 		[Embed(source="../assets/enemies/carrot_small.png")] public static var SmallCarrot:Class;
 		[Embed(source="../assets/enemies/eggplantsprite.png")] public static var Eggplant:Class;
 		[Embed(source="../assets/enemies/eggplant_small.png")] public static var SmallEggplant:Class;
-		[Embed(source="../assets/enemies/lettucesprite.png")] public static var Lettuce:Class;	
+		[Embed(source="../assets/enemies/cabbagesprite.png")] public static var Lettuce:Class;	
 		[Embed(source="../assets/enemies/lettuce_small.png")] public static var SmallLettuce:Class;
+		[Embed(source="../assets/enemies/onionsprite.png")] public static var Onion:Class;	
+		[Embed(source="../assets/enemies/onion_small.png")] public static var SmallOnion:Class;
 		
 		[Embed(source="../assets/weapons/axe_candycane.png")] public static var AxeCane:Class;
 		[Embed(source="../assets/weapons/axe_chocolate.png")] public static var AxeChocolate:Class;
@@ -69,6 +71,7 @@ package
 		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
 		
 		[Embed(source="../assets/treasure.png")] public static var TreasureChest:Class;
+		[Embed(source="../assets/crafthouse.png")] public static var CraftHouse:Class;
 		
 		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
@@ -83,6 +86,9 @@ package
 		
 		
 		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
+		
+		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
+		[Embed(source="../assets/backdrops/title.png")] public static var SplashScreenBackground:Class;
 		
 		//fonts
 		// Even if we comment this out it seems to still work?
@@ -103,20 +109,23 @@ package
 		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
 		
 		//text
-		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce"];
+		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce", "onion"];
 		public static const enemyExploreSpriteMap:Object = {
 			"broccoli": SmallBroccoli,
 			"tomato": SmallTomato,
 			"carrot": SmallCarrot,
 			"eggplant": SmallEggplant,
-			"lettuce": SmallLettuce
+			"lettuce": SmallLettuce,
+			"onion": SmallOnion
 		};
 		public static const enemyBattleSpriteMap:Object = {
 			"broccoli": Broccoli,
 			"tomato": Tomato,
 			"carrot": Carrot,
 			"eggplant": Eggplant,
-			"lettuce": Lettuce
+			"lettuce": Lettuce,
+			"onion": Onion
 		};
+		
 	}
 }

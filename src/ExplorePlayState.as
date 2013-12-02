@@ -22,10 +22,14 @@ package
 			[new FlxPoint(700,390)] //1100, 700
 		];
 		
+		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
+		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
+		
+		protected var craftInstructions:FlxText;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -43,6 +47,7 @@ package
 		
 		Sources.fontCookies;
 		
+
 		public function ExplorePlayState(lock:SingletonLock) {
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			add(background);
@@ -69,14 +74,9 @@ package
 				_spawners.add(spawner);
 			}
 			
-			var craftButton:FlxButton = new FlxButton(FlxG.width-120-2, 410, "", triggerCraftingState); //-2 for margin
-			craftButton.loadGraphic(Sources.buttonBlue);
-			var craftLabel:FlxText=new FlxText(0,0,120,"CRAFT");
-			craftLabel.setFormat("COOKIES", 17, 0xffffffff);
-			craftLabel.alignment = "center";
-			craftButton.label=craftLabel;
-			craftButton.labelOffset=new FlxPoint(0,0);
-			craftButton.scrollFactor.x = craftButton.scrollFactor.y = 0;
+			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
+			
+			
 
 			var eatButton:FlxButton = new FlxButton(FlxG.width/2-60, 410, "EAT", eatStuff);
 
@@ -90,7 +90,7 @@ package
 			eatButton.onDown = eatCallback;
 			
 			buttonArray = new Array();
-			buttonArray.push(craftButton);
+
 			buttonArray.push(eatButton);
 			
 			pause = new PauseState();
@@ -100,16 +100,23 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
+			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
+			craftInstructions.setFormat("COOKIES",15);
+			craftInstructions.color=0x01000000;
+			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
 			
+			
+			add(craftHouse);
 			add(_spawners);
 			add(_chests);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
 			add(HUD);
-			add(craftButton);
+
 			add(eatButton);
 			add(pauseInstruction);
+			add(craftInstructions)
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -181,10 +188,23 @@ package
 					/* i haven't looked into the source to see how collision works exactly.
 					however, it only seems to trigger on the first frame of a collision,
 					rather than on every frame of a collision, so the above FlxG.overlap seems necessary to me. */
-					FlxG.collide(_player, _enemies, triggerBattleState);
+					FlxG.overlap(_player, _enemies, triggerBattleState);
 				}
 				
 				FlxG.overlap(_player, _chests, triggerCandyChest);
+				if (FlxG.overlap(_player, craftHouse)) 
+				{
+					craftInstructions.visible = true; 
+					
+					if (FlxG.keys.C)
+					{
+						triggerCraftingState();
+					}
+				} 
+				else 
+				{
+					craftInstructions.visible = false;
+				}
 				
 				if (FlxG.keys.P){
 					pause = new PauseState;
@@ -193,7 +213,7 @@ package
 				} else if (FlxG.keys.B){
 					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
-				} else if (FlxG.keys.C){ // cheathax
+				} else if (FlxG.keys.A){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
 				}
 			} else {

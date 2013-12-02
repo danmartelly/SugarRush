@@ -201,12 +201,18 @@ package
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
 				var weapon:Weapon = Inventory.getWeapons()[i];
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
-				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;
+				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;	
+				//weaponSprite.label = new FlxText(0, 0, 40, weapon.getDisplayName());
+				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
+				
+				//weaponSprite.fill(0xFFFFFFFF);
 				weaponSprite.y = FlxG.height * 0.91;
 
 				//weaponSprite.label = new FlxText(0, 0, 40, weapon.displayName);
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.loadGraphic(weapon.image);
+
+				//weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
 				
 				//only want this to be possible if you are in eat/attack tab
 				if (_inTab){
@@ -222,8 +228,20 @@ package
 					_currentWeaponBox.visible=false;
 				}
 				
-
 				
+				if (i == PlayerData.instance.currentWeaponIndex) {
+					_currentWeaponBox.x = weaponSprite.x;
+					_currentWeaponBox.y = weaponSprite.y;
+				}
+					
+				var weaponStats:FlxButton = _weaponStatsGroup.recycle(FlxButton) as FlxButton;
+				weaponStats.x = weaponSprite.x+10;
+				weaponStats.y = weaponSprite.y-12;
+				weaponStats.width = weaponSprite.width;
+				//weaponStats.label = new FlxText(0, 0, 40, weapon.attack.toString() + "/" +  weapon.defense.toString());
+				weaponStats.scrollFactor.x = weaponStats.scrollFactor.y = 0;
+				weaponStats.makeGraphic(40, 40, 0x00000000);
+
 			}
 			
 			mouseHover();

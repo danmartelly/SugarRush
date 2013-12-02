@@ -12,7 +12,7 @@ package
 		private var _player:ExplorePlayer;
 		private var _enemiesFromThisSpawner:Array;
 		public var spawnRate:Number = 3;
-		public var totalEnemies:Number = 5;
+		public var totalEnemies:Number = 3;
 		
 		private const enemyDifficulty:int = 1;
 		

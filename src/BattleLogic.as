@@ -87,9 +87,10 @@ package {
 			
 			// 1-second delay on turn-change
 			var timer:FlxTimer = new FlxTimer();
-			timer.start(1,1, function(timer:FlxTimer):void {
+			timer.start(1,1, function():void {
 				if (turn == ENEMY_TURN && !enemy.isDead){
-					enemy.attack(player);
+					var enemyDamage:Number = enemy.attack(player);
+					state.enemyAttackCallback(enemyDamage);
 					state.healthCallback();
 					endTurn();
 				}

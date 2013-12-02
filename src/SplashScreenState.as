@@ -4,13 +4,14 @@ package
 	
 	public class SplashScreenState extends FlxState
 	{
-		[Embed(source="../assets/backdrops/title.png")] protected var backgroundImg:Class;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public var background:FlxSprite;
 		private var startText:FlxText;
 		private var instrText:FlxText;
+		private var creditText:FlxText;
+		private var narrText:FlxText;
 		
 		private var currentScreen:Number=0;
 		
@@ -24,15 +25,22 @@ package
 			
 			
 			background = new FlxSprite(0,0);
-			background.loadGraphic(backgroundImg);
+			background.loadGraphic(Sources.SplashScreenBackground);
 			add(background);
 			
-			startText = new FlxText(10, (FlxG.height)-45, FlxG.width-10, "Click to start!");
+			startText = new FlxText(10, (FlxG.height)-55, FlxG.width-10, "Press ENTER to start!");
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;
 			startText.setFormat("COOKIES",26);
 			startText.alignment = "center";
 			add(startText);
+			
+			creditText = new FlxText(10, (FlxG.height)-25, FlxG.width-10, "Press C for credits");
+			creditText.color = 0x01FFFFFF;
+			creditText.shadow = 0x01000000;
+			creditText.setFormat("COOKIES",16);
+			creditText.alignment = "center";
+			add(creditText);
 			
 			instrText = new FlxText(10, (FlxG.height)-25, FlxG.width-10, "");
 			instrText.color = 0x01FFFFFF;
@@ -40,6 +48,10 @@ package
 			instrText.setFormat("COOKIES",18);
 			instrText.alignment = "center";
 			add(instrText);
+			
+			narrText = new FlxText(30, 50, 400, "");
+			narrText.setFormat("COOKIES",20,0x01ffffff,"left",0xffa86d46);
+			add(narrText);
 		}
 		
 		override public function update():void {
@@ -47,21 +59,31 @@ package
 				FlxG.fade(0x00000000, 1, startGame);
 			} else if (FlxG.keys.ENTER && currentScreen==4){
 				FlxG.fade(0x00000000, 1, startGame);
-			}
-			if (FlxG.mouse.justReleased()){
+//			} else if (FlxG.keys.SPACE){
+//				background.loadGraphic(Sources.Instructions);
+//				add(background);
+//				startText.text="";
+//				remove(instrText);
+			} else if (FlxG.keys.C) {
+				creditsScreen();
+			}else if ((FlxG.keys.ENTER && currentScreen==0)|| (FlxG.mouse.justReleased() && currentScreen!=0)){
 				background.loadGraphic(Sources.intros[currentScreen]);
+				remove(creditText);
 				instrText.text="click to continue";
-				startText.color=0xff000000;
-				startText.y=50;
+				instrText.color=0xff000000;
+				remove(startText);
 				if (currentScreen==0){
-					startText.text="Candyland was a peaceful land of joy and sugary goodness, and all was well.";
+					narrText.text="Candyland was a peaceful land\nof joy and sugary goodness,\nand all was well.";
 				}else if (currentScreen==1){
-					startText.text="Then one day, strange portals spawned and evil monsters appeared.";
+					narrText.text="Then one day, strange portals spawned and evil monsters appeared.";
 				}else if (currentScreen==2){
-					startText.text="Only one small boy with a propeller hat had the strength to continue and reclaim Candyland.";
+					narrText.text="Only one small boy with a propeller hat had the strength to continue and reclaim Candyland.";
 				}else if (currentScreen==3){
 					//this is instructions
-					startText.text="";
+					remove(narrText);
+					instrText.color=0xffffffff;
+					instrText.size=36;
+					instrText.y=155;
 					instrText.text="press ENTER to play!";
 				}
 				currentScreen ++;
@@ -78,7 +100,13 @@ package
 		}
 		
 		private function startGame():void {
+			trace("hi");
 			FlxG.switchState(ExplorePlayState.instance);
+		}
+		
+		private function creditsScreen():void {
+			var credits:CreditsState = new CreditsState();
+			FlxG.switchState(credits);
 		}
 	}
 }
