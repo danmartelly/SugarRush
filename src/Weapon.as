@@ -22,7 +22,7 @@ package {
 			"Cotton" : "Cotton Candy",
 			"Chocolate": "Chocolate",
 			"Gumdrop": "Gumdrop",
-			"Marsh": "Marshmalllow"
+			"Marsh": "Marshmallow"
 		};
 		
 		// 1-3 match Candy constants.
@@ -54,7 +54,8 @@ package {
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }),
 			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
-					var critChance:Number = 0.8 - 0.8 * src.currentHealth / src.maxHealth;
+					var critChance:Number = 1. - src.currentHealth / src.maxHealth;
+					critChance *= 0.95 * critChance;
 					
 					if (Math.random() < critChance) {
 						src.flags = ['crit'];
@@ -71,9 +72,9 @@ package {
 					else { 
 						obj["stacks"] = 1;
 					}
-					if (obj["stacks"] > 10) obj["stacks"] = 10;
+					if (obj["stacks"] > 7) obj["stacks"] = 7;
 					
-					src.tempAttackStat = Math.ceil(obj["stacks"] / 2);
+					src.tempAttackStat = Math.ceil(2 * obj["stacks"] / 3);
 				})        ];
 		
 		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){

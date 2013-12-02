@@ -30,8 +30,10 @@ package
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
-		protected var craftInstructions:FlxText;
 		private var inGameMessage:FlxText
+		private var temporaryInstructions:FlxSprite;
+		private const instructionShowTime:Number = 10;
+		private var _timer:Number;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -49,6 +51,7 @@ package
 		Sources.fontCookies;
 		
 		public function ExplorePlayState(lock:SingletonLock) {
+			_timer = 0;
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			background.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(background);
@@ -79,7 +82,9 @@ package
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
-						
+			craftHouse.height -= 20; 
+			craftHouse.width -= 20;
+			
 			pause = new PauseState();
 			
 			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
@@ -87,25 +92,22 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
-			craftInstructions.setFormat("COOKIES",15);
-			craftInstructions.color=0x01000000;
-			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
-			
-			
-			add(inGameMessage);
+			//very specific code for putting the instruction signboard in the game
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
 			
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
+			add(temporaryInstructions);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
+			add(inGameMessage);
 			add(HUD);
 			
-			add(pauseInstruction);
-			add(craftInstructions);
+			add(pauseInstruction); 
 			
 			HUD.eatFunction = function(healAmount:Number):void{};
 		}
@@ -139,6 +141,11 @@ package
 			if (!pause.showing){
 
 				super.update();
+				
+				_timer += FlxG.elapsed;
+				if (_timer > instructionShowTime) {
+					remove(temporaryInstructions)
+				}
 				
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());
@@ -176,17 +183,10 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					craftInstructions.visible = true; 
-					
-					if (FlxG.keys.C)
-					{
-						triggerCraftingState();
-					}
+					triggerCraftingState();
+					_player.x = FlxG.width/2.0; 
+					_player.y = FlxG.height/2.0;
 				} 
-				else 
-				{
-					craftInstructions.visible = false;
-				}
 				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){

@@ -249,10 +249,17 @@ package
 		
 		public function attackCallback():void{
 			var dmg:Number=logic.useAttack();
+			var playerFlags:Array = logic.getPlayerFlags();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
-			dmgInfo.text="You did " + dmg + " damage!";
+			
+			if (playerFlags && playerFlags[0] == 'crit') {
+				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+			}
+			else {
+				dmgInfo.text="You did " + dmg + " damage!";
+			}
 		}
 
 		public function switchCallback():void{
@@ -297,7 +304,7 @@ package
 					dmgInfo.text = "The carrot tried to stab you! \n You took " + damage + " damage!";
 					break;
 				case "eggplant":
-					dmgInfo.text = "The eggplant used butt bump! \n You took " + damage + " damage!";
+					dmgInfo.text = "The eggplant used booty bump! \n You took " + damage + " damage!";
 					break;
 				case "lettuce":
 					dmgInfo.text = "The lettuce used razor leaf! \n You took " + damage + " damage!";

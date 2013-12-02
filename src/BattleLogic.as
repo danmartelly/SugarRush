@@ -37,6 +37,9 @@ package {
 			endTurn();
 			return dmg;
 		}
+		public function getPlayerFlags():Array {
+			return player.flags;
+		}
 		
 		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
