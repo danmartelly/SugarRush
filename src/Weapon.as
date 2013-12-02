@@ -40,22 +40,28 @@ package {
 		// this might get moved later -npinsker
 		//some functions return true if the buff was applied.
 		public static const BUFF_LIST:Array = [         new Buff('none', 'none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
-			new Buff('burn', 'Burn', 'Has a 50% chance to apply a burn on hit which damages the enemy over time.', 3, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) {src.hurt(1); return true;} return false;}),
-			new Buff('freeze', 'Freeze', 'Has a chance to freeze the enemy, disabling their attack for a turn.', 1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.3) {src.tempAttackStat = -src.attackStat; return true; } return false;} ),
-			new Buff('heal', 'Drain', 'Has a 50% chance to restore 1 point of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) {src.heal(1); return true;} return false;}),
-			new Buff('burn', 'Ignite', 'Applies a burn on hit which damages the enemy over time.', 3, 
+			new Buff('burn', 'Burn', 'Applies a burn on hit which damages the enemy over time.', 3, 
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
-			new Buff('freeze', 'Deep Freeze', 'Has a chance to freeze the enemy, disabling their attack for 2 turns.', 2, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.6) {src.tempAttackStat = -src.attackStat; return true;} return false;}),
-			new Buff('heal', 'Mega Drain', 'Restores one point of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(1); }),
-			new Buff('pierce', 'Pierce', 'Attacks with this weapon ignore the enemy\'s defense.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.flags = ['true']; }),
+			new Buff('freeze', 'Freeze', 'Has a 50% chance to freeze the enemy, disabling their attack for a turn.', 1, 
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) {src.tempAttackStat = -src.attackStat; return true; } return false;} ),
+			new Buff('heal', 'Drain', 'Restores one point of blood sugar on hit.', -1, 
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { src.heal(1); return true; return false;}),
+			new Buff('burn', 'Ignite', 'Applies a burn on hit which damages the enemy over time.', 3, 
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(2); }),
+			new Buff('freeze', 'Deep Freeze', 'Has a 70% chance to freeze the enemy, disabling their attack for a turn.', 1, 
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.7) {src.tempAttackStat = -src.attackStat; return true;} return false;}),
+			new Buff('heal', 'Mega Drain', 'Restores two points of blood sugar on hit.', -1, 
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }),
+			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
+				function(src:BattleCharacter, trg:BattleCharacter):void {
+					var critChance:Number = 0.8 - 0.8 * src.currentHealth / src.maxHealth;
+					
+					if (Math.random() < critChance) {
+						src.flags = ['crit'];
+					}
+				}),
 			new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(2 * src.buffs.length); trg.buffs = []; }),
+				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(3 * src.buffs.length); trg.buffs = []; }),
 			new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var obj = src.findBuff("cascade");
@@ -65,6 +71,8 @@ package {
 					else { 
 						obj["stacks"] = 1;
 					}
+					if (obj["stacks"] > 10) obj["stacks"] = 10;
+					
 					src.tempAttackStat = Math.ceil(obj["stacks"] / 2);
 				})        ];
 		

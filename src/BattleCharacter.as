@@ -67,7 +67,7 @@ package {
 		public function hasBuff(tag:String):Boolean {
 			var foundBuff:Boolean = false;
 			for (var i:uint = 0; i < this.buffs.length; i+=1){
-				var buff:Buff = buffs[i];
+				var buff:Object = buffs[i];
 				if (buff.tag == tag) {
 					foundBuff = true;
 				}
@@ -88,10 +88,15 @@ package {
 			var output:String = "";
 			if (this.buffs.length > 0) {
 				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
-				output = buff.getDisplayName();
-				if (output == 'Burn') {
-					output += " (-1)";
+				var buffName = buff.getDisplayName();
+				if (buffName == 'Burn') {
+					buffName += " (-1)";
 				}
+				else if (buffName == 'Ignite') {
+					buffName += " (-2)";
+				}
+				output += (output != "" ? " " : ""); //puts a space before any additional buffs
+				output += buffName;
 			}
 			return output;
 		}
@@ -116,12 +121,13 @@ package {
 			}
 			var opponentDefense:int = opponent.getDefenseStat();
 			
-			if (this.flags.indexOf("true") != -1) {
-				opponentDefense = 0;
-			}
-			
 			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
 				Math.floor(Math.random()*2*opponentDefense)));
+			
+			if (this.getAttackStat() == 0)
+				damageAmount = 0;
+			if (this.flags[0] == 'crit')
+				damageAmount *= 2;
 			
 			opponent.hurt(damageAmount);
 			
