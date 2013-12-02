@@ -55,7 +55,7 @@ package
 		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
 		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
 		
-		private var invulnTime:Number = 3.0;
+		private var invulnTime:Number = 2.0;
 		
 		private var background:FlxBackdrop;
 		
@@ -286,12 +286,16 @@ package
 		}
 		
 		public function candyCallback():void {
-			if (Inventory.hasCandy()){
+			if (Inventory.hasCandy() && logic.playerHealthPercent() != 100){
+				FlxG.play(Sources.gainHealth);
 				logic.useCandy();
 				inventoryHUD.update(); //updates candy count
 				playerSprite.loadGraphic(Sources.battlePlayerEat);
 				//eatOject.loadGraphic( whatever the player just chose to eat );
 				add(eatObject);
+			}
+			else {
+				FlxG.play(Sources.error);
 			}
 		}
 		

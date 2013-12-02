@@ -67,7 +67,7 @@ package {
 		public function hasBuff(tag:String):Boolean {
 			var foundBuff:Boolean = false;
 			for (var i:uint = 0; i < this.buffs.length; i+=1){
-				var buff:Buff = buffs[i];
+				var buff:Object = buffs[i];
 				if (buff.tag == tag) {
 					foundBuff = true;
 				}
