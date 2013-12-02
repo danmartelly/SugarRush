@@ -249,10 +249,17 @@ package
 		
 		public function attackCallback():void{
 			var dmg:Number=logic.useAttack();
+			var playerFlags:Array = logic.getPlayerFlags();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
-			dmgInfo.text="You did " + dmg + " damage!";
+			
+			if (playerFlags && playerFlags[0] == 'crit') {
+				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+			}
+			else {
+				dmgInfo.text="You did " + dmg + " damage!";
+			}
 		}
 
 		public function switchCallback():void{

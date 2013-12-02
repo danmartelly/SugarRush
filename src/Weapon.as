@@ -54,7 +54,8 @@ package {
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }),
 			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
-					var critChance:Number = 0.8 - 0.8 * src.currentHealth / src.maxHealth;
+					var critChance:Number = 0.95 - 0.95 * src.currentHealth / src.maxHealth;
+					critChance *= critChance;
 					
 					if (Math.random() < critChance) {
 						src.flags = ['crit'];
