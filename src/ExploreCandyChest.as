@@ -27,10 +27,11 @@ package
 		}
 		
 		private function giveCandy():void {
-			var candies:Array = [Inventory.COLOR_BLUE, Inventory.COLOR_RED, Inventory.COLOR_WHITE];
-			var reward:int = int(FlxG.getRandom(candies))
+			var candies:Array = [Inventory.COLOR_RED, Inventory.COLOR_BLUE, Inventory.COLOR_WHITE];
+			var reward:int = int(FlxG.getRandom(candies));
+			var color:String = ["red", "blue", "white"][reward];
 			Inventory.addCandy(reward);
-			showMessage("You got 1 candy");
+			showMessage("You got a " + color + " candy");
 		}
 		
 		private function giveMaxHealth():void {
