@@ -8,7 +8,6 @@ package
 	{
 		private var isEnabled:Boolean = true;
 		private const maxEnemiesAttacking:Number = 2;
-		private const attackTimeUntilBroken:Number = 3;
 		public var enemySlotsOccupied:Boolean = false;
 		
 		private const occupyDistance:Number = 80;
@@ -25,7 +24,6 @@ package
 			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
 			addAnimation("open", [1]); 
 			immovable = true;
-			health = attackTimeUntilBroken; // your health is actually time
 		}
 		
 		private function giveCandy():void {

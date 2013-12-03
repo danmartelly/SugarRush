@@ -39,8 +39,8 @@ package
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 				
-		public var levelX:Number = 720;//1200;
-		public var levelY:Number = 480;//800;
+		public static var levelX:Number = 720;//1200;
+		public static var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop;
 		private var oldMap:FlxSprite;
