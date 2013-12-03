@@ -212,6 +212,7 @@ package
 					PlayerData.instance.killCount++;
 				}
 			} else {
+				_player.flicker(0);
 				pause.update();
 			}
 		}
