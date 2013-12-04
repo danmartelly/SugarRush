@@ -26,6 +26,7 @@ package
 		];
 		
 		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
+		private var craftButton:FlxSprite; 
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
@@ -96,6 +97,8 @@ package
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
 			craftHouse.height -= 20; 
 			craftHouse.width -= 20;
+			craftButton = new FlxSprite(craftHouseLocation.x + 15, craftHouseLocation.y - 40, Sources.CraftButton);
+			craftButton.visible = false;
 			
 			pause = new PauseState();
 			
@@ -122,6 +125,7 @@ package
 			add(_killCount);
 			add(_healthLabel);
 			add(craftHouse);
+			add(craftButton);
 			add(_spawners);
 			add(_chests);
 			add(_enemies);
@@ -215,10 +219,16 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					triggerCraftingState();
-					_player.x = FlxG.width/2.0; 
-					_player.y = FlxG.height/2.0;
+					craftButton.visible = true; 
+					if (FlxG.keys.E) 
+					{
+						triggerCraftingState();
+					}
 				} 
+				else 
+				{
+					craftButton.visible = false;
+				}
 				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){
