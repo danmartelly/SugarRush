@@ -2,6 +2,9 @@ package {
 	/**
 	 * @author ethanis
 	 */
+	
+	import org.flixel.FlxG;
+	
 	public class BattleCharacter {
 		var currentHealth:Number;
 		var maxHealth:Number;
@@ -88,16 +91,12 @@ package {
 			var output:String = "";
 			if (this.buffs.length > 0) {
 				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
-				var buffName = buff.getDisplayName();
-				if (buffName == 'Burn') {
-					buffName += " (-1)";
-				}
-				else if (buffName == 'Ignite') {
-					buffName += " (-2)";
-				}
-				output += (output != "" ? " " : ""); //puts a space before any additional buffs
+				var buffName:String = buff.getDisplayName();
+				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
 			}
+			
+			FlxG.play(buff.sound);
 			return output;
 		}
 		

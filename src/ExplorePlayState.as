@@ -30,26 +30,30 @@ package
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
-		protected var craftInstructions:FlxText;
 		private var inGameMessage:FlxText
+		private var temporaryInstructions:FlxSprite;
+		private const instructionShowTime:Number = 10;
+		private var _timer:Number;
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
 		public var battle:BattlePlayState;
 				
-		public var levelX:Number = 720;//1200;
-		public var levelY:Number = 480;//800;
+		public static var levelX:Number = 720;//1200;
+		public static var levelY:Number = 480;//800;
 		
 		private var background:FlxBackdrop;
 		private var oldMap:FlxSprite;
+		private var oldMapIndex:int=4; //starts at last map out of 5 (4 since index starts at 0)
 		private var currentMap:FlxSprite;
+		private var fader:SpriteFader;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
 		Sources.fontCookies;
 		
-
 		public function ExplorePlayState(lock:SingletonLock) {
+			_timer = 0;
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 			background.loadGraphic(Sources.maps[getCurrentMap()]);
 			add(background);
@@ -57,9 +61,11 @@ package
 			FlxG.mouse.load(Sources.cursor);
 			
 			//map stuff
-			currentMap=new FlxSprite(0,0);
-			currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
-			add(currentMap);
+			currentMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
+			oldMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
+			fader = new SpriteFader(oldMap, currentMap);
+			add(fader);
+			//add(currentMap);
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
@@ -80,7 +86,9 @@ package
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
-						
+			craftHouse.height -= 20; 
+			craftHouse.width -= 20;
+			
 			pause = new PauseState();
 			
 			var pauseInstruction:FlxText = new FlxText(0, FlxG.height - 60, 130, "press P to pause");
@@ -88,25 +96,21 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
-			craftInstructions = new FlxText(FlxG.width/2.0-100,FlxG.height/2.0 - 80,500, "Press C to enter and craft weapons");
-			craftInstructions.setFormat("COOKIES",15);
-			craftInstructions.color=0x01000000;
-			craftInstructions.scrollFactor.x = craftInstructions.scrollFactor.y = 0;
+			//very specific code for putting the instruction signboard in the game
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
-			
-			add(inGameMessage);
-			
-			
+			add(temporaryInstructions);
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
 			add(_enemies);
 			add(_player);
 			HUD = new ExploreHUD();
+			add(inGameMessage);
 			add(HUD);
 			
-			add(pauseInstruction);
-			add(craftInstructions);
+			add(pauseInstruction); 
 			
 			HUD.eatFunction = function(healAmount:Number):void{};
 		}
@@ -141,6 +145,11 @@ package
 
 				super.update();
 				
+				_timer += FlxG.elapsed;
+				if (_timer > instructionShowTime) {
+					remove(temporaryInstructions)
+				}
+				
 				if (PlayerData.instance.currentHealth <= 0){
 					FlxG.switchState(new EndState());
 				}
@@ -149,7 +158,14 @@ package
 				}
 				
 				//map changey stuff
-				currentMap.loadGraphic(Sources.maps[getCurrentMap()]);
+				var currentMapIndex:int = getCurrentMap();
+				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
+				if (currentMapIndex!=oldMapIndex){ //if the map changed
+					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
+					oldMapIndex=currentMapIndex;
+					fader.replaceImages(oldMap,currentMap);
+					fader.animate(2.0);
+				}
 				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
@@ -177,17 +193,10 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					craftInstructions.visible = true; 
-					
-					if (FlxG.keys.C)
-					{
-						triggerCraftingState();
-					}
+					triggerCraftingState();
+					_player.x = FlxG.width/2.0; 
+					_player.y = FlxG.height/2.0;
 				} 
-				else 
-				{
-					craftInstructions.visible = false;
-				}
 				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){
@@ -199,8 +208,11 @@ package
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.A){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
+				}else if (FlxG.keys.K){ //killcount cheathax
+					PlayerData.instance.killCount++;
 				}
 			} else {
+				_player.flicker(0);
 				pause.update();
 			}
 		}

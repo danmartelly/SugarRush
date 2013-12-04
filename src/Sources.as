@@ -76,6 +76,7 @@ package
 		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
+		[Embed(source="../assets/backdrops/instructions_small.png")] public static var InstructionsSmall:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
 		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
@@ -109,14 +110,17 @@ package
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
 		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
+		[Embed(source="../assets/sound/burn.mp3")] public static var burn:Class;
 		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
+		[Embed(source="../assets/sound/select.mp3")] public static var select:Class;
+		[Embed(source="../assets/sound/deselect.mp3")] public static var deselect:Class;
 		[Embed(source="../assets/sound/error.mp3")] public static var error:Class;
 		
 		// candy stuff
 		public static const candies:Array = [candyRed, candyBlue, candyWhite];
 		
 		//buff stuff
-		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "hit", "hit", "equip", "equip", "equip", "equip", "equip"];
+		public static const defaultBuffStrings:Array = ["hit", "hit", "hit", "equip", "hit", "hit", "equip", "equip", "equip", "equip"];
 		
 		//text
 		public static const enemyNames:Array = ["broccoli", "tomato", "carrot", "eggplant", "lettuce", "onion"];

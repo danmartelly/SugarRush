@@ -37,6 +37,12 @@ package {
 			endTurn();
 			return dmg;
 		}
+		public function getPlayerFlags():Array {
+			return player.flags;
+		}
+		public function getEnemyFlags():Array {
+			return enemy.flags;
+		}
 		
 		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
@@ -87,9 +93,9 @@ package {
 			}
 			
 			var self:BattleLogic = this;
-			// 1-second delay on turn-change
+			// 2-second delay on turn-change
 			if (turn == ENEMY_TURN && !enemy.isDead){
-				(new FlxTimer).start(1, 1, enemyTurn(this));
+				(new FlxTimer).start(2, 1, enemyTurn(this));
 			}
 		}
 		

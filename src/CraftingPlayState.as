@@ -93,6 +93,7 @@ package
 		{
 			var emptySlot:int = cauldron.indexOf(-1);
 			if (emptySlot > -1 && Inventory.removeCandy(color)) {
+				FlxG.play(Sources.select);
 				cauldron[emptySlot] = color;
 				FlxButton(candies[emptySlot]).loadGraphic(image);
 				banner.text = "";
@@ -105,6 +106,7 @@ package
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
+				// stuff related to keeping track of candy combination -> weapon mappings is in Craftlogic.as
 				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
 				banner.text = "You got a " + weapon.displayName;// + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
@@ -131,6 +133,7 @@ package
 		private function removeCandy(position:int):void {
 			var currentCandy:int = cauldron[position];
 			if (currentCandy > -1) {
+				FlxG.play(Sources.deselect);
 				Inventory.addCandy(currentCandy);
 				cauldron[position] = -1;
 				FlxButton(candies[position]).loadGraphic(Sources.candyDisabledBig);

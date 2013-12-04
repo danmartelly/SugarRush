@@ -6,7 +6,12 @@ package
 	{
 		public const creationRate:Number = 20;
 		public const maxChests:Number = 3;
-		private var _timer:Number = 0;
+		private const spawnRegions:Array = [
+			new FlxRect(0, 70, 100, ExplorePlayState.levelY - 140 - 75), //left
+			new FlxRect(ExplorePlayState.levelX - 100 - 40, 70, 100, ExplorePlayState.levelY - 140 - 75), //right
+			new FlxRect(70, 0, ExplorePlayState.levelX - 140, 100), //up
+			new FlxRect(70, ExplorePlayState.levelY - 100 - 75 - 40, ExplorePlayState.levelX - 140, 100), //down
+		];
 		private var firstTime:Boolean = true;
 		
 		private var _enemies:FlxGroup
@@ -20,11 +25,6 @@ package
 		}
 		
 		override public function update():void {
-//			_timer += FlxG.elapsed;
-//			if (_timer > creationRate && length < maxChests ) {
-//				spawnRandomChest()
-//				_timer = 0;
-//			}
 			super.update();
 			if (firstTime) {
 				firstTime = false;
@@ -32,12 +32,17 @@ package
 					spawnRandomChest();
 				}
 			}
+			
+			
 		}
 		
 		public function spawnRandomChest():void {
-			var x:Number = Math.floor(Math.random()*FlxG.worldBounds.width);
-			var y:Number = Math.floor(Math.random()*(FlxG.worldBounds.height-75)); // 75 is lower bar
-			add(new ExploreCandyChest(x, y, this, _enemies, _inGameMessage));
+			var region:FlxRect = FlxG.getRandom(spawnRegions) as FlxRect;
+			var xRect:Number = Math.floor(Math.random()*region.width);
+			var yRect:Number = Math.floor(Math.random()*region.height);
+			var xCoord:Number = region.left + xRect;
+			var yCoord:Number = region.top + yRect;
+			add(new ExploreCandyChest(xCoord, yCoord, this, _enemies, _inGameMessage));
 		}
 	}
 }
