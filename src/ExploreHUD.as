@@ -8,9 +8,7 @@ package
 	import org.flixel.FlxPoint;
 	
 	public class ExploreHUD extends FlxGroup
-	{
-		public var _healthLabel:FlxText;
-		
+	{		
 		protected var _inventoryBox:FlxSprite;
 		protected var _buttonBar:FlxSprite;
 		protected var _inventoryDividerH:FlxSprite;
@@ -25,7 +23,6 @@ package
 		protected var _redCount:FlxText;
 		protected var _blueCount:FlxText;
 		protected var _whiteCount:FlxText;
-		protected var _killCount:FlxText;
 		protected var _currentWeaponBox:FlxSprite;
 		protected var _weaponInfo:FlxText;
 		
@@ -144,16 +141,6 @@ package
 			add(_blueCount);
 			add(_whiteCount);
 			
-			_healthLabel = new FlxText(FlxG.width - 90, FlxG.height - 90, 90, "Health: ");
-			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
-			_healthLabel.setFormat("COOKIES",15);
-			_healthLabel.color=0xff000000;
-			add(_healthLabel);
-			
-			_killCount = new FlxText(FlxG.width - 90, 10, 90, "Kills: ");
-			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
-			_killCount.setFormat("COOKIES", 15, 0xff000000);
-			add(_killCount);
 			
 			if (hasEat) {
 				_red.makeGraphic(25,25,0xaaffffff);
@@ -262,9 +249,6 @@ package
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
-			_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
-			_killCount.text = "Kills: " + PlayerData.instance.killCount;
-			
 			//if _isEat, make it possible to select a candy
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {

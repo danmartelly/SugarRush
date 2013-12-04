@@ -34,7 +34,7 @@ package
 		private var dmgFlickerTime:Number = 1.0;
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, FlxG.height-invenBarHeight-20);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor-30, FlxG.height-invenBarHeight-20);
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
@@ -48,9 +48,9 @@ package
 		private var playerName:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y-20,75, "Kid");
 		private var playerHealthText:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight - 40); 
+		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight - 50); 
 		private var playerSprite:FlxSprite = new FlxSprite(playerSpritePos.x, playerSpritePos.y, Sources.battlePlayer);
-		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 325 - invenBarHeight);
+		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 325 - invenBarHeight - 20);
 		private var enemySprite:FlxSprite = new FlxSprite(enemySpritePos.x, enemySpritePos.y);
 		
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
