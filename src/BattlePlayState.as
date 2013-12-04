@@ -304,6 +304,8 @@ package
 		}
 		
 		public function healthCallback():void {
+			// synchronize player health...
+			PlayerData.instance.currentHealth = logic.player.currentHealth;
 			this.drawHealthBar();
 		}
 		
