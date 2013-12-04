@@ -94,9 +94,9 @@ package {
 				var buffName:String = buff.getDisplayName();
 				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
+				FlxG.play(buff.sound);
 			}
 			
-			FlxG.play(buff.sound);
 			return output;
 		}
 		

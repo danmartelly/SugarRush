@@ -114,6 +114,8 @@ package
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
 		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
 		[Embed(source="../assets/sound/burn.mp3")] public static var burn:Class;
+		[Embed(source="../assets/sound/freeze.mp3")] public static var freeze:Class;
+		[Embed(source="../assets/sound/empty.mp3")] public static var empty:Class;
 		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
 		[Embed(source="../assets/sound/select.mp3")] public static var select:Class;
 		[Embed(source="../assets/sound/deselect.mp3")] public static var deselect:Class;
