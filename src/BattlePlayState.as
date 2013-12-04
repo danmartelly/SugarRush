@@ -185,11 +185,15 @@ package
 		public function useCandyFn(self:BattlePlayState):Function {
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
-				self.eatObject.loadGraphic(Sources.candies[candy]);
-				add(eatObject);	
+				if(candy != -1){
+					self.eatObject.loadGraphic(Sources.candies[candy]);	
+					
+				}
+				add(eatObject);
 				self.logic.useCandy(healAmount);
 			};
 		}
+		
 		
 		// return enemy and player sprites to idle state
 		public function returnToIdle():void {
@@ -269,7 +273,6 @@ package
 		
 		public function openCandyTab():void{
 			add(eatBtnCandy);
-			remove(attackBtnWeapons); //remove invisible button that calls attackCallback
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}

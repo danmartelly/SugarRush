@@ -57,6 +57,8 @@ package {
 			endTurn();
 		}
 		
+		
+		
 		public function enemyTurn(self:BattleLogic):Function {
 			return function():void {
 				var enemyDamage:Number = self.enemy.attack(player);

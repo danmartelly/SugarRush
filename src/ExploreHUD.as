@@ -3,9 +3,9 @@ package
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
-	import org.flixel.FlxPoint;
 	
 	public class ExploreHUD extends FlxGroup
 	{
@@ -204,15 +204,32 @@ package
 			this.update();
 		}
 		
-		private function weaponCallbackFn(i:int): Function
+		private function weaponCallbackFn(i:int, that:ExploreHUD): Function
 		{
 			return function():void {
-				//if(_isEat){
-				//	PlayerData.instance.changeWeapon(0);
-				//	Inventory.removeWeaponAt(i);
-				/*}else*/
 				PlayerData.instance.changeWeapon(i);
 			};		
+		}
+		
+
+		private function eatWeaponCallbackFn(i:int, that:ExploreHUD): Function {
+			if(Inventory.weaponCount() > 1){
+				return function():void {
+					PlayerData.instance.changeWeapon(0);
+					Inventory.removeWeaponAt(i);
+					//hard coded
+					eatFunction(-1,5);
+					update();
+					trace("test");
+				};
+			}else {
+				return function():void {
+					var x:FlxText = new FlxText(150,440,100,"This is your last weapon!");
+					x.setFormat("COOKIES",14,0x000000);
+					add(x);
+				}
+			}
+			
 		}
 		
 		public function candyCallback(color:int):Function {
@@ -287,8 +304,11 @@ package
 				//only want this to be possible if you are in eat/attack tab
 				if (_inTab){
 					if(!_isEat){
-						weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
+						weaponSprite.onDown = weaponCallbackFn(i,this); //onUp doesn't work for some reason
 						//only show selection if we're in a tab
+						_currentWeaponBox.visible=true;
+					}else{
+						weaponSprite.onDown = eatWeaponCallbackFn(i,this);
 						_currentWeaponBox.visible=true;
 					}
 				} else {
