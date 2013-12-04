@@ -47,10 +47,13 @@ package
 		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
 		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height - 325 - invenBarHeight, Sources.battlePlayer);
+		private var playCoordX:int=25;
+		private var playCoordY:int=FlxG.height - 325 - invenBarHeight;
+		private var playerSprite:FlxSprite = new FlxSprite(playCoordX, playCoordY, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width - 300, 0);
 		
-		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
+		private var eatObject:FlxSprite = new FlxSprite(playCoordX+205, playCoordY+65, Sources.candyRed);
+		private var attackObject:FlxSprite = new FlxSprite(playCoordX+250, playCoordY+100, Sources.AxeGumdrop);
 		
 		// for turn notification
 		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
@@ -209,6 +212,9 @@ package
 			{
 				remove(eatObject);
 			}
+			if (attackObject.visible){
+				remove(attackObject);
+			}
 		}
 		
 		public function showHealth():void
@@ -263,7 +269,8 @@ package
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
-			
+			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
+			add(attackObject);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
 			}

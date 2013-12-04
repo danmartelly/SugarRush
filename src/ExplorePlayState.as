@@ -75,9 +75,9 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			inGameMessage = new FlxText(FlxG.width/2.0, 0, 300, "test");
-			inGameMessage.setFormat("COOKIES",20);
-			inGameMessage.color = 0xff000000;
+			inGameMessage = new FlxText(10, FlxG.height/2-50, FlxG.width-10, "test");
+			inGameMessage.setFormat("COOKIES",20,0xff000000,"center",0xffffffff);
+			inGameMessage.scrollFactor.x=inGameMessage.scrollFactor.y=0;
 			inGameMessage.visible = false;
 			_chests = new ExploreChestManager(_enemies, inGameMessage);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
@@ -114,12 +114,11 @@ package
 			
 			
 			//very specific code for putting the instruction signboard in the game
-			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
+			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
 			
 			add(temporaryInstructions);
-			add(_killCount);
-			add(_healthLabel);
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
@@ -128,6 +127,8 @@ package
 			HUD = new ExploreHUD();
 			add(inGameMessage);
 			add(HUD);
+			add(_killCount);
+			add(_healthLabel);
 			
 			add(pauseInstruction); 
 			

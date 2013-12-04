@@ -6,7 +6,7 @@ package {
 		var attack:int;
 		var defense:int;
 		// Cotton Candy Sythe would be of Type Sythe and Mod Cotton Candy
-		var weaponType:String;
+		public var weaponType:String;
 		var weaponMod:String;
 		var buff:int;
 		
