@@ -105,6 +105,7 @@ package
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
 			else {
+				// stuff related to keeping track of candy combination -> weapon mappings is in Craftlogic.as
 				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
 				banner.text = "You got a " + weapon.displayName;// + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;

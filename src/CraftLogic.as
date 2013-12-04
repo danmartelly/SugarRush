@@ -16,7 +16,22 @@ package
 		/*
 		 * Takes an array of exactly 3 ints corresponding to candy numbers and returns a Weapon
 		 */
-		public static function craft(cauldron:Array):Weapon
+		public static function craft(cauldron:Array):Weapon {
+			cauldron.sort();
+			var encode:String = '' + cauldron[0] + ',' + cauldron[1] + ',' + cauldron[2];
+			var w:Weapon;
+			
+			if (PlayerData.weaponList[encode]) {
+				var weaponInfo:Array = PlayerData.weaponList[encode];
+				w = new Weapon(weaponInfo[0], weaponInfo[1], weaponInfo[2], weaponInfo[3], weaponInfo[4]);
+			}
+			else {
+				w = craftGenerate(cauldron);
+				PlayerData.recordCraftedWeapon(encode, w);
+			}
+			return w;
+		}
+		public static function craftGenerate(cauldron:Array):Weapon
 		{
 			var first:int = cauldron[(int)(3 * Math.random())] + 1;
 			var second:int = cauldron[(int)(3 * Math.random())] + 1;
