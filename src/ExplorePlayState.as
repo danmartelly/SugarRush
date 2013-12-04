@@ -1,5 +1,7 @@
 package
 {
+	import flash.geom.Point;
+	
 	import org.flixel.FlxBackdrop;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -18,15 +20,16 @@ package
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
 			[new FlxPoint(10,10)],
-			[new FlxPoint(700,10)], //1100,10
-			[new FlxPoint(10,390)], //10, 700
-			[new FlxPoint(700,390)] //1100, 700
+			[new FlxPoint(620,10)], //1100,10
+			[new FlxPoint(10,360)], //10, 700
+			[new FlxPoint(620,360)] //1100, 700
 		];
 		
 		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
+		protected var portal:FlxSprite;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
@@ -84,8 +87,10 @@ package
 				var spawnPoint:FlxPoint = entry[0];
 				//make new Spawner
 				var spawner:EnemySpawner = new EnemySpawner(spawnPoint.x, spawnPoint.y, _enemies, _chests, _player);
+				portal = new FlxSprite(spawnPoint.x, spawnPoint.y, Sources.Portal);
 				//add to State
 				_spawners.add(spawner);
+				add(portal);
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 

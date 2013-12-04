@@ -24,7 +24,7 @@ package
 			_timer = Math.random()*spawnRate;
 			_player = player;
 			super(X, Y);
-			makeGraphic(10,12,0xffaa1111);
+			loadGraphic(Sources.Portal, false, false, this.x, this.y);
 		}
 		
 		override public function update():void {
