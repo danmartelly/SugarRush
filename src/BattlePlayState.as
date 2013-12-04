@@ -311,7 +311,7 @@ package
 				var buffText:String = that.updateBuffText();
 				that.enemySprite.play(buffText);
 			};
-		}
+		}	
 		
 		public function enemyAttackCallback(damage:Number):void {
 			switch(logic.enemy.name){
@@ -385,7 +385,7 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					buffText.text = "Burnt! 1 damage"
+					buffText.text = "Burnt! 1 damage";
 					return "burn";
 				case "Ignite":
 					buffText.text = "Burnt! 2 damage";
@@ -394,10 +394,11 @@ package
 				case "Deep Freeze":
 					buffText.text = "Frozen!";
 					return "freeze";
+				default:
+					return "idle";
 			}
-			return "idle";
 		}
-		
+
 		public function endBattleCallback(status:int):void {			
 			switch(status){
 				case BattleLogic.ENEMY_WON:
