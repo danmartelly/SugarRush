@@ -270,7 +270,7 @@ package
 			else {
 				dmgInfo.text="You did " + dmg + " damage!";
 			}
-			(new FlxTimer()).start(1,1,updateBuff);
+			(new FlxTimer()).start(1,1,updateBuff(this));
 		}
 		
 		public function switchCallback():void
@@ -301,12 +301,17 @@ package
 		}
 		
 		public function healthCallback():void {
+			// synchronize player health...
+			PlayerData.instance.currentHealth = logic.player.currentHealth;
 			this.drawHealthBar();
 		}
 		
-		public function updateBuff(timer:FlxTimer):void {
-			enemySprite.play(updateBuffText());
-		}
+		public function updateBuff(that:BattlePlayState):Function {
+			return function(timer:FlxTimer):void {
+				var buffText:String = that.updateBuffText();
+				that.enemySprite.play(buffText);
+			};
+		}	
 		
 		public function enemyAttackCallback(damage:Number):void {
 			switch(logic.enemy.name){
@@ -380,7 +385,7 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					buffText.text = "Burnt! 1 damage"
+					buffText.text = "Burnt! 1 damage";
 					return "burn";
 				case "Ignite":
 					buffText.text = "Burnt! 2 damage";
@@ -389,10 +394,11 @@ package
 				case "Deep Freeze":
 					buffText.text = "Frozen!";
 					return "freeze";
+				default:
+					return "idle";
 			}
-			return "idle";
 		}
-		
+
 		public function endBattleCallback(status:int):void {			
 			switch(status){
 				case BattleLogic.ENEMY_WON:

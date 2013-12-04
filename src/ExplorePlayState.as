@@ -33,6 +33,9 @@ package
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
+		protected var _killCount:FlxText;
+		public var _healthLabel:FlxText;
+		
 		private var inGameMessage:FlxText
 		private var temporaryInstructions:FlxSprite;
 		private const instructionShowTime:Number = 10;
@@ -101,11 +104,22 @@ package
 			pauseInstruction.color = 0x01000000;
 			pauseInstruction.scrollFactor.x = pauseInstruction.scrollFactor.y = 0;
 			
+			_killCount = new FlxText(FlxG.width - 90, 10, 90, "Kills: ");
+			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
+			_killCount.setFormat("COOKIES", 15, 0xff000000);
+			
+			_healthLabel = new FlxText(FlxG.width - 90, FlxG.height - 90, 90, "Health: ");
+			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
+			_healthLabel.setFormat("COOKIES",15,0xff000000);
+			
+			
 			//very specific code for putting the instruction signboard in the game
 			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
 			add(temporaryInstructions);
+			add(_killCount);
+			add(_healthLabel);
 			add(craftHouse);
 			add(_spawners);
 			add(_chests);
@@ -117,7 +131,7 @@ package
 			
 			add(pauseInstruction); 
 			
-			HUD.eatFunction = function(healAmount:Number):void{};
+			HUD.eatFunction = function(color:int, healAmount:Number):void{};
 		}
 		
 		public static function get instance():ExplorePlayState {
@@ -162,6 +176,9 @@ package
 					FlxG.switchState(new WinState());
 				}
 				
+				_killCount.text = "Kills: " + PlayerData.instance.killCount;
+				_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
+				
 				//map changey stuff
 				var currentMapIndex:int = getCurrentMap();
 				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
@@ -169,9 +186,8 @@ package
 					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
 					oldMapIndex=currentMapIndex;
 					fader.replaceImages(oldMap,currentMap);
-					fader.animate(2.0);
+					fader.animate(4.0);
 				}
-				//backgroundOpacity.alpha=(KILLGOAL-PlayerData.instance.killCount)/KILLGOAL/2;
 				
 				if (_player.invincibilityTime > 0) {
 					_player.invincibilityTime = Math.max(_player.invincibilityTime - FlxG.elapsed, 0);
@@ -208,7 +224,7 @@ package
 					pause = new PauseState;
 					pause.showPaused();
 					add(pause);
-				} else if (FlxG.keys.B){
+				} else if (FlxG.keys.B){ // for debugging help
 					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.A){ // cheathax
