@@ -115,6 +115,7 @@ package
 			
 			//very specific code for putting the instruction signboard in the game
 			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			
 			add(temporaryInstructions);
