@@ -34,7 +34,7 @@ package
 		private var dmgFlickerTime:Number = 1.0;
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor-30, FlxG.height-invenBarHeight-20);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor-30, FlxG.height-invenBarHeight-350);
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
@@ -42,31 +42,27 @@ package
 		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
 		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-20);  
+		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-350);  
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
 		private var playerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
 		private var playerName:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y-20,75, "Kid");
 		private var playerHealthText:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight - 50); 
+		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight); 
 		private var playerSprite:FlxSprite = new FlxSprite(playerSpritePos.x, playerSpritePos.y, Sources.battlePlayer);
-		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 325 - invenBarHeight - 20);
+		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 300 - invenBarHeight);
 		private var enemySprite:FlxSprite = new FlxSprite(enemySpritePos.x, enemySpritePos.y);
 		
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
+		private var turnText:FlxText = new FlxText(250,30,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(120, FlxG.height - 400, 400, "");
 		
 		private var invulnTime:Number = 2.0;
-		
 		private var background:FlxBackdrop;
-		
 		private var buttonGroup:FlxGroup = new FlxGroup();
-		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
-		
 		private var isEndBattle:Boolean = false;
 		
 		//invisible button, lies on top of weapons so it's clicked when any weapon is clicked
@@ -113,7 +109,7 @@ package
 			attackButton.loadGraphic(Sources.buttonRed);
 			runButton.loadGraphic(Sources.buttonGreen);
 			
-			turnText.setFormat("COOKIES",15,0xff000000);
+			turnText.setFormat("COOKIES",20,0xff000000);
 			dmgInfo.setFormat("COOKIES", 20, 0xff000000, "center");
 			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 			
