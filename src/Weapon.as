@@ -39,19 +39,19 @@ package {
 		
 		// this might get moved later -npinsker
 		//some functions return true if the buff was applied.
-		public static const BUFF_LIST:Array = [         new Buff('none', 'none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }),
+		public static const BUFF_LIST:Array = [         new Buff('none', 'none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }, null),
 			new Buff('burn', 'Burn', 'Applies a burn on hit which damages the enemy over time.', 3, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }),
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }, Sources.burn),
 			new Buff('freeze', 'Freeze', 'Has a 30% chance to freeze the enemy, disabling their attack for a turn.', 1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.3) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true; } return false;} ),
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.3) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true; } return false;}, null ),
 			new Buff('heal', 'Drain', 'Restores one point of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { src.heal(1); return true; return false;}),
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { src.heal(1); return true; return false;}, null),
 			new Buff('burn', 'Ignite', 'Applies a burn on hit which damages the enemy over time.', 3, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(2); }),
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(2); }, null),
 			new Buff('freeze', 'Deep Freeze', 'Has a 50% chance to freeze the enemy, disabling their attack for a turn.', 1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true;} return false;}),
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true;} return false;}, null),
 			new Buff('heal', 'Mega Drain', 'Restores two points of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }),
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }, null),
 			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var critChance:Number = 1. - src.currentHealth / src.maxHealth;
@@ -60,9 +60,9 @@ package {
 					if (Math.random() < critChance) {
 						src.flags = ['crit'];
 					}
-				}),
+				}, Sources.burn),
 			new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(3 * src.buffs.length); trg.buffs = []; }),
+				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(3 * src.buffs.length); trg.buffs = []; }, null),
 			new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var obj = src.findBuff("cascade");
@@ -75,7 +75,7 @@ package {
 					if (obj["stacks"] > 7) obj["stacks"] = 7;
 					
 					src.tempAttackStat = Math.ceil(2 * obj["stacks"] / 3);
-				})        ];
+				}, null)        ];
 		
 		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
 			this.weaponType = weaponType;
