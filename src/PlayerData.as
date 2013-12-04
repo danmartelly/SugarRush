@@ -13,6 +13,8 @@ package
 		//public var lsWeapon:Weapon = new Weapon("Star", "Gumdrop", 1, 0, Weapon.WW_SPECIAL);
 		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.BB_SPECIAL);
 		
+		public static var weaponList:Object = { };
+		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
 		{
@@ -55,6 +57,9 @@ package
 		
 		public function removeWeapon():void {
 			
+		}
+		public static function recordCraftedWeapon(s:String, w:Weapon):void {
+			weaponList[s] = [w.weaponType, w.weaponMod, w.attack, w.defense, w.buff];
 		}
 		
 		public function hasFullHealth():Boolean {

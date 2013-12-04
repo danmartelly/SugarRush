@@ -13,6 +13,7 @@ package
 		private const avoidOtherEnemyDistance:Number = 80;
 		private const ambleSpeed:Number = 10;
 		private const chestAggroDistance:Number = 80; // this should be smaller than chestBufferDistance
+		private const chestWiggleDistance:Number = 20;
 		private const chestAggroSpeed:Number = 30;
 		private const chestBufferDistance:Number = 100;
 		
@@ -74,6 +75,13 @@ package
 				var distance:Number = vectorToChest.length;
 				// if you're within aggro distance always aggro
 				if (distance < chestAggroDistance) {
+					if (distance < chestWiggleDistance) {
+						// this makes them rotate clockwise
+						vectorToChest.normalize(chestAggroSpeed);
+						velocity.x = vectorToChest.y;
+						velocity.y = -vectorToChest.x;
+						return;
+					}
 					vectorToChest.normalize(chestAggroSpeed);
 					velocity.copyFromFlash(vectorToChest);
 					return;

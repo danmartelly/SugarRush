@@ -72,7 +72,7 @@ package
 				}else if (currentScreen==1){
 					narrText.text="Then one day, strange portals spawned and evil monsters appeared.";
 				}else if (currentScreen==2){
-					narrText.text="Only one small boy with a propeller hat had the strength to continue and reclaim Candyland.";
+					narrText.text="Only one small kid with a propeller hat had the strength to continue and reclaim Candyland.";
 				}else if (currentScreen==3){
 					//this is instructions
 					remove(narrText);

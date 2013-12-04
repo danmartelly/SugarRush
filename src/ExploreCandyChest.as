@@ -8,7 +8,6 @@ package
 	{
 		private var isEnabled:Boolean = true;
 		private const maxEnemiesAttacking:Number = 2;
-		private const attackTimeUntilBroken:Number = 3;
 		public var enemySlotsOccupied:Boolean = false;
 		
 		private const occupyDistance:Number = 80;
@@ -25,28 +24,42 @@ package
 			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
 			addAnimation("open", [1]); 
 			immovable = true;
-			health = attackTimeUntilBroken; // your health is actually time
+		}
+		
+		private function giveCandy():void {
+			var candies:Array = [Inventory.COLOR_RED, Inventory.COLOR_BLUE, Inventory.COLOR_WHITE];
+			var reward:int = int(FlxG.getRandom(candies));
+			var color:String = ["red", "blue", "white"][reward];
+			Inventory.addCandy(reward);
+			showMessage("You got a " + color + " candy");
+		}
+		
+		private function giveMaxHealth():void {
+			PlayerData.instance.maxHealth += 3;
+			PlayerData.instance.currentHealth += 3;
+			showMessage("You got +3 maxHealth");
 		}
 		
 		public function rewardTreasure():void {
 			if (isEnabled) {
-				Inventory.addCandy(Inventory.COLOR_BLUE);
+				//select reward
+				var rewardFunctions:Array = [giveCandy, giveMaxHealth];
+				var choice:Function = FlxG.getRandom(rewardFunctions) as Function;
+				choice.call();
 				
 				play("open");
 				isEnabled = false;
-				createGotCandyMessage();
 				var timer:FlxTimer = new FlxTimer(); 
 				var that:FlxBasic = this;
 				timer.start(1,1,function(timer:FlxTimer){
 					_chests.remove(that);
 				});
-				
 			}
 		}
 		
-		public function createGotCandyMessage():void {	
+		public function showMessage(message:String):void {	
 			_inGameMessage.visible = true;
-			_inGameMessage.text = "You got 1 candy!";
+			_inGameMessage.text = message;
 			var timer:FlxTimer = new FlxTimer();
 			timer.start(1,1,function(timer:FlxTimer){
 				_inGameMessage.visible = false;
