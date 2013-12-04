@@ -112,7 +112,7 @@ package
 			
 			add(pauseInstruction); 
 			
-			HUD.eatFunction = function(healAmount:Number):void{};
+			HUD.eatFunction = function(color:int, healAmount:Number):void{};
 		}
 		
 		public static function get instance():ExplorePlayState {
