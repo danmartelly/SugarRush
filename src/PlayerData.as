@@ -27,7 +27,7 @@ package
 			return _instance;
 		}
 		
-		public function initialize(initialWeapons:Array = null, initialHealth:Number = 10):void {
+		public function initialize(initialWeapons:Array = null, initialHealth:Number = 5):void {
 			if (initialWeapons == null) {
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				Inventory.addWeapon(startingWeapon);
