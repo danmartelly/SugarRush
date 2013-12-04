@@ -93,6 +93,7 @@ package
 		{
 			var emptySlot:int = cauldron.indexOf(-1);
 			if (emptySlot > -1 && Inventory.removeCandy(color)) {
+				FlxG.play(Sources.select);
 				cauldron[emptySlot] = color;
 				FlxButton(candies[emptySlot]).loadGraphic(image);
 				banner.text = "";
@@ -132,6 +133,7 @@ package
 		private function removeCandy(position:int):void {
 			var currentCandy:int = cauldron[position];
 			if (currentCandy > -1) {
+				FlxG.play(Sources.deselect);
 				Inventory.addCandy(currentCandy);
 				cauldron[position] = -1;
 				FlxButton(candies[position]).loadGraphic(Sources.candyDisabledBig);

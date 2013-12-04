@@ -15,12 +15,14 @@ package {
 		public var desc:String = "";
 		public var numTurns:int = 1;
 		public var effect:Function = function(src:BattleCharacter, trg:BattleCharacter):void { }
+		public var sound:Class;
 			
-		public function Buff(tag:String, name:String, desc:String, numTurns:int, effect:Function):void {
+		public function Buff(tag:String, name:String, desc:String, numTurns:int, effect:Function, sound:Class):void {
 			this.tag = tag;
 			this.name = name;
 			this.numTurns = numTurns;
 			this.effect = effect;
+			this.sound = sound;
 		}
 		
 		public function getDisplayName():String {

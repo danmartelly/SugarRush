@@ -270,7 +270,7 @@ package
 			else {
 				dmgInfo.text="You did " + dmg + " damage!";
 			}
-			(new FlxTimer()).start(1,1,updateBuff);
+			(new FlxTimer()).start(1,1,updateBuff(this));
 		}
 		
 		public function switchCallback():void
@@ -301,11 +301,16 @@ package
 		}
 		
 		public function healthCallback():void {
+			// synchronize player health...
+			PlayerData.instance.currentHealth = logic.player.currentHealth;
 			this.drawHealthBar();
 		}
 		
-		public function updateBuff(timer:FlxTimer):void {
-			enemySprite.play(updateBuffText());
+		public function updateBuff(that:BattlePlayState):Function {
+			return function(timer:FlxTimer):void {
+				var buffText:String = that.updateBuffText();
+				that.enemySprite.play(buffText);
+			};
 		}
 		
 		public function enemyAttackCallback(damage:Number):void {
