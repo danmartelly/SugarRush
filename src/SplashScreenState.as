@@ -61,7 +61,7 @@ package
 				FlxG.fade(0x00000000, 1, startGame);
 			} else if (FlxG.keys.C) {
 				creditsScreen();
-			}else if ((FlxG.keys.ENTER && currentScreen==0)|| (FlxG.mouse.justReleased() && currentScreen!=0)){
+			}else if ((FlxG.keys.ENTER && currentScreen==0)|| (FlxG.mouse.justReleased() && currentScreen!=0 && currentScreen<4)){
 				background.loadGraphic(Sources.intros[currentScreen]);
 				remove(creditText);
 				instrText.text="click to continue";

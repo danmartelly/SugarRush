@@ -9,6 +9,7 @@ package
 	
 	public class ExploreHUD extends FlxGroup
 	{		
+
 		protected var _inventoryBox:FlxSprite;
 		protected var _buttonBar:FlxSprite;
 		protected var _inventoryDividerH:FlxSprite;
@@ -33,9 +34,9 @@ package
 		
 		//eating button
 		public var eatGroup:FlxGroup = new FlxGroup();
-		public var _red:FlxButton = new FlxButton(FlxG.width * 0.635, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_RED));
-		public var _blue:FlxButton = new FlxButton(FlxG.width * 0.735, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_BLUE));
-		public var _white:FlxButton = new FlxButton(FlxG.width * 0.835, FlxG.height * 0.925,"",candyCallback(Inventory.COLOR_WHITE));
+		public var _red:FlxButton = new FlxButton(FlxG.width * 0.635, FlxG.height * 0.925,"", candyCallback(Inventory.COLOR_RED));
+		public var _blue:FlxButton = new FlxButton(FlxG.width * 0.735, FlxG.height * 0.925,"", candyCallback(Inventory.COLOR_BLUE));
+		public var _white:FlxButton = new FlxButton(FlxG.width * 0.835, FlxG.height * 0.925,"", candyCallback(Inventory.COLOR_WHITE));
 		
 		protected var _inTab:Boolean=false; //true if a tab (attack, eat) is open
 		public var _isEat:Boolean=false; //true if eat tab is open
@@ -140,7 +141,6 @@ package
 			add(_redCount);
 			add(_blueCount);
 			add(_whiteCount);
-			
 			
 			if (hasEat) {
 				_red.makeGraphic(25,25,0xaaffffff);
@@ -249,6 +249,7 @@ package
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
+
 			//if _isEat, make it possible to select a candy
 			
 			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
