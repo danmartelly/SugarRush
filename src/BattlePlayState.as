@@ -308,8 +308,8 @@ package
 		
 		public function updateBuff(that:BattlePlayState):Function {
 			return function(timer:FlxTimer):void {
-				var buffText:String = that.updateBuffText();
-				that.enemySprite.play(buffText);
+				var buffStr:String = that.updateBuffText();
+				that.enemySprite.play(buffStr);
 			};
 		}	
 		
