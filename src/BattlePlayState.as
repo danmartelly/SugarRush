@@ -34,7 +34,7 @@ package
 		private var dmgFlickerTime:Number = 1.0;
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, y - 50 - invenBarHeight);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor-30, FlxG.height-invenBarHeight-350);
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
@@ -42,31 +42,28 @@ package
 		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
 		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
+		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-350);  
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerName:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y-20,75, "Kid");
+		private var playerHealthText:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playCoordX:int=25;
-		private var playCoordY:int=FlxG.height - 325 - invenBarHeight;
-		private var playerSprite:FlxSprite = new FlxSprite(playCoordX, playCoordY, Sources.battlePlayer);
-		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width - 300, 0);
+		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight); 
+		private var playerSprite:FlxSprite = new FlxSprite(playerSpritePos.x, playerSpritePos.y, Sources.battlePlayer);
+		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 300 - invenBarHeight);
+		private var enemySprite:FlxSprite = new FlxSprite(enemySpritePos.x, enemySpritePos.y);
 		
-		private var eatObject:FlxSprite = new FlxSprite(playCoordX+205, playCoordY+65, Sources.candyRed);
-		private var attackObject:FlxSprite = new FlxSprite(playCoordX+250, playCoordY+100, Sources.AxeGumdrop);
+		private var eatObject:FlxSprite = new FlxSprite(playerSpritePos.x+205, playerSpritePos.y+65, Sources.candyRed);
+		private var attackObject:FlxSprite = new FlxSprite(playerSpritePos.x+250, playerSpritePos.y+100, Sources.AxeGumdrop);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
+		private var turnText:FlxText = new FlxText(250,30,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(120, FlxG.height - 400, 400, "");
 		
 		private var invulnTime:Number = 2.0;
-		
 		private var background:FlxBackdrop;
-		
 		private var buttonGroup:FlxGroup = new FlxGroup();
-		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
-		
 		private var isEndBattle:Boolean = false;
 		
 		//invisible button, lies on top of weapons so it's clicked when any weapon is clicked
@@ -113,7 +110,7 @@ package
 			attackButton.loadGraphic(Sources.buttonRed);
 			runButton.loadGraphic(Sources.buttonGreen);
 			
-			turnText.setFormat("COOKIES",15,0xff000000);
+			turnText.setFormat("COOKIES",20,0xff000000);
 			dmgInfo.setFormat("COOKIES", 20, 0xff000000, "center");
 			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 			
@@ -136,16 +133,17 @@ package
 						
 			add(inventoryHUD);
 			
-			add(maxEnemyLifeBar);
-			add(enemyLifeBar);
-			add(playerName);
-			add(maxPlayerLifeBar);
-			add(playerLifeBar);
+	
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
 			add(enemySprite);
 			add(playerSprite);
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			add(playerName);
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
@@ -271,6 +269,7 @@ package
 			enemySprite.play("attacked");
 			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
 			add(attackObject);
+			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
 			}
@@ -366,7 +365,7 @@ package
 					attackButton.active = true;
 					runButton.active = true;
 					attackBtnWeapons.active = true;
-					(new FlxTimer()).start(1,1,updatePlayerText(self));
+					(new FlxTimer()).start(2,1,updatePlayerText(self));
 					break;
 				default:
 					break;

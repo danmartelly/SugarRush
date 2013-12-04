@@ -58,22 +58,22 @@ package
 				y = (mapHeight - (playerheight+75));
 			}
 			
-			if (FlxG.keys.LEFT) {
+			if (FlxG.keys.A) {
 				velocity.x = -maxVelocity.x * 4;
 				dirFacing="left";
 				play('walkLeft');
 			}
-			else if (FlxG.keys.RIGHT) {
+			else if (FlxG.keys.D) {
 				velocity.x = maxVelocity.x * 4;
 				dirFacing="right";
 				play('walkRight');
 			}
-			else if (FlxG.keys.UP) {
+			else if (FlxG.keys.W) {
 				velocity.y = -maxVelocity.y * 4;
 				dirFacing="back";
 				play('walkBack');
 			}
-			else if (FlxG.keys.DOWN) {
+			else if (FlxG.keys.S) {
 				velocity.y = maxVelocity.y * 4;
 				dirFacing="front";
 				play('walkFront');

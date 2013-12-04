@@ -26,6 +26,7 @@ package
 		];
 		
 		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
+		private var craftButton:FlxSprite; 
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
@@ -96,6 +97,8 @@ package
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
 			craftHouse.height -= 20; 
 			craftHouse.width -= 20;
+			craftButton = new FlxSprite(craftHouseLocation.x + 15, craftHouseLocation.y - 40, Sources.CraftButton);
+			craftButton.visible = false;
 			
 			pause = new PauseState();
 			
@@ -115,11 +118,13 @@ package
 			
 			//very specific code for putting the instruction signboard in the game
 			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
+			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
 			
 			add(temporaryInstructions);
 			add(craftHouse);
+			add(craftButton);
 			add(_spawners);
 			add(_chests);
 			add(_enemies);
@@ -215,10 +220,16 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					triggerCraftingState();
-					_player.x = FlxG.width/2.0; 
-					_player.y = FlxG.height/2.0;
+					craftButton.visible = true; 
+					if (FlxG.keys.E) 
+					{
+						triggerCraftingState();
+					}
 				} 
+				else 
+				{
+					craftButton.visible = false;
+				}
 				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){
@@ -228,7 +239,7 @@ package
 				} else if (FlxG.keys.B){ // for debugging help
 					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
-				} else if (FlxG.keys.A){ // cheathax
+				} else if (FlxG.keys.V){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
 				}else if (FlxG.keys.K){ //killcount cheathax
 					PlayerData.instance.killCount++;
