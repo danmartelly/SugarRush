@@ -110,7 +110,10 @@ package
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
 		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
+		[Embed(source="../assets/sound/burn.mp3")] public static var burn:Class;
 		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
+		[Embed(source="../assets/sound/select.mp3")] public static var select:Class;
+		[Embed(source="../assets/sound/deselect.mp3")] public static var deselect:Class;
 		[Embed(source="../assets/sound/error.mp3")] public static var error:Class;
 		
 		// candy stuff

@@ -2,6 +2,9 @@ package {
 	/**
 	 * @author ethanis
 	 */
+	
+	import org.flixel.FlxG;
+	
 	public class BattleCharacter {
 		var currentHealth:Number;
 		var maxHealth:Number;
@@ -92,6 +95,8 @@ package {
 				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
 			}
+			
+			FlxG.play(buff.sound);
 			return output;
 		}
 		
