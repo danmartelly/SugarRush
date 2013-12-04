@@ -263,7 +263,7 @@ package
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
-			
+			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
 			}
