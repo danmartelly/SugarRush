@@ -200,8 +200,11 @@ package
 		}
 		
 		private function openCandyTab():void {
-			this.openEat();
-			this.update();
+			if (!_isEat){
+				this.openEat();
+			} else {
+				this.closeTab();
+			}
 		}
 		
 		private function weaponCallbackFn(i:int): Function
