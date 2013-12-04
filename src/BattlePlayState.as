@@ -40,12 +40,13 @@ package
 		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
 		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
+		private var playerLifeBarPos:FlxPoint = new FlxPoint(70, FlxG.height-invenBarHeight-20);  
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerName:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y-20,75, "Kid");
+		private var playerHealthText:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight, Sources.battlePlayer);
+		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height-325-invenBarHeight-20, Sources.battlePlayer);
 		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width-300, 0);
 		
 		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
@@ -130,16 +131,17 @@ package
 						
 			add(inventoryHUD);
 			
-			add(maxEnemyLifeBar);
-			add(enemyLifeBar);
-			add(playerName);
-			add(maxPlayerLifeBar);
-			add(playerLifeBar);
+	
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
 			add(enemySprite);
 			add(playerSprite);
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			add(playerName);
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
@@ -330,7 +332,7 @@ package
 					attackButton.active = true;
 					runButton.active = true;
 					attackBtnWeapons.active = true;
-					(new FlxTimer()).start(1,1,updatePlayerText(self));
+					(new FlxTimer()).start(2,1,updatePlayerText(self));
 					break;
 				default:
 					break;

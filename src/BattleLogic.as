@@ -90,7 +90,7 @@ package {
 			var self:BattleLogic = this;
 			// 1-second delay on turn-change
 			if (turn == ENEMY_TURN && !enemy.isDead){
-				(new FlxTimer).start(1, 1, enemyTurn(this));
+				(new FlxTimer).start(2, 1, enemyTurn(this));
 			}
 		}
 		
