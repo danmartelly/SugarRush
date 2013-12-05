@@ -58,11 +58,6 @@ package
 		[Embed(source="../assets/weapons/sword_gumdrop.png")] public static var SwordGumdrop:Class;
 		[Embed(source="../assets/weapons/sword_marshmallow.png")] public static var SwordMarsh:Class;
 		
-//		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
-//		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
-//		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
-//		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
-		
 		[Embed(source="../assets/button_red.png")] public static var buttonRed:Class;	
 		[Embed(source="../assets/button_blue.png")] public static var buttonBlue:Class;	
 		[Embed(source="../assets/button_green.png")] public static var buttonGreen:Class;	
