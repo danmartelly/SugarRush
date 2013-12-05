@@ -147,6 +147,8 @@ package
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
+			add(attackObject); 
+			attackObject.visible = false;
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
@@ -210,9 +212,6 @@ package
 			{
 				remove(eatObject);
 			}
-			if (attackObject.visible){
-				remove(attackObject);
-			}
 		}
 		
 		public function showHealth():void
@@ -268,7 +267,7 @@ package
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
 			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
-			add(attackObject);
+			attackObject.visible = true;
 			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
@@ -347,7 +346,11 @@ package
 			}
 			else {
 				enemySprite.play("attack");
+				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
+				if (attackObject.visible){
+					attackObject.visible = false;
+				}
 			}
 		}
 		
