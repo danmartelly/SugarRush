@@ -1,14 +1,19 @@
 package
 {
 	import mx.core.FlexSprite;
+	
 	import org.flixel.*;
 	
 	public class CraftingPlayState extends FlxState
 	{
 		private var cauldron:Array = [-1,-1,-1];
-		private var banner:FlxText = new FlxText(0, 390, 500, "");
+		private var craftTitle:FlxText = new FlxText(10, 20, FlxG.width-10, "Weapon Crafting");
+		private var craftInstructions:FlxText = new FlxText(10, 70, FlxG.width-10, "pick 3 candies from your inventory\n\nclick candies in the cauldron to remove");
+		private var bannerLabel:FlxText = new FlxText(10, 150, 240, "You got a");
+		private var banner:FlxText = new FlxText(10, 165, 240, "");
+		private var craftedWeapon:FlxSprite = new FlxSprite(110,230,Sources.AxeGumdrop);
 		
-		var candies:Array = new Array(); // contains the FlxButtons in the cauldron
+		private var candies:Array = new Array(); // contains the FlxButtons in the cauldron
 		
 		override public function create():void
 		{			
@@ -17,14 +22,19 @@ package
 			
 			add(new ExploreHUD(false));
 			
+			craftTitle.setFormat("COOKIES",26,0xFF7b421c,"left");
+			craftInstructions.setFormat("COOKIES",15,0xFF7b421c,"left");
+			add(this.craftTitle);
+			add(this.craftInstructions);
+			
 			var cauldronWidth:int = 400;
-			var cauldronImage:FlxSprite = new FlxSprite(FlxG.width / 2 - cauldronWidth / 2, -50, Sources.Cauldron);
+			var cauldronImage:FlxSprite = new FlxSprite(FlxG.width - cauldronWidth, -50, Sources.Cauldron);
 			cauldronImage.scale = new FlxPoint(0.8,0.8);
 			add(cauldronImage);
 			
 			var candyOffset:int = 50;
 			var candyWidth:int = 75;
-			var candyX:int = (FlxG.width - candyWidth) / 2;
+			var candyX:int = FlxG.width - cauldronWidth + (cauldronWidth/2) - candyWidth/2;
 			var candyY:int = 270;
 			
 			var candy1:FlxButton = new FlxButton(candyX - candyOffset, candyY, "", removeCandy1);
@@ -66,8 +76,13 @@ package
 			add(blueButton);
 			add(whiteButton);
 
-			banner.setFormat("COOKIES",16,0xff000000);
+			bannerLabel.setFormat("COOKIES",15,0xff7b421c);
+			bannerLabel.visible=false;
+			add(bannerLabel);
+			banner.setFormat("COOKIES",20,0xFF7b421c);
 			add(this.banner);
+			craftedWeapon.visible=false;
+			add(craftedWeapon);
 			
 			FlxG.mouse.load(Sources.cursor);
 			FlxG.mouse.show();
@@ -97,6 +112,8 @@ package
 				cauldron[emptySlot] = color;
 				FlxButton(candies[emptySlot]).loadGraphic(image);
 				banner.text = "";
+				craftedWeapon.visible=false;
+				bannerLabel.visible=false;
 			}
 		}
 		
@@ -109,7 +126,10 @@ package
 				// stuff related to keeping track of candy combination -> weapon mappings is in Craftlogic.as
 				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
-				banner.text = "You got a " + weapon.displayName;// + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
+				bannerLabel.visible=true;
+				banner.text = weapon.displayName;// + "!\nAttack: " + weapon.attack + " Defense: " + weapon.defense;
+				craftedWeapon.loadGraphic(weapon.image);
+				craftedWeapon.visible=true;
 				Inventory.addWeapon(weapon);
 				cauldron = [ -1, -1, -1];
 				for (var i:int = 0; i < 3; i++) {

@@ -132,8 +132,8 @@ package
 			add(background);
 						
 			add(inventoryHUD);
-			
-	
+			attackObject.visible=false;
+			add(attackObject);
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
@@ -210,9 +210,7 @@ package
 			{
 				remove(eatObject);
 			}
-			if (attackObject.visible){
-				remove(attackObject);
-			}
+			attackObject.visible=false;
 		}
 		
 		public function showHealth():void
@@ -268,7 +266,7 @@ package
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
 			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
-			add(attackObject);
+			attackObject.visible=true;
 			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
@@ -413,11 +411,11 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					var candyColor:int = Math.floor(Math.random() * 3);
+					
 					var back:FlxSprite = new FlxSprite(0, 0);
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
-					
-					var candyColor:int = Math.floor(Math.random() * 3);
 					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");
