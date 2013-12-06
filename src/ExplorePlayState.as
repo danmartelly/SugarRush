@@ -19,10 +19,10 @@ package
 		
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
-			[new FlxPoint(10,10)],
-			[new FlxPoint(620,10)], //1100,10
-			[new FlxPoint(10,360)], //10, 700
-			[new FlxPoint(620,360)] //1100, 700
+			[new FlxPoint(10,5)],
+			[new FlxPoint(640,5)],
+			[new FlxPoint(10,365)],
+			[new FlxPoint(640,365)]
 		];
 		
 		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
