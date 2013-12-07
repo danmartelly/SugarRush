@@ -132,8 +132,6 @@ package
 			add(background);
 						
 			add(inventoryHUD);
-			
-	
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
@@ -147,6 +145,8 @@ package
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
+			add(eatObject);
+			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
 			FlxG.mouse.show();
@@ -198,7 +198,7 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
-				add(eatObject);	
+				eatObject.visible = true;
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -208,10 +208,8 @@ package
 			enemySprite.play("idle");
 			dmgInfo.text = "";
 			playerSprite.loadGraphic(Sources.battlePlayer);
-			if (eatObject.visible)
-			{
-				remove(eatObject);
-			}
+			eatObject.visible = false; 
+			attackObject.visible=false;
 		}
 		
 		public function showHealth():void
@@ -267,7 +265,7 @@ package
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
 			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
-			attackObject.visible = true;
+			attackObject.visible=true;
 			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
@@ -348,9 +346,8 @@ package
 				enemySprite.play("attack");
 				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
-				if (attackObject.visible){
-					attackObject.visible = false;
-				}
+				attackObject.visible = false;
+				eatObject.visible = false;
 			}
 		}
 		
@@ -416,11 +413,11 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					var candyColor:int = Math.floor(Math.random() * 3);
+					
 					var back:FlxSprite = new FlxSprite(0, 0);
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
-					
-					var candyColor:int = Math.floor(Math.random() * 3);
 					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");
