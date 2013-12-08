@@ -127,10 +127,10 @@ package {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
-			var opponentDefense:int = opponent.getDefenseStat();
+			//var opponentDefense:int = opponent.getDefenseStat();
 			
 			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-				Math.floor(Math.random()*2*opponentDefense)));
+				Math.floor(Math.random()*2)));
 			
 			if (this.getAttackStat() == 0)
 				damageAmount = 0;
