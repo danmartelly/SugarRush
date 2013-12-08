@@ -12,6 +12,8 @@ package
 		
 		private const occupyDistance:Number = 80;
 		
+		private const healthGain:int = 2;
+		
 		private var _enemies:FlxGroup;
 		private var _chests:FlxGroup;
 		private var _inGameMessage:FlxText;
@@ -31,14 +33,14 @@ package
 			var reward:int = int(FlxG.getRandom(candies));
 			var color:String = ["red", "blue", "white"][reward];
 			Inventory.addCandy(reward);
-			showMessage("You got a " + color + " candy");
+			showMessage("You got a " + color + " candy!");
 		}
 		
 		private function giveMaxHealth():void {
 			FlxG.play(Sources.maxHealth);
-			PlayerData.instance.maxHealth += 3;
-			PlayerData.instance.currentHealth += 3;
-			showMessage("You got +3 maxHealth");
+			PlayerData.instance.maxHealth += healthGain;
+			PlayerData.instance.currentHealth += healthGain;
+			showMessage("You gained " + healthGain.toString() + " max health!");
 		}
 		
 		public function rewardTreasure():void {
