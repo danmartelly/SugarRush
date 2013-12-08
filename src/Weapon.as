@@ -92,6 +92,9 @@ package {
 				this.initializeBuffs(buffs);
 			}
 		}
+		public function getBuff():Buff {
+			return BUFF_LIST[this.buff];
+		}
 		
 		public function initializeBuffs(buffs:Object):void{
 			this.buffs = buffs;
