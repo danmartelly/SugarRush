@@ -128,7 +128,7 @@ package
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
 			
-			add(temporaryInstructions);
+			
 			add(craftHouse);
 			add(craftButton);
 			add(_spawners);
@@ -145,6 +145,7 @@ package
 			add(cameraPanObject);
 			
 			add(pauseInstruction); 
+			add(temporaryInstructions);
 			
 			HUD.eatFunction = function(color:int, healAmount:Number):void{};
 		}
