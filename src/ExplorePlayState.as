@@ -53,7 +53,7 @@ package
 		private var oldMap:FlxSprite;
 		private var oldMapIndex:int=4; //starts at last map out of 5 (4 since index starts at 0)
 		private var currentMap:FlxSprite;
-		private var clouds:FlxSprite;
+		private var clouds:FlxSprite=new FlxSprite(0,0,Sources.mapClouds);
 		private var fader:SpriteFader;
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
@@ -68,7 +68,6 @@ package
 			
 			FlxG.mouse.load(Sources.cursor);
 			
-			clouds=new FlxSprite(0,0,Sources.mapClouds);
 			//map stuff
 			currentMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
 			oldMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
@@ -131,6 +130,7 @@ package
 			add(_chests);
 			add(_enemies);
 			add(_player);
+			add(clouds);
 			HUD = new ExploreHUD();
 			add(inGameMessage);
 			add(HUD);
@@ -196,6 +196,7 @@ package
 					oldMapIndex=currentMapIndex;
 					fader.replaceImages(oldMap,currentMap);
 					fader.animate(4.0);
+					clouds.alpha=currentMapIndex/4;
 				}
 				
 				if (_player.invincibilityTime > 0) {
