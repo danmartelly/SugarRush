@@ -182,7 +182,8 @@ package
 		override public function update():void
 		{
 			if (!pause.showing){
-
+//				trace("x: " + String(FlxG.mouse.getScreenPosition().x) + // used for finding positions on screen
+//					" y: " + String(FlxG.mouse.getScreenPosition().y));
 				super.update();
 				
 				_timer += FlxG.elapsed;

@@ -64,6 +64,8 @@ package
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
+		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
+		
 		private var isEndBattle:Boolean = false;
 		
 		//invisible button, lies on top of weapons so it's clicked when any weapon is clicked
@@ -149,6 +151,7 @@ package
 			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
+			add(weaponDescription);
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
@@ -342,9 +345,12 @@ package
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
 				enemySprite.play("freeze");
+				//enemyData.playBuffSound();
+				FlxG.play(Sources.freeze);
 			}
 			else {
 				enemySprite.play("attack");
+				FlxG.play(Sources.playerHurt);
 				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
 				attackObject.visible = false;
@@ -392,10 +398,11 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					//buffText.text = "Burnt! 1 damage";
-					return "burn";
+					/*buffText.text = "Burnt! 1 damage";
+					return "burn";*/
 				case "Ignite":
 					//buffText.text = "Burnt! 2 damage";
+					FlxG.play(Sources.burn);
 					return "burn";
 				case "Freeze":
 				case "Deep Freeze":

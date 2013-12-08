@@ -65,5 +65,11 @@ package
 			
 			return new Weapon(weaponType, weaponMod, attack, defense, buff);
 		}
+		public static function generateBasicWeapon():Weapon {
+			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
+			var weaponMod:String = weaponMods[(int)(weaponMods.length * Math.random())];
+			
+			return new Weapon(weaponType, weaponMod, 1, 0, null);
+		}
 	}
 }

@@ -97,10 +97,16 @@ package {
 				var buffName:String = buff.getDisplayName();
 				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
-				FlxG.play(buff.sound);
 			}
 			
 			return output;
+		}
+		
+		public function playBuffSound(): void {
+			if (this.buffs.length > 0) {
+				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
+				FlxG.play(buff.sound);
+			}
 		}
 		
 		public function tickBuffs():void {
