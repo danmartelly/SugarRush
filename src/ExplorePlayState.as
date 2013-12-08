@@ -153,6 +153,7 @@ package
 		
 		override public function create(): void
 		{ 
+//			FlxG.visualDebug = true; 
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
