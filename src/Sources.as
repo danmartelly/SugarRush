@@ -107,6 +107,10 @@ package
 		[Embed(source="../assets/sound/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
+		[Embed(source="../assets/sound/explosion.mp3")] public static var explosion:Class;
+		[Embed(source="../assets/sound/death.mp3")] public static var death:Class;
+		[Embed(source="../assets/sound/treasure.mp3")] public static var treasure:Class;
+		[Embed(source="../assets/sound/max_health.mp3")] public static var maxHealth:Class;
 		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
 		[Embed(source="../assets/sound/burn.mp3")] public static var burn:Class;
 		[Embed(source="../assets/sound/freeze.mp3")] public static var freeze:Class;

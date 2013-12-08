@@ -192,6 +192,7 @@ package
 				var currentMapIndex:int = getCurrentMap();
 				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
 				if (currentMapIndex!=oldMapIndex){ //if the map changed
+					FlxG.play(Sources.explosion);
 					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
 					oldMapIndex=currentMapIndex;
 					fader.replaceImages(oldMap,currentMap);
