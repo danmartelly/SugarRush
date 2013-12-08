@@ -9,7 +9,7 @@ package
 		public var maxHealth:int;
 		public var killCount:int;
 		
-		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.RB_SPECIAL);
+		public var startingWeapon:Weapon = new Weapon("Axe", "Cotton", 1, 0, Weapon.RR_SPECIAL);
 		//public var lsWeapon:Weapon = new Weapon("Star", "Gumdrop", 1, 0, Weapon.WW_SPECIAL);
 		public var dispelWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.BB_SPECIAL);
 		

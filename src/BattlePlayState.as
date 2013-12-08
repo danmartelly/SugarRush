@@ -342,6 +342,8 @@ package
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
 				enemySprite.play("freeze");
+				//enemyData.playBuffSound();
+				FlxG.play(Sources.freeze);
 			}
 			else {
 				enemySprite.play("attack");
@@ -392,10 +394,11 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					//buffText.text = "Burnt! 1 damage";
-					return "burn";
+					/*buffText.text = "Burnt! 1 damage";
+					return "burn";*/
 				case "Ignite":
 					//buffText.text = "Burnt! 2 damage";
+					FlxG.play(Sources.burn);
 					return "burn";
 				case "Freeze":
 				case "Deep Freeze":
