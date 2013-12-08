@@ -64,6 +64,8 @@ package
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
+		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
+		
 		private var isEndBattle:Boolean = false;
 		
 		//invisible button, lies on top of weapons so it's clicked when any weapon is clicked
@@ -149,6 +151,7 @@ package
 			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
+			add(weaponDescription);
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);

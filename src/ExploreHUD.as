@@ -226,7 +226,7 @@ package
 		//checks if mouse is over a weapon
 		//if yes, returns which weapon it is
 		//if no, returns -1
-		private function mouseHover():int{
+		public function mouseHover():int{
 			var x:int=FlxG.mouse.screenX;
 			var y:int=FlxG.mouse.screenY;
 			//check for each weapon if there's an overlap
