@@ -132,8 +132,6 @@ package
 			add(background);
 						
 			add(inventoryHUD);
-			attackObject.visible=false;
-			add(attackObject);
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
@@ -147,6 +145,10 @@ package
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
+			add(eatObject);
+			eatObject.visible = false;
+			add(attackObject); 
+			attackObject.visible = false;
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
@@ -196,7 +198,7 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
-				add(eatObject);	
+				eatObject.visible = true;
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -206,10 +208,7 @@ package
 			enemySprite.play("idle");
 			dmgInfo.text = "";
 			playerSprite.loadGraphic(Sources.battlePlayer);
-			if (eatObject.visible)
-			{
-				remove(eatObject);
-			}
+			eatObject.visible = false; 
 			attackObject.visible=false;
 		}
 		
@@ -345,7 +344,10 @@ package
 			}
 			else {
 				enemySprite.play("attack");
+				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
+				attackObject.visible = false;
+				eatObject.visible = false;
 			}
 		}
 		
