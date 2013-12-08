@@ -64,16 +64,15 @@ package
 		[Embed(source="../assets/button_orange.png")] public static var buttonOrange:Class;
 
 		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
-		
 		[Embed(source="../assets/treasure.png")] public static var TreasureChest:Class;
 		[Embed(source="../assets/crafthouse.png")] public static var CraftHouse:Class;
 		[Embed(source="../assets/portal.png")] public static var Portal:Class;
-
 		
-		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
-		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
+		
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/instructions_small.png")] public static var InstructionsSmall:Class;
+
+		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
 		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
@@ -82,12 +81,13 @@ package
 		
 		public static const intros:Array=[intro1, intro2, intro3, Instructions];
 		
+		[Embed(source="../assets/backdrops/map_clouds.png")] public static var mapClouds:Class;
+		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/map1.png")] public static var map1:Class;
 		[Embed(source="../assets/backdrops/map2.png")] public static var map2:Class;
 		[Embed(source="../assets/backdrops/map3.png")] public static var map3:Class;
 		[Embed(source="../assets/backdrops/map4.png")] public static var map4:Class;
 		[Embed(source="../assets/backdrops/map5.png")] public static var map5:Class;
-		
 		public static const maps:Array=[map1, map2, map3, map4, map5];
 		
 		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
