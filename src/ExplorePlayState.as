@@ -30,6 +30,7 @@ package
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
+		protected var _portals:FlxGroup;
 		protected var portal:FlxSprite;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
@@ -55,6 +56,7 @@ package
 		private var currentMap:FlxSprite;
 		private var clouds:FlxSprite=new FlxSprite(0,0,Sources.mapClouds);
 		private var fader:SpriteFader;
+		private var cameraPanObject:FlxSprite; 
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -77,6 +79,7 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
+			_portals = new FlxGroup();
 			inGameMessage = new FlxText(10, FlxG.height/2-50, FlxG.width-10, "test");
 			inGameMessage.setFormat("COOKIES",20,0xff000000,"center",0xffffffff);
 			inGameMessage.scrollFactor.x=inGameMessage.scrollFactor.y=0;
@@ -92,7 +95,7 @@ package
 				portal = new FlxSprite(spawnPoint.x, spawnPoint.y, Sources.Portal);
 				//add to State
 				_spawners.add(spawner);
-				add(portal);
+				_portals.add(portal);
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
@@ -116,17 +119,20 @@ package
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			_healthLabel.setFormat("COOKIES",15,0xff000000);
 			
-			
+			cameraPanObject = new FlxSprite(0,0); 
+			cameraPanObject.makeGraphic(10, 10, 0xffffffff);
+			cameraPanObject.visible = false; 
 			//very specific code for putting the instruction signboard in the game
 			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
 			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
 			
-			add(temporaryInstructions);
+			
 			add(craftHouse);
 			add(craftButton);
 			add(_spawners);
+			add(_portals);
 			add(_chests);
 			add(_enemies);
 			add(_player);
@@ -136,8 +142,10 @@ package
 			add(HUD);
 			add(_killCount);
 			add(_healthLabel);
+			add(cameraPanObject);
 			
 			add(pauseInstruction); 
+			add(temporaryInstructions);
 			
 			HUD.eatFunction = function(color:int, healAmount:Number):void{};
 		}
@@ -156,6 +164,10 @@ package
 		override public function create(): void
 		{ 
 //			FlxG.visualDebug = true; 
+//			var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
+//			FlxG.resetCameras( zoomCam );
+//			zoomCam.targetZoom = 2;
+
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
@@ -170,7 +182,8 @@ package
 		override public function update():void
 		{
 			if (!pause.showing){
-
+//				trace("x: " + String(FlxG.mouse.getScreenPosition().x) + // used for finding positions on screen
+//					" y: " + String(FlxG.mouse.getScreenPosition().y));
 				super.update();
 				
 				_timer += FlxG.elapsed;
@@ -183,6 +196,14 @@ package
 				}
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					FlxG.switchState(new WinState());
+				}
+				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0) 
+				{
+					var portal:FlxSprite = _portals.members[0];
+					cameraFocus(portal, 100, 100); 
+					//cameraFocus(_player, levelX, levelY);
+					//(new FlxTimer()).start(3,1, FlxG.camera.follow(_player));
+					
 				}
 				
 				_killCount.text = "Kills: " + PlayerData.instance.killCount;
@@ -253,6 +274,15 @@ package
 				_player.flicker(0);
 				pause.update();
 			}
+		}
+		
+		//focuses camera on that object, where width and height are the w and h of the camera
+		private function cameraFocus(object:FlxSprite, width:int, height:int):void
+		{
+//			FlxG.camera.zoom = 2;
+//			FlxG.camera.follow(object);
+			
+			//FlxG.camera.setBounds(0, 0, width, height); 
 		}
 		
 		public function setInvincibility(duration:Number):void {
