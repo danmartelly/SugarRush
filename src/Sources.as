@@ -67,7 +67,7 @@ package
 		[Embed(source="../assets/treasure.png")] public static var TreasureChest:Class;
 		[Embed(source="../assets/crafthouse.png")] public static var CraftHouse:Class;
 		[Embed(source="../assets/portal.png")] public static var Portal:Class;
-		
+		[Embed(source="../assets/portal_sheet.png")] public static var PortalSheet:Class;
 		
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/instructions_small.png")] public static var InstructionsSmall:Class;
