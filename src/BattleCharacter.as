@@ -49,6 +49,9 @@ package {
 		public function removeTempStats():void {
 			this.tempAttackStat = this.tempDefenseStat = 0;
 		}
+		public function removeAllFlags():void {
+			this.flags = [];
+		}
 		
 		//buff-related functions
 		public function applyBuff(s:String, id:Number, turns:Number):void {

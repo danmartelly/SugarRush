@@ -35,6 +35,7 @@ package
 		}
 		
 		private function giveMaxHealth():void {
+			FlxG.play(Sources.maxHealth);
 			PlayerData.instance.maxHealth += 3;
 			PlayerData.instance.currentHealth += 3;
 			showMessage("You got +3 maxHealth");
@@ -47,7 +48,7 @@ package
 				var choice:Function = FlxG.getRandom(rewardFunctions) as Function;
 				choice.call();
 				
-				play("open");
+				FlxG.play(Sources.treasure);
 				isEnabled = false;
 				var timer:FlxTimer = new FlxTimer(); 
 				var that:FlxBasic = this;

@@ -40,7 +40,7 @@ package
 		
 		private var enemyName:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-20, lifeBarWidth,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
-		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
+		//private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
 		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-350);  
 		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
@@ -112,7 +112,7 @@ package
 			
 			turnText.setFormat("COOKIES",20,0xff000000);
 			dmgInfo.setFormat("COOKIES", 20, 0xff000000, "center");
-			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
+			//buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 			
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -156,7 +156,7 @@ package
 			buttonGroup.add(attackBtnWeapons);
 			
 			add(turnText);
-			add(buffText);
+			//add(buffText);
 			
 			drawHealthBar();
 			inventoryHUD.eatFunction = useCandyFn(this);
@@ -341,6 +341,7 @@ package
 			var enemyFlags = logic.getEnemyFlags();
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
+				enemySprite.play("freeze");
 			}
 			else {
 				enemySprite.play("attack");
@@ -391,15 +392,15 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					buffText.text = "Burnt! 1 damage";
+					//buffText.text = "Burnt! 1 damage";
 					return "burn";
 				case "Ignite":
-					buffText.text = "Burnt! 2 damage";
+					//buffText.text = "Burnt! 2 damage";
 					return "burn";
 				case "Freeze":
 				case "Deep Freeze":
-					buffText.text = "Frozen!";
-					return "freeze";
+					//buffText.text = "Frozen!";
+					//return "freeze";
 				default:
 					return "idle";
 			}
