@@ -345,6 +345,7 @@ package
 			}
 			else {
 				enemySprite.play("attack");
+				FlxG.play(Sources.playerHurt);
 				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
 				attackObject.visible = false;

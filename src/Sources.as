@@ -104,6 +104,7 @@ package
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] public static var fontCookies:Class;
 		
 		//music and sound effects
+		[Embed(source="../assets/sound/player_hurt.mp3")] public static var playerHurt:Class;
 		[Embed(source="../assets/sound/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
