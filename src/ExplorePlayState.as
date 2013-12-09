@@ -209,7 +209,7 @@ package
 					var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
 					FlxG.resetCameras( zoomCam );
 					FlxG.camera.follow(spawner);
-					zoomCam.targetZoom = 2;
+					zoomCam.targetZoom = 4;
 					spawner.play("explode");
 					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
 					portalsDestroyed++;
