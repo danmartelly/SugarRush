@@ -9,6 +9,8 @@ package
 		public var maxHealth:int;
 		public var killCount:int;
 		
+		public var hasUpdatedWeapon:Boolean = true;
+		
 		public var startingWeapon:Weapon = CraftLogic.generateBasicWeapon();
 		//public var hax0rWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.WW_SPECIAL);
 		
@@ -52,6 +54,7 @@ package
 		
 		public function changeWeapon(index:int):void {
 			currentWeaponIndex = index;
+			hasUpdatedWeapon = false;
 		}
 		
 		public function removeWeapon():void {
