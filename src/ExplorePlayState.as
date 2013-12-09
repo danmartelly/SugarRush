@@ -199,7 +199,7 @@ package
 			maxPlayerLifeBar.scrollFactor.x = maxPlayerLifeBar.scrollFactor.y = 0;
 			playerLifeBar.scrollFactor.x = playerLifeBar.scrollFactor.y = 0;
 			playerHealthText.scrollFactor.x = playerHealthText.scrollFactor.y = 0;
-			playerHealthText.text = "Blood Sugar: " + PlayerData.instance.currentHealth + "/" + PlayerData.instance.maxHealth;
+			updateHealthText();
 			playerHealthText.setFormat("COOKIES",14, 0x000000, "center");
 			add(maxPlayerLifeBar);
 			add(playerLifeBar);
@@ -208,6 +208,10 @@ package
 			drawHealthBar();
 
 
+		}
+		
+		private function updateHealthText():void {
+			playerHealthText.text = "Blood Sugar: " + PlayerData.instance.currentHealth + "/" + PlayerData.instance.maxHealth;
 		}
 		
 		private function healthColor(healthPercent:Number):uint
@@ -234,7 +238,7 @@ package
 			playerLifeBar.fill(playerBarColor);
 			// change color based on health!
 			
-			
+			updateHealthText();
 			
 		}
 		
@@ -243,6 +247,7 @@ package
 		
 		override public function update():void
 		{
+			drawHealthBar();
 			if (!pause.showing){
 //				trace("x: " + String(FlxG.mouse.getScreenPosition().x) + // used for finding positions on screen
 //					" y: " + String(FlxG.mouse.getScreenPosition().y));
