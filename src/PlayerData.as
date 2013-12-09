@@ -12,7 +12,7 @@ package
 		public var hasUpdatedWeapon:Boolean = true;
 		
 		public var startingWeapon:Weapon = CraftLogic.generateBasicWeapon();
-		//public var hax0rWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, Weapon.WW_SPECIAL);
+		public var hax0rWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, 9);
 		
 		public static var weaponList:Object = { };
 		
@@ -32,7 +32,7 @@ package
 			if (initialWeapons == null) {
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				Inventory.addWeapon(startingWeapon);
-				//Inventory.addWeapon(hax0rWeapon);
+				Inventory.addWeapon(hax0rWeapon);
 			}
 			currentHealth = initialHealth;
 			maxHealth = initialHealth;
