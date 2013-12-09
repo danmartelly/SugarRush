@@ -5,7 +5,7 @@ package
 	{
 		
 		private static const probSpecial:Number = 1; // Probability of getting a special, period
-		private static const probDoubleSpecial:Number = .3; // Probability of that special being a dual-color special
+		private static const probDoubleSpecial:Number = BalanceHooks.probSuperSpecial; // Probability of that special being a dual-color special
 		
 		//private static const maxAttack:int = 5;
 		
@@ -21,11 +21,11 @@ package
 			var encode:String = '' + cauldron[0] + ',' + cauldron[1] + ',' + cauldron[2];
 			var w:Weapon;
 			
-			if (PlayerData.weaponList[encode]) {
+			/*if (PlayerData.weaponList[encode]) {
 				var weaponInfo:Array = PlayerData.weaponList[encode];
 				w = new Weapon(weaponInfo[0], weaponInfo[1], weaponInfo[2], weaponInfo[3], weaponInfo[4]);
 			}
-			else {
+			else*/ {
 				w = craftGenerate(cauldron);
 				PlayerData.recordCraftedWeapon(encode, w);
 			}
@@ -57,13 +57,7 @@ package
 			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
 			var weaponMod:String = weaponMods[(int)(weaponMods.length * Math.random())];
 			
-			var attack:int = .2 / Math.random() + 1;
-			var defense:int = .2 / Math.random();
-			
-			if (attack > 3) attack = 3;
-			if (defense > 2) defense = 2;
-			
-			return new Weapon(weaponType, weaponMod, attack, defense, buff);
+			return new Weapon(weaponType, weaponMod, 1, 0, buff);
 		}
 		public static function generateBasicWeapon():Weapon {
 			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];

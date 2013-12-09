@@ -64,7 +64,6 @@ package
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
-		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
 		
 		private var isEndBattle:Boolean = false;
 		
@@ -105,6 +104,7 @@ package
 			enemySprite.addAnimation("attack", [2]);
 			enemySprite.addAnimation("freeze", [3]);
 			enemySprite.addAnimation("burn", [4]);
+			enemySprite.addAnimation("crit", [5]);
 			
 			playerName.setFormat("COOKIES", 20, 0x01000000);
 			enemyName.setFormat("COOKIES", 20, 0x01000000);
@@ -132,11 +132,7 @@ package
 			
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
-						
-			add(inventoryHUD);
-			add(enemyName);
-			add(attackButton);
-			add(runButton);
+			
 			add(enemySprite);
 			add(playerSprite);
 			add(maxEnemyLifeBar);
@@ -151,8 +147,12 @@ package
 			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
-			add(weaponDescription);
 			FlxG.mouse.show();
+						
+			add(inventoryHUD);
+			add(enemyName);
+			add(attackButton);
+			add(runButton);
 			
 			buttonGroup.add(attackButton);
 			buttonGroup.add(runButton);
@@ -201,10 +201,16 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
+
+				if(candy != -1){
+					self.eatObject.loadGraphic(Sources.candies[candy]);		
+				}
 				eatObject.visible = true;
+
 				self.logic.useCandy(healAmount);
 			};
 		}
+		
 		
 		// return enemy and player sprites to idle state
 		public function returnToIdle():void {
@@ -257,26 +263,39 @@ package
 		{
 			inventoryHUD.openAttack();
 			inventoryHUD.update(); //makes it so switching weapons is doable
-			add(attackBtnWeapons); //add the invisible button that actually does the attack
+			add(attackBtnWeapons); //add the invisible button that does the attack
 			remove(eatBtnCandy);
 		}
+
+		public function attackCallback():void {
+			if (!inventoryHUD._isEat){
+				var oldHp:int = logic.player.currentHealth;
+				var dmg:Number=logic.useAttack();
+				var playerFlags:Array = logic.getPlayerFlags();
+				playerSprite.loadGraphic(Sources.battlePlayerAttack);
+				FlxG.play(Sources.vegetableHurt1);
+				attackObject.loadGraphic(logic.player.data.currentWeapon().image);
+				attackObject.visible=true;
+				enemyLifeBar.flicker(dmgFlickerTime);
+				if (playerFlags && playerFlags[0] == 'crit') {
+					dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+					enemySprite.play("crit");
+				}
+				else {
+					dmgInfo.text = "You did " + dmg + " damage!";
+					enemySprite.play("attacked");
+				}
+				(new FlxTimer()).start(1, 1, updateBuff(this));
+				if (logic.player.currentHealth != oldHp) {
+					(new FlxTimer()).start(1, 1, showHeal(this));
+				}
+			}
+		}
 		
-		public function attackCallback():void{
-			var dmg:Number=logic.useAttack();
-			var playerFlags:Array = logic.getPlayerFlags();
-			playerSprite.loadGraphic(Sources.battlePlayerAttack);
-			FlxG.play(Sources.vegetableHurt1);
-			enemySprite.play("attacked");
-			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
-			attackObject.visible=true;
-			enemyLifeBar.flicker(dmgFlickerTime);
-			if (playerFlags && playerFlags[0] == 'crit') {
-				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
-			}
-			else {
-				dmgInfo.text="You did " + dmg + " damage!";
-			}
-			(new FlxTimer()).start(1,1,updateBuff(this));
+		public function showHeal(self:BattlePlayState):Function {
+			return function(): void {
+				self.playerSprite.loadGraphic(Sources.battlePlayerHeal);
+			};
 		}
 		
 		public function switchCallback():void
@@ -296,7 +315,6 @@ package
 		
 		public function openCandyTab():void{
 			add(eatBtnCandy);
-			remove(attackBtnWeapons); //remove invisible button that calls attackCallback
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}
@@ -313,9 +331,9 @@ package
 		}
 		
 		public function updateBuff(that:BattlePlayState):Function {
-			return function(timer:FlxTimer):void {
-				var buffText:String = that.updateBuffText();
-				that.enemySprite.play(buffText);
+			return function():void {
+				var buffStr:String = that.updateBuffText();
+				that.enemySprite.play(buffStr);
 			};
 		}	
 		
@@ -341,7 +359,7 @@ package
 					break;
 			}
 			
-			var enemyFlags = logic.getEnemyFlags();
+			var enemyFlags:Array = logic.getEnemyFlags();
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
 				enemySprite.play("freeze");
@@ -421,12 +439,14 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					inventoryHUD.disable();
 					var candyColor:int = Math.floor(Math.random() * 3);
 					
 					var back:FlxSprite = new FlxSprite(0, 0);
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
 					//var candyDrop:Candy = new Candy(candyColor);
+					//this.logic.player.heal(1);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");
 					earningsText.setFormat("COOKIES", 20, 0xffffffff, "center");

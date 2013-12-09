@@ -11,7 +11,8 @@ package
 		[Embed(source="../assets/player/playerb_fight.png")] public static var battlePlayer:Class;
 		[Embed(source="../assets/player/playerb_hurt.png")] public static var battlePlayerHurt:Class;	
 		[Embed(source="../assets/player/playerb_eat.png")] public static var battlePlayerEat:Class;	
-		[Embed(source="../assets/player/playerb_attack.png")] public static var battlePlayerAttack:Class;	
+		[Embed(source="../assets/player/playerb_attack.png")] public static var battlePlayerAttack:Class;
+		[Embed(source="../assets/player/playerb_heal.png")] public static var battlePlayerHeal:Class;
 		
 		[Embed(source="../assets/player/playerwalk.png")] public static var playerWalk:Class;
 		

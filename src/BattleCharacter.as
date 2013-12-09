@@ -93,7 +93,7 @@ package {
 		public function getBuffText():String {
 			var output:String = "";
 			if (this.buffs.length > 0) {
-				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
+				var buff:Buff = Weapon.BUFF_LIST[this.buffs[0]["id"]];
 				var buffName:String = buff.getDisplayName();
 				//output += (output != "" ? " " : ""); //puts a space before any additional buffs
 				output += buffName;
@@ -129,8 +129,7 @@ package {
 			}
 			//var opponentDefense:int = opponent.getDefenseStat();
 			
-			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-				Math.floor(Math.random()*2)));
+			var damageAmount:int = Math.ceil(Math.random() * 3 * this.getAttackStat());
 			
 			if (this.getAttackStat() == 0)
 				damageAmount = 0;
