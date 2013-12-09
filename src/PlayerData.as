@@ -41,6 +41,9 @@ package
 			currentWeaponIndex = 0;
 			killCount = 0;
 			difficulty = 1;
+			for (var i:int = 0; i < BalanceHooks.startingCandy; i++) {
+				Inventory.addCandy(Math.floor(Math.random()*3));
+			}
 		}
 		
 		public function playerHasDied():Boolean {
