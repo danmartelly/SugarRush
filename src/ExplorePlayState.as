@@ -149,7 +149,9 @@ package
 			add(pauseInstruction); 
 			add(temporaryInstructions);
 			
-			HUD.eatFunction = function(color:int, healAmount:Number):void{};
+			HUD.eatFunction = function(color:int, healAmount:Number):void {
+				PlayerData.instance.heal(healAmount);
+			};
 		}
 		
 		public static function get instance():ExplorePlayState {
