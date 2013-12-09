@@ -262,19 +262,21 @@ package
 		}
 		
 		public function attackCallback():void{
-			var dmg:Number=logic.useAttack();
-			var playerFlags:Array = logic.getPlayerFlags();
-			playerSprite.loadGraphic(Sources.battlePlayerAttack);
-			FlxG.play(Sources.vegetableHurt1);
-			enemySprite.play("attacked");
-			
-			if (playerFlags && playerFlags[0] == 'crit') {
-				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+			if (!inventoryHUD._isEat){
+				var dmg:Number=logic.useAttack();
+				var playerFlags:Array = logic.getPlayerFlags();
+				playerSprite.loadGraphic(Sources.battlePlayerAttack);
+				FlxG.play(Sources.vegetableHurt1);
+				enemySprite.play("attacked");
+				
+				if (playerFlags && playerFlags[0] == 'crit') {
+					dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+				}
+				else {
+					dmgInfo.text="You did " + dmg + " damage!";
+				}
+				(new FlxTimer()).start(1,1,updateBuff(this));
 			}
-			else {
-				dmgInfo.text="You did " + dmg + " damage!";
-			}
-			(new FlxTimer()).start(1,1,updateBuff(this));
 		}
 		
 		public function switchCallback():void

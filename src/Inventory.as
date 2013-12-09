@@ -8,6 +8,8 @@ package {
 		public static const COLOR_RED:int = 0;
 		public static const COLOR_BLUE:int = 1;
 		public static const COLOR_WHITE:int = 2;
+		
+		public static const MAX_WEAPONS:int = 5;
 
 		public static function resetInventory():void {
 			weapons = new Array();
@@ -17,7 +19,7 @@ package {
 		}
 		
 		public static function addWeapon(weapon:Weapon):void {
-			if (weapons.length == 5) {
+			if (weapons.length == MAX_WEAPONS) {
 				weapons.shift();
 			}
 			
