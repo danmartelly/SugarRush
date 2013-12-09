@@ -19,6 +19,7 @@ package
 	{	
 		public static var _instance:ExplorePlayState;
 		
+		
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
 			[new FlxPoint(10,5)],
@@ -36,13 +37,24 @@ package
 		protected var _chests:ExploreChestManager;
 		
 		protected var _killCount:FlxText;
-		public var _healthLabel:FlxText;
+		//public var _healthLabel:FlxText;
 		
 		private var portalShouldExplode:Boolean; 
+		private var portalsDestroyed:int; 
 		private var inGameMessage:FlxText
 		private var temporaryInstructions:FlxSprite;
 		private const instructionShowTime:Number = 10;
 		private var _timer:Number;
+		//health bars
+		private var invenBarHeight:int = FlxG.height * 0.10 + 25; //25 is height of buttons
+
+		const lifeBarWidth:int = 160;
+		const lifeBarHeight:int = 18;
+		
+		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-350);  
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerHealthText:FlxText = new FlxText(FlxG.width-160, 410, lifeBarWidth, "Blood Sugar: ?/?");
 
 		public var HUD:ExploreHUD;
 		public var pause:PauseState;
@@ -64,6 +76,7 @@ package
 		private var portalExplosionDuration:Number = 4.0;
 		
 		private var difficulty:int = 1;
+		private var backgroundColors:Array = [0xff805a3f, 0xffa86d46, 0xffffc662, 0xffffc662];
 		
 		Sources.fontCookies;
 		
@@ -72,8 +85,8 @@ package
 //			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 //			background.loadGraphic(Sources.maps[getCurrentMap()]);
 //			add(background);
-			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
-			add(background);
+//			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
+//			add(background);
 			FlxG.mouse.load(Sources.cursor);
 			portalShouldExplode = true;
 			//map stuff
@@ -117,20 +130,19 @@ package
 			_killCount = new FlxText(FlxG.width - 90, 10, 90, "Kills: ");
 			_killCount.scrollFactor.x = _killCount.scrollFactor.y = 0;
 			_killCount.setFormat("COOKIES", 15, 0xff000000);
-			
+			/*
 			_healthLabel = new FlxText(FlxG.width - 90, FlxG.height - 90, 90, "Health: ");
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			_healthLabel.setFormat("COOKIES",15,0xff000000);
-			
+			*/
 			cameraPanObject = new FlxSprite(0,0); 
 			cameraPanObject.makeGraphic(10, 10, 0xffffffff);
 			cameraPanObject.visible = false; 
 			//very specific code for putting the instruction signboard in the game
-			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,20);
 			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
-			
 			
 			add(craftHouse);
 			add(craftButton);
@@ -143,7 +155,7 @@ package
 			add(inGameMessage);
 			add(HUD);
 			add(_killCount);
-			add(_healthLabel);
+			//add(_healthLabel);
 			add(cameraPanObject);
 			
 			add(pauseInstruction); 
@@ -177,6 +189,51 @@ package
 			FlxG.camera.follow(_player);
 			//originalCamera = FlxG.camera; 
 			FlxG.mouse.show();
+			
+			maxPlayerLifeBar.makeGraphic(lifeBarWidth, lifeBarHeight, 0xff00aa00);
+			playerLifeBar.makeGraphic(lifeBarWidth, lifeBarHeight, healthColor(PlayerData.instance.currentHealth/PlayerData.instance.maxHealth*100.0));
+			playerLifeBar.setOriginToCorner()
+			maxPlayerLifeBar.x = playerLifeBar.x= FlxG.width-160;
+			maxPlayerLifeBar.y = playerLifeBar.y = 410;
+			maxPlayerLifeBar.scrollFactor.x = maxPlayerLifeBar.scrollFactor.y = 0;
+			playerLifeBar.scrollFactor.x = playerLifeBar.scrollFactor.y = 0;
+			playerHealthText.scrollFactor.x = playerHealthText.scrollFactor.y = 0;
+			playerHealthText.setFormat("COOKIES",14, 0x000000, "left");
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
+			add(playerHealthText);
+		}
+		
+		private function updateHealthText():void {
+			playerHealthText.text = "Blood Sugar: " + PlayerData.instance.currentHealth + "/" + PlayerData.instance.maxHealth;
+		}
+		
+		private function healthColor(healthPercent:Number):uint
+		{
+			if (healthPercent > 50)
+			{
+				return 0xff00ff00;
+			}
+			else if (healthPercent > 25)
+			{
+				return 0xffffff00;
+			}
+			else
+			{
+				return 0xffff0000;
+			}
+		}
+		private function drawHealthBar():void
+		{
+			var health:Number = PlayerData.instance.currentHealth/PlayerData.instance.maxHealth*100.0;
+			
+			playerLifeBar.scale.x = health / 100.0;
+			var playerBarColor:uint = healthColor(health);
+			playerLifeBar.fill(playerBarColor);
+			// change color based on health!
+			
+			updateHealthText();
+			
 		}
 		
 		override public function destroy():void {
@@ -184,6 +241,7 @@ package
 		
 		override public function update():void
 		{
+			drawHealthBar();
 			if (!pause.showing){
 //				trace("x: " + String(FlxG.mouse.getScreenPosition().x) + // used for finding positions on screen
 //					" y: " + String(FlxG.mouse.getScreenPosition().y));
@@ -198,8 +256,13 @@ package
 					FlxG.switchState(new EndState());
 				}
 				if(PlayerData.instance.killCount>=KILLGOAL){
-					FlxG.switchState(new WinState());
+					(new FlxTimer()).start(portalExplosionDuration, 1, function():void {
+						return (FlxG.fade(0x00ffffff, 5, function():void {
+							FlxG.switchState(new WinState());
+						}))
+					})
 				}
+				
 				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0 && portalShouldExplode) 
 				{
 					//portal moving 
@@ -207,9 +270,13 @@ package
 					var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
 					FlxG.resetCameras( zoomCam );
 					FlxG.camera.follow(spawner);
-					zoomCam.targetZoom = 2;
+					zoomCam.targetZoom = 4;
 					spawner.play("explode");
+					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
+					portalsDestroyed++;
 					portalShouldExplode = false;
+					_enemies.active = false; 
+					_player.active = false;
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
 				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 
@@ -217,7 +284,7 @@ package
 					portalShouldExplode = true;
 				}
 				_killCount.text = "Kills: " + PlayerData.instance.killCount;
-				_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
+				//_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 				
 				//map changey stuff
 				var currentMapIndex:int = getCurrentMap();
@@ -304,6 +371,8 @@ package
 				FlxG.resetCameras(camera);
 				spawner.alive = false;
 				spawner.visible = false;
+				_enemies.active = true;
+				_player.active = true;
 			};
 			
 		}

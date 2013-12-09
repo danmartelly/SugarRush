@@ -39,7 +39,7 @@ package {
 		
 		// this might get moved later -npinsker
 		//some functions return true if the buff was applied.
-		public static const BUFF_LIST:Array = [         new Buff('none', 'none', 'none', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }, Sources.empty),
+		public static const BUFF_LIST:Array = [         new Buff('none', 'none', '', 0, function(src:BattleCharacter, trg:BattleCharacter):void { }, Sources.empty),
 			new Buff('burn', 'Burn', 'Applies a burn on hit for additional damage.', 1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(1); }, Sources.burn),
 			new Buff('freeze', 'Freeze', 'Has a 30% chance to freeze the enemy, disabling their attack for a turn.', 1, 
@@ -52,7 +52,7 @@ package {
 				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true;} return false;}, Sources.freeze),
 			new Buff('heal', 'Mega Drain', 'Restores two points of blood sugar on hit.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }, Sources.empty),
-			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
+			new Buff('berserk', 'Perseverance', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var critChance:Number = 1. - src.currentHealth / src.maxHealth;
 					critChance *= critChance; // yes this is intentional. qudratic scaling on crit chance.
@@ -61,8 +61,8 @@ package {
 						src.flags = ['crit'];
 					}
 				}, Sources.empty),
-			new Buff('dispel', 'Dispel', 'Attacks with this weapon remove status effects on the enemy for increased damage.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { trg.hurt(3 * src.buffs.length); trg.buffs = []; }, Sources.empty),
+			new Buff('luck', 'Luck', 'Attacks with this weapon have a 50% chance to deal double damage.', -1, 
+				function(src:BattleCharacter, trg:BattleCharacter):void { if (Math.random() < 0.5) { src.flags = ['crit']; } }, Sources.empty),
 			new Buff('cascade', 'Cascade', 'Repeated attacks with this weapon become stronger and stronger.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var obj = src.findBuff("cascade");
@@ -74,7 +74,7 @@ package {
 					}
 					if (obj["stacks"] > 7) obj["stacks"] = 7;
 					
-					src.tempAttackStat = Math.ceil(2 * obj["stacks"] / 3);
+					src.tempAttackStat = obj["stacks"] / 3;
 				}, Sources.empty)        ];
 		
 		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){

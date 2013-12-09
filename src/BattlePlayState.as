@@ -26,7 +26,7 @@ package
 		
 		private var buttonWidth:int = 120;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
-		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
+		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 	
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
@@ -120,7 +120,7 @@ package
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
 			var attackLabel:FlxText=new FlxText(0,0,buttonWidth,"ATTACK");
-			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN -1 HP");
+			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN");
 			attackLabel.setFormat("COOKIES", 17, 0xffffffff);
 			runLabel.setFormat("COOKIES", 17, 0xffffffff);
 			attackLabel.alignment = "center";
@@ -205,7 +205,6 @@ package
 					self.eatObject.loadGraphic(Sources.candies[candy]);		
 				}
 				self.eatObject.visible = true;
-				trace("ate candy");
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -285,15 +284,24 @@ package
 					enemySprite.play("attacked");
 				}
 				(new FlxTimer()).start(1, 1, updateBuff(this));
+				
 				if (logic.player.currentHealth != oldHp) {
-					(new FlxTimer()).start(1, 1, showHeal(this));
+					var delta = logic.player.currentHealth - oldHp;
+					logic.player.currentHealth = oldHp;
+					drawHealthBar();
+					
+					(new FlxTimer()).start(1, 1, showHeal(this, delta));
 				}
 			}
 		}
 		
-		public function showHeal(self:BattlePlayState):Function {
+		public function showHeal(self:BattlePlayState, delta:int):Function {
 			return function(): void {
+				logic.player.currentHealth += delta;
+				drawHealthBar();
+				
 				self.playerSprite.loadGraphic(Sources.battlePlayerHeal);
+				dmgInfo.text = "Drained " + delta + " health!";
 			};
 		}
 		
@@ -435,7 +443,10 @@ package
 			switch(status){
 				case BattleLogic.ENEMY_WON:
 					
-					FlxG.switchState(new EndState());
+					FlxG.fade(0x00000000, 5, function():void {
+						FlxG.switchState(new EndState());
+					});
+					
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
@@ -478,8 +489,9 @@ package
 					break;
 				
 				case BattleLogic.RAN_AWAY: 
-					logic.player.currentHealth -= 1;
-					logic.player.updatePlayerData();
+					//player doens't lose health with running away anymore
+					//logic.player.currentHealth -= 1;
+					//logic.player.updatePlayerData();
 					switchToExplore();
 					break;
 			}
