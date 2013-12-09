@@ -105,6 +105,7 @@ package
 			enemySprite.addAnimation("attack", [2]);
 			enemySprite.addAnimation("freeze", [3]);
 			enemySprite.addAnimation("burn", [4]);
+			enemySprite.addAnimation("crit", [5]);
 			
 			playerName.setFormat("COOKIES", 20, 0x01000000);
 			enemyName.setFormat("COOKIES", 20, 0x01000000);
@@ -257,26 +258,37 @@ package
 		{
 			inventoryHUD.openAttack();
 			inventoryHUD.update(); //makes it so switching weapons is doable
-			add(attackBtnWeapons); //add the invisible button that actually does the attack
+			add(attackBtnWeapons); //add the invisible button that does the attack
 			remove(eatBtnCandy);
 		}
 		
-		public function attackCallback():void{
+		public function attackCallback():void {
+			var oldHp:int = logic.player.currentHealth;
 			var dmg:Number=logic.useAttack();
 			var playerFlags:Array = logic.getPlayerFlags();
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
-			enemySprite.play("attacked");
 			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
 			attackObject.visible=true;
 			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+				enemySprite.play("crit");
 			}
 			else {
-				dmgInfo.text="You did " + dmg + " damage!";
+				dmgInfo.text = "You did " + dmg + " damage!";
+				enemySprite.play("attacked");
 			}
-			(new FlxTimer()).start(1,1,updateBuff(this));
+			(new FlxTimer()).start(1, 1, updateBuff(this));
+			if (logic.player.currentHealth != oldHp) {
+				(new FlxTimer()).start(1, 1, showHeal(this));
+			}
+		}
+		
+		public function showHeal(self:BattlePlayState):Function {
+			return function(): void {
+				self.playerSprite.loadGraphic(Sources.battlePlayerHeal);
+			};
 		}
 		
 		public function switchCallback():void
@@ -427,6 +439,7 @@ package
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
 					//var candyDrop:Candy = new Candy(candyColor);
+					this.logic.player.heal(1);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");
 					earningsText.setFormat("COOKIES", 20, 0xffffffff, "center");
