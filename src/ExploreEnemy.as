@@ -21,6 +21,7 @@ package
 		private const chestAggroSpeed:Number = 30;
 		private const chestBufferDistance:Number = 100;
 		private var boundingBoxReduction:int = 16; 
+		private var chestRotateDirection:String = "cw";
 		
 		public var enemyData:BattleEnemy;
 		
@@ -87,8 +88,12 @@ package
 					if (distance < chestWiggleDistance) {
 						// this makes them rotate clockwise
 						vectorToChest.normalize(chestAggroSpeed);
-						velocity.x = vectorToChest.y;
-						velocity.y = -vectorToChest.x;
+						if (FlxG.random() > .999) {
+							// switch direction
+							chestRotateDirection = chestRotateDirection == "cw" ? "ccw" : "cw";
+						}
+						velocity.x = (chestRotateDirection == "cw" ? 1 : -1)*vectorToChest.y;
+						velocity.y = (chestRotateDirection == "cw" ? -1 : 1)*vectorToChest.x;
 						return;
 					}
 					vectorToChest.normalize(chestAggroSpeed);
