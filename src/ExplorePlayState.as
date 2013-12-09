@@ -76,6 +76,7 @@ package
 		private var portalExplosionDuration:Number = 4.0;
 		
 		private var backgroundColors:Array = [0xff805a3f, 0xffa86d46, 0xffffc662, 0xffffc662];
+		private var backgroundMusic:Array = [Sources.Bgmusic1, Sources.Bgmusic2, Sources.Bgmusic3, Sources.Bgmusic4];
 		
 		Sources.fontCookies;
 		
@@ -273,7 +274,13 @@ package
 					zoomCam.targetZoom = 4;
 					spawner.play("explode");
 					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
+					
 					portalsDestroyed++;
+					if (portalsDestroyed != 4) //hax don't worry
+					{
+						FlxG.playMusic(backgroundMusic[portalsDestroyed]);
+					}
+					
 					portalShouldExplode = false;
 					_enemies.active = false; 
 					_player.active = false;
