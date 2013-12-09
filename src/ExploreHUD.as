@@ -48,8 +48,6 @@ package {
 		// baby type system is baby
 		public var eatFunction:Function;
 		
-		protected static const healAmount:Number = BalanceHooks.healAmount;
-		
 		private var weaponDescription:WeaponDescriptorUI;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
@@ -219,7 +217,7 @@ package {
 						PlayerData.instance.changeWeapon(0);
 						Inventory.removeWeaponAt(i);
 						//hard coded
-						that.eatFunction(-1,healAmount);
+						that.eatFunction(-1,BalanceHooks.weaponHealAmount);
 						trace("test");
 					} else {
 						that.add(that._eatLastWarning);
@@ -244,7 +242,7 @@ package {
 					Inventory.removeCandy(color);
 					//PlayerData.instance.heal(healAmount);
 					// here, call battle / overworld specific callback (eg: to change turn, etc)
-					that.eatFunction(color, healAmount);
+					that.eatFunction(color, BalanceHooks.candyHealAmount);
 				} else {
 					FlxG.play(Sources.error);
 				}
