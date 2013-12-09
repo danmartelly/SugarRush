@@ -270,6 +270,8 @@ package
 					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
 					portalsDestroyed++;
 					portalShouldExplode = false;
+					_enemies.active = false; 
+					_player.active = false;
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
 				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 
@@ -364,6 +366,8 @@ package
 				FlxG.resetCameras(camera);
 				spawner.alive = false;
 				spawner.visible = false;
+				_enemies.active = true;
+				_player.active = true;
 			};
 			
 		}

@@ -205,7 +205,7 @@ package
 				if(candy != -1){
 					self.eatObject.loadGraphic(Sources.candies[candy]);		
 				}
-				eatObject.visible = true;
+				self.eatObject.visible = true;
 
 				self.logic.useCandy(healAmount);
 			};
