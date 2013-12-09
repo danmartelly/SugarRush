@@ -186,7 +186,7 @@ package
 			}
 			
 			if (FlxG.keys.SPACE)
-			{
+			{	
 				if (isEndBattle)
 				{
 					//same as the button press
@@ -447,7 +447,7 @@ package
 					FlxG.fade(0x00000000, 5, function():void {
 						FlxG.switchState(new EndState());
 					});
-					
+					break;
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
