@@ -199,7 +199,8 @@ package
 			maxPlayerLifeBar.scrollFactor.x = maxPlayerLifeBar.scrollFactor.y = 0;
 			playerLifeBar.scrollFactor.x = playerLifeBar.scrollFactor.y = 0;
 			playerHealthText.scrollFactor.x = playerHealthText.scrollFactor.y = 0;
-			playerHealthText.text = "Blood Sugar: "+ PlayerData.instance.currentHealth + "/" + PlayerData.instance.maxHealth;
+			playerHealthText.text = "Blood Sugar: " + PlayerData.instance.currentHealth + "/" + PlayerData.instance.maxHealth;
+			playerHealthText.setFormat("COOKIES",14, 0x000000, "center");
 			add(maxPlayerLifeBar);
 			add(playerLifeBar);
 			add(playerHealthText);
