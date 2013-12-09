@@ -55,7 +55,7 @@ package {
 			new Buff('berserk', 'Berserk', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var critChance:Number = 1. - src.currentHealth / src.maxHealth;
-					critChance *= 0.95 * critChance;
+					critChance *= critChance; // yes this is intentional. qudratic scaling on crit chance.
 					
 					if (Math.random() < critChance) {
 						src.flags = ['crit'];

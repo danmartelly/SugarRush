@@ -129,8 +129,7 @@ package {
 			}
 			//var opponentDefense:int = opponent.getDefenseStat();
 			
-			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-				Math.floor(Math.random()*2)));
+			var damageAmount:int = Math.ceil(Math.random() * 3 * this.getAttackStat());
 			
 			if (this.getAttackStat() == 0)
 				damageAmount = 0;
