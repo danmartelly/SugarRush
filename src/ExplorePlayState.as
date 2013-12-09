@@ -256,8 +256,13 @@ package
 					FlxG.switchState(new EndState());
 				}
 				if(PlayerData.instance.killCount>=KILLGOAL){
-					FlxG.switchState(new WinState());
+					(new FlxTimer()).start(portalExplosionDuration, 1, function():void {
+						return (FlxG.fade(0x00ffffff, 5, function():void {
+							FlxG.switchState(new WinState());
+						}))
+					})
 				}
+				
 				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0 && portalShouldExplode) 
 				{
 					//portal moving 
