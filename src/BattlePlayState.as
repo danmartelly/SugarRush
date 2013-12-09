@@ -200,13 +200,12 @@ package
 		public function useCandyFn(self:BattlePlayState):Function {
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
-				self.eatObject.loadGraphic(Sources.candies[candy]);
 
 				if(candy != -1){
 					self.eatObject.loadGraphic(Sources.candies[candy]);		
 				}
-				eatObject.visible = true;
-
+				self.eatObject.visible = true;
+				trace("ate candy");
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -315,6 +314,7 @@ package
 		
 		public function openCandyTab():void{
 			add(eatBtnCandy);
+			
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}

@@ -48,6 +48,8 @@ package {
 		// baby type system is baby
 		public var eatFunction:Function;
 		
+		public var postEatFunction:Function;
+		
 		private var weaponDescription:WeaponDescriptorUI;
 		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
@@ -218,7 +220,6 @@ package {
 						Inventory.removeWeaponAt(i);
 						//hard coded
 						that.eatFunction(-1,5);
-						trace("test");
 					} else {
 						that.add(that._eatLastWarning);
 						var timer:FlxTimer = new FlxTimer();
