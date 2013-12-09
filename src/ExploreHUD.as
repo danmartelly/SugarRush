@@ -143,11 +143,11 @@ package
 			add(_whiteCount);
 			
 			if (hasEat) {
-				_red.makeGraphic(25,25,0xaaffffff);
+				_red.makeGraphic(25,25,0x00ffffff);
 				_red.scrollFactor.x = _red.scrollFactor.y = 0;
-				_blue.makeGraphic(25,25,0xaaffffff);
+				_blue.makeGraphic(25,25,0x00ffffff);
 				_blue.scrollFactor.x = _blue.scrollFactor.y = 0;
-				_white.makeGraphic(25,25,0xaaffffff);
+				_white.makeGraphic(25,25,0x00ffffff);
 				_white.scrollFactor.x = _white.scrollFactor.y = 0;
 				
 				eatGroup.add(_red);
