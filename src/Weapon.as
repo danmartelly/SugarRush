@@ -74,7 +74,7 @@ package {
 					}
 					if (obj["stacks"] > 7) obj["stacks"] = 7;
 					
-					src.tempAttackStat = Math.ceil(2 * obj["stacks"] / 3);
+					src.tempAttackStat = obj["stacks"] / 3;
 				}, Sources.empty)        ];
 		
 		public function Weapon(weaponType:String, weaponMod:String, attack:int=1, defense:int=0, buffs:Object = null, useDefault:Boolean = true){
