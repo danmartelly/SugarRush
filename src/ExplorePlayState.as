@@ -186,6 +186,11 @@ package
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
+			if (portalsDestroyed == 0)
+			{
+				FlxG.playMusic(Sources.Bgmusic1);
+				trace("music playing");
+			}
 			
 			FlxG.camera.follow(_player);
 			//originalCamera = FlxG.camera; 
