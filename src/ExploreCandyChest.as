@@ -12,7 +12,7 @@ package
 		
 		private const occupyDistance:Number = 80;
 		
-		private const healthGain:int = 2;
+		private const healthGain:int = BalanceHooks.healthGain;
 		
 		private var _enemies:FlxGroup;
 		private var _chests:FlxGroup;

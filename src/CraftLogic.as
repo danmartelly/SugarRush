@@ -5,7 +5,7 @@ package
 	{
 		
 		private static const probSpecial:Number = 1; // Probability of getting a special, period
-		private static const probDoubleSpecial:Number = .3; // Probability of that special being a dual-color special
+		private static const probDoubleSpecial:Number = BalanceHooks.probSuperSpecial; // Probability of that special being a dual-color special
 		
 		//private static const maxAttack:int = 5;
 		
@@ -21,11 +21,11 @@ package
 			var encode:String = '' + cauldron[0] + ',' + cauldron[1] + ',' + cauldron[2];
 			var w:Weapon;
 			
-			if (PlayerData.weaponList[encode]) {
+			/*if (PlayerData.weaponList[encode]) {
 				var weaponInfo:Array = PlayerData.weaponList[encode];
 				w = new Weapon(weaponInfo[0], weaponInfo[1], weaponInfo[2], weaponInfo[3], weaponInfo[4]);
 			}
-			else {
+			else*/ {
 				w = craftGenerate(cauldron);
 				PlayerData.recordCraftedWeapon(encode, w);
 			}

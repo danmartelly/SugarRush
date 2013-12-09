@@ -64,7 +64,6 @@ package
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
-		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
 		
 		private var isEndBattle:Boolean = false;
 		
@@ -133,11 +132,7 @@ package
 			
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
-						
-			add(inventoryHUD);
-			add(enemyName);
-			add(attackButton);
-			add(runButton);
+			
 			add(enemySprite);
 			add(playerSprite);
 			add(maxEnemyLifeBar);
@@ -152,8 +147,12 @@ package
 			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
-			add(weaponDescription);
 			FlxG.mouse.show();
+						
+			add(inventoryHUD);
+			add(enemyName);
+			add(attackButton);
+			add(runButton);
 			
 			buttonGroup.add(attackButton);
 			buttonGroup.add(runButton);
@@ -202,10 +201,16 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
+
+				if(candy != -1){
+					self.eatObject.loadGraphic(Sources.candies[candy]);		
+				}
 				eatObject.visible = true;
+
 				self.logic.useCandy(healAmount);
 			};
 		}
+		
 		
 		// return enemy and player sprites to idle state
 		public function returnToIdle():void {
@@ -261,27 +266,29 @@ package
 			add(attackBtnWeapons); //add the invisible button that does the attack
 			remove(eatBtnCandy);
 		}
-		
+
 		public function attackCallback():void {
-			var oldHp:int = logic.player.currentHealth;
-			var dmg:Number=logic.useAttack();
-			var playerFlags:Array = logic.getPlayerFlags();
-			playerSprite.loadGraphic(Sources.battlePlayerAttack);
-			FlxG.play(Sources.vegetableHurt1);
-			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
-			attackObject.visible=true;
-			enemyLifeBar.flicker(dmgFlickerTime);
-			if (playerFlags && playerFlags[0] == 'crit') {
-				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
-				enemySprite.play("crit");
-			}
-			else {
-				dmgInfo.text = "You did " + dmg + " damage!";
-				enemySprite.play("attacked");
-			}
-			(new FlxTimer()).start(1, 1, updateBuff(this));
-			if (logic.player.currentHealth != oldHp) {
-				(new FlxTimer()).start(1, 1, showHeal(this));
+			if (!inventoryHUD._isEat){
+				var oldHp:int = logic.player.currentHealth;
+				var dmg:Number=logic.useAttack();
+				var playerFlags:Array = logic.getPlayerFlags();
+				playerSprite.loadGraphic(Sources.battlePlayerAttack);
+				FlxG.play(Sources.vegetableHurt1);
+				attackObject.loadGraphic(logic.player.data.currentWeapon().image);
+				attackObject.visible=true;
+				enemyLifeBar.flicker(dmgFlickerTime);
+				if (playerFlags && playerFlags[0] == 'crit') {
+					dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
+					enemySprite.play("crit");
+				}
+				else {
+					dmgInfo.text = "You did " + dmg + " damage!";
+					enemySprite.play("attacked");
+				}
+				(new FlxTimer()).start(1, 1, updateBuff(this));
+				if (logic.player.currentHealth != oldHp) {
+					(new FlxTimer()).start(1, 1, showHeal(this));
+				}
 			}
 		}
 		
@@ -308,7 +315,6 @@ package
 		
 		public function openCandyTab():void{
 			add(eatBtnCandy);
-			remove(attackBtnWeapons); //remove invisible button that calls attackCallback
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}
@@ -325,7 +331,7 @@ package
 		}
 		
 		public function updateBuff(that:BattlePlayState):Function {
-			return function(timer:FlxTimer):void {
+			return function():void {
 				var buffStr:String = that.updateBuffText();
 				that.enemySprite.play(buffStr);
 			};
@@ -353,7 +359,7 @@ package
 					break;
 			}
 			
-			var enemyFlags = logic.getEnemyFlags();
+			var enemyFlags:Array = logic.getEnemyFlags();
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
 				enemySprite.play("freeze");

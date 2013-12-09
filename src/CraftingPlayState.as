@@ -122,7 +122,7 @@ package
 				FlxG.play(Sources.error);
 				banner.text = "You have to put 3 candies in the cauldron first!";
 			}
-			else {
+			else if (Inventory.weaponCount() < Inventory.MAX_WEAPONS) {
 				// stuff related to keeping track of candy combination -> weapon mappings is in Craftlogic.as
 				FlxG.play(Sources.craftWeapon);
 				var weapon:Weapon = CraftLogic.craft(cauldron);
@@ -135,6 +135,9 @@ package
 				for (var i:int = 0; i < 3; i++) {
 					FlxButton(candies[i]).loadGraphic(Sources.candyDisabledBig);
 				}
+			} else {
+				FlxG.play(Sources.error);
+				banner.text = "Your inventory is full. Eat a weapon to make room for more!";
 			}
 		}
 		
