@@ -87,6 +87,8 @@ package
 //			add(background);
 //			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
 //			add(background);
+			FlxG.playMusic(Sources.Bgmusic1);
+			
 			FlxG.mouse.load(Sources.cursor);
 			portalShouldExplode = true;
 			//map stuff
@@ -179,10 +181,8 @@ package
 		
 		override public function create(): void
 		{ 
-			FlxG.playMusic(Sources.Bgmusic1);
 			//FlxG.visualDebug = true; 
 			FlxG.bgColor = 0xff783629;
-			
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
