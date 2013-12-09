@@ -300,6 +300,7 @@ package
 				logic.player.currentHealth += delta;
 				drawHealthBar();
 				
+				FlxG.play(Sources.drain);
 				self.playerSprite.loadGraphic(Sources.battlePlayerHeal);
 				dmgInfo.text = "Drained " + delta + " health!";
 			};

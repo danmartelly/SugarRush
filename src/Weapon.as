@@ -45,13 +45,13 @@ package {
 			new Buff('freeze', 'Freeze', 'Has a 30% chance to freeze the enemy, disabling their attack for a turn.', 1, 
 				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.3) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true; } return false;}, Sources.freeze),
 			new Buff('heal', 'Drain', 'Restores one point of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):Boolean { src.heal(1); return true; return false;}, Sources.empty),
+				function(src:BattleCharacter, trg:BattleCharacter):Boolean { src.heal(1); return true; return false;}, Sources.drain),
 			new Buff('burn', 'Ignite', 'Applies a burn on hit for lots of additional damage.', 1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void { src.hurt(2); }, Sources.burn),
 			new Buff('freeze', 'Deep Freeze', 'Has a 50% chance to freeze the enemy, disabling their attack for a turn.', 1, 
 				function(src:BattleCharacter, trg:BattleCharacter):Boolean { if (Math.random() < 0.5) { src.flags = ['frozen']; src.tempAttackStat = -src.attackStat; return true;} return false;}, Sources.freeze),
 			new Buff('heal', 'Mega Drain', 'Restores two points of blood sugar on hit.', -1, 
-				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }, Sources.empty),
+				function(src:BattleCharacter, trg:BattleCharacter):void { src.heal(2); }, Sources.drain),
 			new Buff('berserk', 'Perseverance', 'Attacks with this weapon are stronger with less health.', -1, 
 				function(src:BattleCharacter, trg:BattleCharacter):void {
 					var critChance:Number = 1. - src.currentHealth / src.maxHealth;
