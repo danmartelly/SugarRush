@@ -70,9 +70,9 @@ package
 				if (currentScreen==0){
 					narrText.text="Candyland was a peaceful land\nof joy and sugary goodness,\nand all was well.";
 				}else if (currentScreen==1){
-					narrText.text="Then one day, strange portals spawned and evil monsters appeared.";
+					narrText.text="Then one day, strange leafy beasts spawned from four mysterious portals. \n\nThey plundered the villages, stealing candy and terrorizing Candyland.";
 				}else if (currentScreen==2){
-					narrText.text="Only one small kid with a propeller hat had the strength to continue and reclaim Candyland.";
+					narrText.text="Only one small boy with a propeller hat had enough strength to defeat all the monsters and restore peace to Candyland once more...";
 				}else if (currentScreen==3){
 					//this is instructions
 					remove(narrText);

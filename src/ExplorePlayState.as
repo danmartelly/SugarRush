@@ -167,7 +167,7 @@ package
 		
 		override public function create(): void
 		{ 
-			FlxG.visualDebug = true; 
+			//FlxG.visualDebug = true; 
 			FlxG.bgColor = 0xff783629;
 			
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
