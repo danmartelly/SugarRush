@@ -26,7 +26,7 @@ package
 		/**
 		 * This number is pretty arbitrary, make sure it's greater than zero!
 		 */
-		protected var zoomSpeed:Number = 0;
+		protected var zoomSpeed:Number = 1;
 		
 		/**
 		 * Determines how far to "look ahead" when the target is near the edge of the camera's bounds
