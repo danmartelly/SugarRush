@@ -139,11 +139,10 @@ package
 			cameraPanObject.makeGraphic(10, 10, 0xffffffff);
 			cameraPanObject.visible = false; 
 			//very specific code for putting the instruction signboard in the game
-			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,20);
 			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
 			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
-			
 			
 			add(craftHouse);
 			add(craftButton);
