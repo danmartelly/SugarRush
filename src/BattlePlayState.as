@@ -435,7 +435,10 @@ package
 			switch(status){
 				case BattleLogic.ENEMY_WON:
 					
-					FlxG.switchState(new EndState());
+					FlxG.fade(0x00000000, 5, function():void {
+						FlxG.switchState(new EndState());
+					});
+					
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
