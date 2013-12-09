@@ -39,6 +39,7 @@ package
 		public var _healthLabel:FlxText;
 		
 		private var portalShouldExplode:Boolean; 
+		private var portalsDestroyed:int; 
 		private var inGameMessage:FlxText
 		private var temporaryInstructions:FlxSprite;
 		private const instructionShowTime:Number = 10;
@@ -64,6 +65,7 @@ package
 		private var portalExplosionDuration:Number = 4.0;
 		
 		private var difficulty:int = 1;
+		private var backgroundColors:Array = [0xff805a3f, 0xffa86d46, 0xffffc662, 0xffffc662];
 		
 		Sources.fontCookies;
 		
@@ -72,8 +74,8 @@ package
 //			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
 //			background.loadGraphic(Sources.maps[getCurrentMap()]);
 //			add(background);
-			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
-			add(background);
+//			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
+//			add(background);
 			FlxG.mouse.load(Sources.cursor);
 			portalShouldExplode = true;
 			//map stuff
@@ -209,6 +211,8 @@ package
 					FlxG.camera.follow(spawner);
 					zoomCam.targetZoom = 2;
 					spawner.play("explode");
+					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
+					portalsDestroyed++;
 					portalShouldExplode = false;
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
