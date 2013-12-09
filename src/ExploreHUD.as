@@ -1,11 +1,11 @@
-package
-{
+package {
+	import org.flixel.FlxTimer;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
-	import org.flixel.FlxPoint;
 	
 	public class ExploreHUD extends FlxGroup
 	{		
@@ -41,6 +41,8 @@ package
 		protected var _inTab:Boolean=false; //true if a tab (attack, eat) is open
 		public var _isEat:Boolean=false; //true if eat tab is open
 		public var eatButton:FlxButton;
+		
+		protected var _eatLastWarning:FlxText = new FlxText(140,435,200,"You can't eat your last weapon!");
 		
 		// eatFunction expects 2 args: function(candy:int, healAmount:Number){}
 		// baby type system is baby
@@ -154,6 +156,9 @@ package
 				eatGroup.add(_blue);
 				eatGroup.add(_white);
 			}
+			
+			_eatLastWarning.setFormat("COOKIES", 15, 0xffffffff);
+			_eatLastWarning.scrollFactor.x = _eatLastWarning.scrollFactor.y = 0;
 		}
 		
 		public function openAttack():void{
@@ -194,14 +199,27 @@ package
 			}
 		}
 		
-		private function weaponCallbackFn(i:int): Function
+		private function weaponCallbackFn(i:int, that:ExploreHUD): Function
 		{
 			return function():void {
-				//if(_isEat){
-				//	PlayerData.instance.changeWeapon(0);
-				//	Inventory.removeWeaponAt(i);
-				/*}else*/
-				PlayerData.instance.changeWeapon(i);
+				if (that._isEat){
+					if (Inventory.weaponCount() > 1){
+						PlayerData.instance.changeWeapon(0);
+						Inventory.removeWeaponAt(i);
+						//hard coded
+						that.eatFunction(-1,5);
+						trace("test");
+					} else {
+						that.add(that._eatLastWarning);
+						var timer:FlxTimer = new FlxTimer();
+						timer.start(3,1, function():void {
+							that.remove(that._eatLastWarning);
+						});
+					}
+				} else {
+					//just change weapon
+					PlayerData.instance.changeWeapon(i);
+				}
 			};		
 		}
 		
@@ -214,9 +232,8 @@ package
 					Inventory.removeCandy(color);
 					var healAmount:Number = 4;
 					PlayerData.instance.heal(healAmount);
-					that.update();
 					// here, call battle / overworld specific callback (eg: to change turn, etc)
-					eatFunction(color, healAmount);
+					that.eatFunction(color, healAmount);
 				} else {
 					FlxG.play(Sources.error);
 				}
@@ -252,7 +269,8 @@ package
 
 			//if _isEat, make it possible to select a candy
 			
-			for (var i:int = 0; i < Inventory.weaponCount(); i++) {
+			var i:int = 0;
+			while (i < Inventory.weaponCount()) {
 				var weapon:Weapon = Inventory.getWeapons()[i];
 				var weaponSprite:FlxButton = _weaponSlots.recycle(FlxButton) as FlxButton;
 				weaponSprite.x = (FlxG.width/2) - ((4-i)*50) - 40;	
@@ -265,6 +283,7 @@ package
 				//weaponSprite.label = new FlxText(0, 0, 40, weapon.displayName);
 				weaponSprite.scrollFactor.x = weaponSprite.scrollFactor.y = 0;
 				weaponSprite.loadGraphic(weapon.image);
+				weaponSprite.visible = true;
 
 				//weaponSprite.onDown = itemCallbackFn(i); //onUp doesn't work for some reason
 				if (i == PlayerData.instance.currentWeaponIndex) {
@@ -274,14 +293,22 @@ package
 				
 				//only want this to be possible if you are in eat/attack tab
 				if (_inTab){
-					if(!_isEat){
-						weaponSprite.onDown = weaponCallbackFn(i); //onUp doesn't work for some reason
-						//only show selection if we're in a tab
-						_currentWeaponBox.visible=true;
-					}
+					_currentWeaponBox.visible=true;
+					weaponSprite.onDown = weaponCallbackFn(i,this); //onUp doesn't work for some reason
 				} else {
 					_currentWeaponBox.visible=false;
+					weaponSprite.onDown = function():void{};
 				}
+				
+				i += 1;
+			}
+			
+			// fill up blank slots
+			while (i < Inventory.MAX_WEAPONS - 1){
+				weaponSprite = _weaponSlots.recycle(FlxButton) as FlxButton;
+				weaponSprite.visible = false;
+				weaponSprite.onDown = function():void{};
+				i += 1;
 			}
 			
 			mouseHover();
