@@ -64,7 +64,6 @@ package
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
-		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
 		
 		private var isEndBattle:Boolean = false;
 		
@@ -133,11 +132,7 @@ package
 			
 			var background:FlxSprite = new FlxSprite(0, 0, Sources.BattleBackground);
 			add(background);
-						
-			add(inventoryHUD);
-			add(enemyName);
-			add(attackButton);
-			add(runButton);
+			
 			add(enemySprite);
 			add(playerSprite);
 			add(maxEnemyLifeBar);
@@ -152,8 +147,12 @@ package
 			eatObject.visible = false;
 			add(attackObject); 
 			attackObject.visible = false;
-			add(weaponDescription);
 			FlxG.mouse.show();
+						
+			add(inventoryHUD);
+			add(enemyName);
+			add(attackButton);
+			add(runButton);
 			
 			buttonGroup.add(attackButton);
 			buttonGroup.add(runButton);

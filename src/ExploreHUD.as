@@ -48,6 +48,8 @@ package {
 		// baby type system is baby
 		public var eatFunction:Function;
 		
+		private var weaponDescription:WeaponDescriptorUI;
+		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public function ExploreHUD(hasEat:Boolean = true)
@@ -159,6 +161,9 @@ package {
 			
 			_eatLastWarning.setFormat("COOKIES", 15, 0xffffffff);
 			_eatLastWarning.scrollFactor.x = _eatLastWarning.scrollFactor.y = 0;
+			
+			weaponDescription = new WeaponDescriptorUI(this);
+			add(weaponDescription);
 		}
 		
 		public function openAttack():void{
@@ -252,7 +257,6 @@ package {
 				if (y>FlxG.height*0.91){
 					var xPos:int=(FlxG.width/2) - ((4-i)*50) - 40;
 					if (x>xPos && x<xPos+40){
-						_weaponInfo.text=weapon.displayName;
 						return i;
 					}
 				}
