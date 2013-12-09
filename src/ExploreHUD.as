@@ -221,6 +221,7 @@ package {
 						//hard coded
 						that.eatFunction(-1,BalanceHooks.weaponHealAmount);
 					} else {
+						FlxG.play(Sources.error);
 						that.add(that._eatLastWarning);
 						var timer:FlxTimer = new FlxTimer();
 						timer.start(3,1, function():void {
