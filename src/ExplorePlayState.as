@@ -198,7 +198,7 @@ package
 			maxPlayerLifeBar.scrollFactor.x = maxPlayerLifeBar.scrollFactor.y = 0;
 			playerLifeBar.scrollFactor.x = playerLifeBar.scrollFactor.y = 0;
 			playerHealthText.scrollFactor.x = playerHealthText.scrollFactor.y = 0;
-			playerHealthText.setFormat("COOKIES",14, 0x000000, "center");
+			playerHealthText.setFormat("COOKIES",14, 0x000000, "left");
 			add(maxPlayerLifeBar);
 			add(playerLifeBar);
 			add(playerHealthText);
