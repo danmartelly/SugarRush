@@ -122,6 +122,11 @@ package
 		[Embed(source="../assets/sound/deselect.mp3")] public static var deselect:Class;
 		[Embed(source="../assets/sound/error.mp3")] public static var error:Class;
 		
+		[Embed(source="../assets/sound/overworld_slow1.mp3")] public static var Bgmusic1:Class; //slowest
+		[Embed(source="../assets/sound/overworld_slow2.mp3")] public static var Bgmusic2:Class;
+		[Embed(source="../assets/sound/overworld_slow3.mp3")] public static var Bgmusic3:Class;
+		[Embed(source="../assets/sound/overworld_normal.mp3")] public static var Bgmusic4:Class;
+		
 		// candy stuff
 		public static const candies:Array = [candyRed, candyBlue, candyWhite];
 		

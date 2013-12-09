@@ -179,6 +179,7 @@ package
 		
 		override public function create(): void
 		{ 
+			FlxG.playMusic(Sources.Bgmusic1);
 			//FlxG.visualDebug = true; 
 			FlxG.bgColor = 0xff783629;
 			
