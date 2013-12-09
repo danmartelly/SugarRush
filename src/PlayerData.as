@@ -16,6 +16,8 @@ package
 		
 		public static var weaponList:Object = { };
 		
+		public var difficulty:int;
+		
 		// Follows the Singleton design pattern
 		public function PlayerData(lock:SingletonLock)
 		{
@@ -38,6 +40,7 @@ package
 			maxHealth = initialHealth;
 			currentWeaponIndex = 0;
 			killCount = 0;
+			difficulty = 1;
 		}
 		
 		public function playerHasDied():Boolean {

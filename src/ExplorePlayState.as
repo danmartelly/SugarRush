@@ -75,7 +75,6 @@ package
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		private var portalExplosionDuration:Number = 4.0;
 		
-		private var difficulty:int = 1;
 		private var backgroundColors:Array = [0xff805a3f, 0xffa86d46, 0xffffc662, 0xffffc662];
 		
 		Sources.fontCookies;
@@ -289,13 +288,13 @@ package
 					fader.replaceImages(oldMap,currentMap);
 					fader.animate(4.0);
 					clouds.alpha=currentMapIndex/4;
-					difficulty++;
+					PlayerData.instance.difficulty++;
 					for (var i:int = 0; i < _enemies.length; i++) {
 						var enemyData:BattleEnemy = _enemies.members[i].enemyData;
-						_enemies.members[i].enemyData = new BattleEnemy(enemyData.maxHealth, enemyData.name, difficulty);
+						_enemies.members[i].enemyData = new BattleEnemy(enemyData.maxHealth, enemyData.name, PlayerData.instance.difficulty);
 					}
 					for (var i:int = 0; i < _spawners.length; i++) {
-						_spawners.members[i].enemyDifficulty = difficulty;
+						_spawners.members[i].enemyDifficulty = PlayerData.instance.difficulty;
 					}
 				}
 				
