@@ -8,7 +8,6 @@ package {
 	public class BattleCharacter {
 		var currentHealth:Number;
 		var maxHealth:Number;
-		var isDead:Boolean = false;
 		var attackStat:Number = 0;
 		var defenseStat:Number = 0;
 		var tempAttackStat:Number = 0;
@@ -29,9 +28,10 @@ package {
 		
 		public function hurt(amount:Number):void {
 			this.currentHealth = Math.max((this.currentHealth - amount), 0);
-			if (this.currentHealth == 0){
-				this.isDead = true;
-			}
+		}
+		
+		public function isDead():Boolean {
+			return this.currentHealth <= 0;
 		}
 		
 		public function getAttackStat():Number {
@@ -66,7 +66,7 @@ package {
 		public function removeAllBuffs():void {
 			this.buffs = [];
 		}
-
+		
 		public function hasBuff(tag:String):Boolean {
 			var foundBuff:Boolean = false;
 			for (var i:uint = 0; i < this.buffs.length; i+=1){
@@ -77,7 +77,7 @@ package {
 			}
 			return foundBuff;
 		}
-
+		
 		public function findBuff(s:String):Object {
 			for (var i:int=0; i<this.buffs.length; ++i) {
 				if (this.buffs[i]["name"] == s) {
@@ -86,7 +86,7 @@ package {
 			}
 			return null;
 		}
-
+		
 		public function getBuffText():String {
 			var output:String = "";
 			if (this.buffs.length > 0) {

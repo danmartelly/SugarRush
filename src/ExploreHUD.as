@@ -221,9 +221,7 @@ package
 					PlayerData.instance.changeWeapon(0);
 					Inventory.removeWeaponAt(i);
 					//hard coded
-					eatFunction(-1,5);
-					update();
-					trace("test");
+					eatFunction(-1,-5);
 				};
 			}else {
 				return function():void {

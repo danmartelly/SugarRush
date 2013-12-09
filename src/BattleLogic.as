@@ -82,10 +82,10 @@ package {
 			} else { 
 				enemy.removeTempStats();
 			}
-			
-			if (player.isDead) {
+			trace("player is " + player.isDead());
+			if (player.isDead()) {
 				this.state.endBattleCallback(ENEMY_WON);
-			} else if (enemy.isDead) {
+			} else if (enemy.isDead()) {
 				player.data.killCount += 1;
 				this.state.endBattleCallback(PLAYER_WON);
 			} else {
@@ -94,7 +94,7 @@ package {
 			
 			var self:BattleLogic = this;
 			// 2-second delay on turn-change
-			if (turn == ENEMY_TURN && !enemy.isDead){
+			if (turn == ENEMY_TURN && !enemy.isDead()){
 				(new FlxTimer).start(2, 1, enemyTurn(this));
 			}
 		}

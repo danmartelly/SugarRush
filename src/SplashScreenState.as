@@ -17,6 +17,7 @@ package
 		
 		public function SplashScreenState()
 		{
+			trace("test");
 			FlxG.mouse.hide(); 
 			//initialize/reset all the stats
 			Inventory.resetInventory();
