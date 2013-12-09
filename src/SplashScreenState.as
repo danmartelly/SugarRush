@@ -17,7 +17,7 @@ package
 		
 		public function SplashScreenState()
 		{
-			FlxG.mouse.hide(); 
+			FlxG.mouse.load(Sources.cursor);
 			//initialize/reset all the stats
 			Inventory.resetInventory();
 			PlayerData.instance.initialize();
@@ -28,7 +28,7 @@ package
 			background.loadGraphic(Sources.SplashScreenBackground);
 			add(background);
 			
-			startText = new FlxText(10, (FlxG.height)-55, FlxG.width-10, "Press ENTER to start!");
+			startText = new FlxText(10, (FlxG.height)-55, FlxG.width-10, "CLICK to start!");
 			startText.color = 0x01FFFFFF;
 			startText.shadow = 0x01000000;
 			startText.setFormat("COOKIES",26);
@@ -57,11 +57,11 @@ package
 		override public function update():void {
 			if (FlxG.keys.justPressed("S")) { //this is for the developers playing the game that want to avoid intro screens
 				FlxG.fade(0x00000000, 1, startGame);
-			} else if (FlxG.keys.ENTER && currentScreen==4){
+			} else if (FlxG.mouse.justReleased() && currentScreen==4){
 				FlxG.fade(0x00000000, 1, startGame);
 			} else if (FlxG.keys.C) {
 				creditsScreen();
-			}else if ((FlxG.keys.ENTER && currentScreen==0)|| (FlxG.mouse.justReleased() && currentScreen!=0 && currentScreen<4)){
+			}else if (FlxG.mouse.justReleased() && currentScreen<4){
 				background.loadGraphic(Sources.intros[currentScreen]);
 				remove(creditText);
 				instrText.text="click to continue";
@@ -70,16 +70,18 @@ package
 				if (currentScreen==0){
 					narrText.text="Candyland was a peaceful land\nof joy and sugary goodness,\nand all was well.";
 				}else if (currentScreen==1){
-					narrText.text="Then one day, strange leafy beasts spawned from four mysterious portals. \n\nThey plundered the villages, stealing candy and terrorizing Candyland.";
+					narrText.text="Then one day, strange leafy beasts spawned from four mysterious portals. \n\nThey plundered the villages, terrorizing Candyland.";
+					narrText.size=18;
 				}else if (currentScreen==2){
-					narrText.text="Only one small boy with a propeller hat had enough strength to defeat all the monsters and restore peace to Candyland once more...";
+					narrText.text="Only one small kid with a propeller hat had enough strength to defeat all the monsters and restore peace to Candyland once more...";
+					narrText.size=20;
 				}else if (currentScreen==3){
 					//this is instructions
 					remove(narrText);
 					instrText.color=0xffffffff;
 					instrText.size=36;
 					instrText.y=155;
-					instrText.text="press ENTER to play!";
+					instrText.text="CLICK to play!";
 				}
 				currentScreen ++;
 			}

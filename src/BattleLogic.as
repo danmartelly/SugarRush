@@ -25,13 +25,15 @@ package {
 		}
 		
 		public function initializePlayer():void {
-			switchWeaponIndex(player.data.currentWeaponIndex); //in order to re-apply buffs
+			updateWeapon(); //in order to re-apply buffs
 		}
 		public function useRun():void {
 			this.state.endBattleCallback(RAN_AWAY);
 		}
 		
 		public function useAttack():Number {
+			updateWeapon();
+			
 			var dmg:Number=player.attack(enemy);
 			this.state.healthCallback();
 			endTurn();
@@ -43,10 +45,16 @@ package {
 		public function getEnemyFlags():Array {
 			return enemy.flags;
 		}
-		
-		// couldn't name it just switch() because it's a reserved word
 		public function switchWeaponIndex(index:int):void {
 			player.data.currentWeaponIndex = index;
+			player.data.hasUpdatedWeapon = false;
+			updateWeapon();
+		}
+		// couldn't name it just switch() because it's a reserved word
+		public function updateWeapon():void {
+			if (player.data.hasUpdatedWeapon) return;
+			player.data.hasUpdatedWeapon = true;
+			
 			var weapon:Weapon = player.data.currentWeapon();
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
