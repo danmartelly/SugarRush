@@ -60,6 +60,8 @@ package
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
+		private var difficulty:int = 1;
+		
 		Sources.fontCookies;
 		
 		public function ExplorePlayState(lock:SingletonLock) {
@@ -219,6 +221,14 @@ package
 					fader.replaceImages(oldMap,currentMap);
 					fader.animate(4.0);
 					clouds.alpha=currentMapIndex/4;
+					difficulty++;
+					for (var i:int = 0; i < _enemies.length; i++) {
+						var enemyData:BattleEnemy = _enemies.members[i].enemyData;
+						_enemies.members[i].enemyData = new BattleEnemy(enemyData.maxHealth, enemyData.name, difficulty);
+					}
+					for (var i:int = 0; i < _spawners.length; i++) {
+						_spawners.members[i].enemyDifficulty = difficulty;
+					}
 				}
 				
 				if (_player.invincibilityTime > 0) {

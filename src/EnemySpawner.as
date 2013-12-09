@@ -14,7 +14,7 @@ package
 		public var spawnRate:Number = 3;
 		public var totalEnemies:Number = 3;
 		
-		private const enemyDifficulty:int = 1;
+		public var enemyDifficulty:int = 1;
 		
 		public function EnemySpawner(X:Number, Y:Number, enemyGroup:FlxGroup, chests:FlxGroup, player:ExplorePlayer)
 		{
