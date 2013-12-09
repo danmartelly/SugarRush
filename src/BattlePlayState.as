@@ -26,7 +26,7 @@ package
 		
 		private var buttonWidth:int = 120;
 		private var attackButton:FlxButton = new FlxButton(0+2, 410, "", openAttackTab); // +2 for margin
-		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "RUN", runCallback); // -2 for margin
+		private var runButton:FlxButton = new FlxButton(FlxG.width-buttonWidth-2 , 410, "", runCallback); // -2 for margin
 	
 		const lifeBarWidth:int = 160;
 		const lifeBarHeight:int = 18;
@@ -60,7 +60,7 @@ package
 		private var turnText:FlxText = new FlxText(250,30,200,"Player's turn!");	
 		private var dmgInfo:FlxText = new FlxText(120, FlxG.height - 400, 400, "");
 		
-		private var invulnTime:Number = 2.0;
+		private static var invulnTime:Number = 2.0;
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
@@ -120,7 +120,7 @@ package
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
 			var attackLabel:FlxText=new FlxText(0,0,buttonWidth,"ATTACK");
-			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN -1 HP");
+			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN");
 			attackLabel.setFormat("COOKIES", 17, 0xffffffff);
 			runLabel.setFormat("COOKIES", 17, 0xffffffff);
 			attackLabel.alignment = "center";
@@ -439,6 +439,7 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					inventoryHUD.disable();
 					var candyColor:int = Math.floor(Math.random() * 3);
 					
 					var back:FlxSprite = new FlxSprite(0, 0);
@@ -477,14 +478,15 @@ package
 					break;
 				
 				case BattleLogic.RAN_AWAY: 
-					logic.player.currentHealth -= 1;
-					logic.player.updatePlayerData();
+					//player doens't lose health with running away anymore
+					//logic.player.currentHealth -= 1;
+					//logic.player.updatePlayerData();
 					switchToExplore();
 					break;
 			}
 		}
 		
-		private function switchToExplore():void {
+		public static function switchToExplore():void {
 			var newExploreState:ExplorePlayState = ExplorePlayState.instance;
 			newExploreState.setInvincibility(invulnTime);
 			FlxG.switchState(newExploreState);

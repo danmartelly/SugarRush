@@ -176,7 +176,12 @@ package {
 			_attackBackground.visible=true;
 		}
 		
+		public function disable():void {
+			this.active = false;
+		}
+		
 		public function openEat():void{
+			
 			add(eatGroup);
 			_inTab=true;
 			_isEat=true;

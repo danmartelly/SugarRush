@@ -1,9 +1,11 @@
 package
 {
 	import flash.geom.Point;
+	import flash.media.Camera;
 	
 	import org.flixel.FlxBackdrop;
 	import org.flixel.FlxButton;
+	import org.flixel.FlxCamera;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
@@ -30,14 +32,13 @@ package
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
-		protected var _portals:FlxGroup;
-		protected var portal:FlxSprite;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
 		
 		protected var _killCount:FlxText;
 		public var _healthLabel:FlxText;
 		
+		private var portalShouldExplode:Boolean; 
 		private var inGameMessage:FlxText
 		private var temporaryInstructions:FlxSprite;
 		private const instructionShowTime:Number = 10;
@@ -57,8 +58,10 @@ package
 		private var clouds:FlxSprite=new FlxSprite(0,0,Sources.mapClouds);
 		private var fader:SpriteFader;
 		private var cameraPanObject:FlxSprite; 
+		private var originalCamera:FlxCamera; 
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
+		private var portalExplosionDuration:Number = 4.0;
 		
 		private var difficulty:int = 1;
 		
@@ -66,12 +69,13 @@ package
 		
 		public function ExplorePlayState(lock:SingletonLock) {
 			_timer = 0;
-			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
-			background.loadGraphic(Sources.maps[getCurrentMap()]);
+//			var background:FlxSprite = new FlxSprite(0, 0, Sources.ExploreBackground);
+//			background.loadGraphic(Sources.maps[getCurrentMap()]);
+//			add(background);
+			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
 			add(background);
-			
 			FlxG.mouse.load(Sources.cursor);
-			
+			portalShouldExplode = true;
 			//map stuff
 			currentMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
 			oldMap=new FlxSprite(0,0,Sources.maps[getCurrentMap()]);
@@ -81,7 +85,6 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			_portals = new FlxGroup();
 			inGameMessage = new FlxText(10, FlxG.height/2-50, FlxG.width-10, "test");
 			inGameMessage.setFormat("COOKIES",20,0xff000000,"center",0xffffffff);
 			inGameMessage.scrollFactor.x=inGameMessage.scrollFactor.y=0;
@@ -94,10 +97,8 @@ package
 				var spawnPoint:FlxPoint = entry[0];
 				//make new Spawner
 				var spawner:EnemySpawner = new EnemySpawner(spawnPoint.x, spawnPoint.y, _enemies, _chests, _player);
-				portal = new FlxSprite(spawnPoint.x, spawnPoint.y, Sources.Portal);
 				//add to State
 				_spawners.add(spawner);
-				_portals.add(portal);
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
@@ -133,7 +134,6 @@ package
 			add(craftHouse);
 			add(craftButton);
 			add(_spawners);
-			add(_portals);
 			add(_chests);
 			add(_enemies);
 			add(_player);
@@ -166,16 +166,15 @@ package
 		
 		override public function create(): void
 		{ 
-//			FlxG.visualDebug = true; 
-//			var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
-//			FlxG.resetCameras( zoomCam );
-//			zoomCam.targetZoom = 2;
-
+			//FlxG.visualDebug = true; 
+			FlxG.bgColor = 0xff783629;
+			
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			
 			FlxG.camera.follow(_player);
+			//originalCamera = FlxG.camera; 
 			FlxG.mouse.show();
 		}
 		
@@ -200,15 +199,22 @@ package
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					FlxG.switchState(new WinState());
 				}
-				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0) 
+				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0 && portalShouldExplode) 
 				{
-					var portal:FlxSprite = _portals.members[0];
-					cameraFocus(portal, 100, 100); 
-					//cameraFocus(_player, levelX, levelY);
-					//(new FlxTimer()).start(3,1, FlxG.camera.follow(_player));
-					
+					//portal moving 
+					var spawner:EnemySpawner = EnemySpawner(_spawners.getFirstAlive());
+					var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
+					FlxG.resetCameras( zoomCam );
+					FlxG.camera.follow(spawner);
+					zoomCam.targetZoom = 2;
+					spawner.play("explode");
+					portalShouldExplode = false;
+					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
-				
+				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 
+				{
+					portalShouldExplode = true;
+				}
 				_killCount.text = "Kills: " + PlayerData.instance.killCount;
 				_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
 				
@@ -278,7 +284,7 @@ package
 					FlxG.switchState(battle);
 				} else if (FlxG.keys.V){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
-				}else if (FlxG.keys.K){ //killcount cheathax
+				}else if (FlxG.keys.justPressed("K")){ //killcount cheathax
 					PlayerData.instance.killCount++;
 				}
 			} else {
@@ -288,12 +294,17 @@ package
 		}
 		
 		//focuses camera on that object, where width and height are the w and h of the camera
-		private function cameraFocus(object:FlxSprite, width:int, height:int):void
+		private function resetCamera(object:FlxSprite, zoom:int, spawner:EnemySpawner):Function
 		{
-//			FlxG.camera.zoom = 2;
-//			FlxG.camera.follow(object);
+			return function(timer:FlxTimer):void {
+				var camera:FlxCamera = new FlxCamera(0, 0, FlxG.width, FlxG.height);
+				camera.setBounds(0,0, levelX, levelY); 
+				camera.follow(object)
+				FlxG.resetCameras(camera);
+				spawner.alive = false;
+				spawner.visible = false;
+			};
 			
-			//FlxG.camera.setBounds(0, 0, width, height); 
 		}
 		
 		public function setInvincibility(duration:Number):void {
