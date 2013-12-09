@@ -23,7 +23,7 @@ package
 			_background.scrollFactor.x = _background.scrollFactor.y = 0;
 			add(_background);
 			
-			_weaponName = new FlxText(3, 342, 200, "Weapon Name");
+			_weaponName = new FlxText(3, 342, 252, "Weapon Name");
 			_weaponName.setFormat("COOKIES",13,0xffffffff,"left");
 			_weaponName.scrollFactor.x = _weaponName.scrollFactor.y = 0;
 			add(_weaponName);
