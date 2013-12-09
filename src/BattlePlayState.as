@@ -34,35 +34,37 @@ package
 		private var dmgFlickerTime:Number = 1.0;
 		private var enemy:ExploreEnemy;
 		private var enemyData:BattleEnemy;
-		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor, y - 50 - invenBarHeight);
+		private var maxEnemyLifeBarPos:FlxPoint = new FlxPoint(hor-30, FlxG.height-invenBarHeight-350);
 		private var maxEnemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		private var enemyLifeBar:FlxSprite = new FlxSprite(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y);
 		
 		private var enemyName:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-20, lifeBarWidth,"Enemy Name");
 		private var enemyHealthText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y, lifeBarWidth, "Health: ?/?");
-		private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
+		//private var buffText:FlxText = new FlxText(maxEnemyLifeBarPos.x, maxEnemyLifeBarPos.y-70, lifeBarWidth, "");
 		
-		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerLifeBar:FlxSprite = new FlxSprite(50,50);
-		private var playerName:FlxText = new FlxText(50, 50-20,75,"Kid");
-		private var playerHealthText:FlxText = new FlxText(50,50, lifeBarWidth, "Blood Sugar: ?/?");
+		private var playerLifeBarPos:FlxPoint = new FlxPoint(50, FlxG.height-invenBarHeight-350);  
+		private var maxPlayerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerLifeBar:FlxSprite = new FlxSprite(playerLifeBarPos.x, playerLifeBarPos.y);
+		private var playerName:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y-20,75, "Kid");
+		private var playerHealthText:FlxText = new FlxText(playerLifeBarPos.x, playerLifeBarPos.y, lifeBarWidth, "Blood Sugar: ?/?");
 		
-		private var playerSprite:FlxSprite = new FlxSprite(25, FlxG.height - 325 - invenBarHeight, Sources.battlePlayer);
-		private var enemySprite:FlxSprite = new FlxSprite(FlxG.width - 300, 0);
+		private var playerSpritePos:FlxPoint = new FlxPoint(10, FlxG.height - 325 - invenBarHeight); 
+		private var playerSprite:FlxSprite = new FlxSprite(playerSpritePos.x, playerSpritePos.y, Sources.battlePlayer);
+		private var enemySpritePos:FlxSprite = new FlxSprite(350, FlxG.height - 300 - invenBarHeight);
+		private var enemySprite:FlxSprite = new FlxSprite(enemySpritePos.x, enemySpritePos.y);
 		
-		private var eatObject:FlxSprite = new FlxSprite(225, 150, Sources.candyRed);
+		private var eatObject:FlxSprite = new FlxSprite(playerSpritePos.x+205, playerSpritePos.y+65, Sources.candyRed);
+		private var attackObject:FlxSprite = new FlxSprite(playerSpritePos.x+250, playerSpritePos.y+100, Sources.AxeGumdrop);
 		
 		// for turn notification
-		private var turnText:FlxText = new FlxText(250,50,200,"Player's turn!");	
-		private var dmgInfo:FlxText = new FlxText(FlxG.width/2 - 220, FlxG.height - 400, 400, "");
+		private var turnText:FlxText = new FlxText(250,30,200,"Player's turn!");	
+		private var dmgInfo:FlxText = new FlxText(120, FlxG.height - 400, 400, "");
 		
 		private var invulnTime:Number = 2.0;
-		
 		private var background:FlxBackdrop;
-		
 		private var buttonGroup:FlxGroup = new FlxGroup();
-		
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
+		private var weaponDescription:WeaponDescriptorUI = new WeaponDescriptorUI(inventoryHUD);
 		
 		private var isEndBattle:Boolean = false;
 		
@@ -110,9 +112,9 @@ package
 			attackButton.loadGraphic(Sources.buttonRed);
 			runButton.loadGraphic(Sources.buttonGreen);
 			
-			turnText.setFormat("COOKIES",15,0xff000000);
+			turnText.setFormat("COOKIES",20,0xff000000);
 			dmgInfo.setFormat("COOKIES", 20, 0xff000000, "center");
-			buffText.setFormat("COOKIES", 15, 0xffaa00aa);
+			//buffText.setFormat("COOKIES", 15, 0xffaa00aa);
 			
 			playerHealthText.setFormat("COOKIES", 14, 0xff000000);
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
@@ -132,20 +134,24 @@ package
 			add(background);
 						
 			add(inventoryHUD);
-			
-			add(maxEnemyLifeBar);
-			add(enemyLifeBar);
-			add(playerName);
-			add(maxPlayerLifeBar);
-			add(playerLifeBar);
 			add(enemyName);
 			add(attackButton);
 			add(runButton);
 			add(enemySprite);
 			add(playerSprite);
+			add(maxEnemyLifeBar);
+			add(enemyLifeBar);
+			add(playerName);
+			add(maxPlayerLifeBar);
+			add(playerLifeBar);
 			add(playerHealthText);
 			add(enemyHealthText);
 			add(dmgInfo);
+			add(eatObject);
+			eatObject.visible = false;
+			add(attackObject); 
+			attackObject.visible = false;
+			add(weaponDescription);
 			FlxG.mouse.show();
 			
 			buttonGroup.add(attackButton);
@@ -153,7 +159,7 @@ package
 			buttonGroup.add(attackBtnWeapons);
 			
 			add(turnText);
-			add(buffText);
+			//add(buffText);
 			
 			drawHealthBar();
 			inventoryHUD.eatFunction = useCandyFn(this);
@@ -195,7 +201,7 @@ package
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
 				self.eatObject.loadGraphic(Sources.candies[candy]);
-				add(eatObject);	
+				eatObject.visible = true;
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -205,10 +211,8 @@ package
 			enemySprite.play("idle");
 			dmgInfo.text = "";
 			playerSprite.loadGraphic(Sources.battlePlayer);
-			if (eatObject.visible)
-			{
-				remove(eatObject);
-			}
+			eatObject.visible = false; 
+			attackObject.visible=false;
 		}
 		
 		public function showHealth():void
@@ -263,7 +267,9 @@ package
 			playerSprite.loadGraphic(Sources.battlePlayerAttack);
 			FlxG.play(Sources.vegetableHurt1);
 			enemySprite.play("attacked");
-			
+			attackObject.loadGraphic(logic.player.data.currentWeapon().image);
+			attackObject.visible=true;
+			enemyLifeBar.flicker(dmgFlickerTime);
 			if (playerFlags && playerFlags[0] == 'crit') {
 				dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
 			}
@@ -338,10 +344,17 @@ package
 			var enemyFlags = logic.getEnemyFlags();
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
+				enemySprite.play("freeze");
+				//enemyData.playBuffSound();
+				FlxG.play(Sources.freeze);
 			}
 			else {
 				enemySprite.play("attack");
+				FlxG.play(Sources.playerHurt);
+				playerSprite.loadGraphic(Sources.battlePlayerHurt);
 				playerLifeBar.flicker(dmgFlickerTime);
+				attackObject.visible = false;
+				eatObject.visible = false;
 			}
 		}
 		
@@ -359,7 +372,7 @@ package
 					attackButton.active = true;
 					runButton.active = true;
 					attackBtnWeapons.active = true;
-					(new FlxTimer()).start(1,1,updatePlayerText(self));
+					(new FlxTimer()).start(2,1,updatePlayerText(self));
 					break;
 				default:
 					break;
@@ -385,15 +398,16 @@ package
 		{
 			switch(enemyData.getBuffText()) {
 				case "Burn":
-					buffText.text = "Burnt! 1 damage";
-					return "burn";
+					/*buffText.text = "Burnt! 1 damage";
+					return "burn";*/
 				case "Ignite":
-					buffText.text = "Burnt! 2 damage";
+					//buffText.text = "Burnt! 2 damage";
+					FlxG.play(Sources.burn);
 					return "burn";
 				case "Freeze":
 				case "Deep Freeze":
-					buffText.text = "Frozen!";
-					return "freeze";
+					//buffText.text = "Frozen!";
+					//return "freeze";
 				default:
 					return "idle";
 			}
@@ -407,11 +421,11 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					var candyColor:int = Math.floor(Math.random() * 3);
+					
 					var back:FlxSprite = new FlxSprite(0, 0);
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
-					
-					var candyColor:int = Math.floor(Math.random() * 3);
 					//var candyDrop:Candy = new Candy(candyColor);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");

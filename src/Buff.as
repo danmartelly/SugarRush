@@ -21,6 +21,7 @@ package {
 			this.tag = tag;
 			this.name = name;
 			this.numTurns = numTurns;
+			this.desc = desc;
 			this.effect = effect;
 			this.sound = sound;
 		}

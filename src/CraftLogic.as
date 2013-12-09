@@ -5,7 +5,7 @@ package
 	{
 		
 		private static const probSpecial:Number = 1; // Probability of getting a special, period
-		private static const probDoubleSpecial:Number = .1; // Probability of that special being a dual-color special
+		private static const probDoubleSpecial:Number = .3; // Probability of that special being a dual-color special
 		
 		//private static const maxAttack:int = 5;
 		
@@ -64,6 +64,12 @@ package
 			if (defense > 2) defense = 2;
 			
 			return new Weapon(weaponType, weaponMod, attack, defense, buff);
+		}
+		public static function generateBasicWeapon():Weapon {
+			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
+			var weaponMod:String = weaponMods[(int)(weaponMods.length * Math.random())];
+			
+			return new Weapon(weaponType, weaponMod, 1, 0, null);
 		}
 	}
 }

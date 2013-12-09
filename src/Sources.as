@@ -58,27 +58,21 @@ package
 		[Embed(source="../assets/weapons/sword_gumdrop.png")] public static var SwordGumdrop:Class;
 		[Embed(source="../assets/weapons/sword_marshmallow.png")] public static var SwordMarsh:Class;
 		
-//		[Embed(source="../assets/button_eat.png")] public static var buttonEat:Class;	
-//		[Embed(source="../assets/button_attack.png")] public static var buttonAttack:Class;	
-//		[Embed(source="../assets/button_run.png")] public static var buttonRun:Class;	
-//		[Embed(source="../assets/button_craft.png")] public static var buttonCraft:Class;
-		
 		[Embed(source="../assets/button_red.png")] public static var buttonRed:Class;	
 		[Embed(source="../assets/button_blue.png")] public static var buttonBlue:Class;	
 		[Embed(source="../assets/button_green.png")] public static var buttonGreen:Class;	
 		[Embed(source="../assets/button_orange.png")] public static var buttonOrange:Class;
 
 		[Embed(source="../assets/cauldron.png")] public static var Cauldron:Class;
-		
 		[Embed(source="../assets/treasure.png")] public static var TreasureChest:Class;
 		[Embed(source="../assets/crafthouse.png")] public static var CraftHouse:Class;
 		[Embed(source="../assets/portal.png")] public static var Portal:Class;
-
+		[Embed(source="../assets/portal_sheet.png")] public static var PortalSheet:Class;
 		
-		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
-		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
 		[Embed(source="../assets/backdrops/instructions.png")] public static var Instructions:Class;
 		[Embed(source="../assets/backdrops/instructions_small.png")] public static var InstructionsSmall:Class;
+
+		[Embed(source="../assets/backdrops/battle_background.png")] public static var BattleBackground:Class;
 		[Embed(source="../assets/backdrops/win.png")] public static var WinBackground:Class;
 		[Embed(source="../assets/backdrops/lose.png")] public static var LoseBackground:Class;
 		[Embed(source="../assets/backdrops/intro1.png")] public static var intro1:Class;
@@ -87,15 +81,17 @@ package
 		
 		public static const intros:Array=[intro1, intro2, intro3, Instructions];
 		
+		[Embed(source="../assets/backdrops/map_clouds.png")] public static var mapClouds:Class;
+		[Embed(source="../assets/backdrops/map.png")] public static var ExploreBackground:Class;	
 		[Embed(source="../assets/backdrops/map1.png")] public static var map1:Class;
 		[Embed(source="../assets/backdrops/map2.png")] public static var map2:Class;
 		[Embed(source="../assets/backdrops/map3.png")] public static var map3:Class;
 		[Embed(source="../assets/backdrops/map4.png")] public static var map4:Class;
 		[Embed(source="../assets/backdrops/map5.png")] public static var map5:Class;
-		
 		public static const maps:Array=[map1, map2, map3, map4, map5];
 		
 		[Embed(source="../assets/cursor.png")] public static var cursor:Class;
+		[Embed(source="../assets/craftbutton.png")] public static var CraftButton:Class;
 		
 		[Embed(source="../assets/backdrops/instructions2.png")] public static var Instructions2:Class;
 		[Embed(source="../assets/backdrops/instructions_small.png")] public static var instrucSmall:Class;
@@ -108,11 +104,18 @@ package
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] public static var fontCookies:Class;
 		
 		//music and sound effects
+		[Embed(source="../assets/sound/player_hurt.mp3")] public static var playerHurt:Class;
 		[Embed(source="../assets/sound/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
 		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
+		[Embed(source="../assets/sound/explosion.mp3")] public static var explosion:Class;
+		[Embed(source="../assets/sound/death.mp3")] public static var death:Class;
+		[Embed(source="../assets/sound/treasure.mp3")] public static var treasure:Class;
+		[Embed(source="../assets/sound/max_health.mp3")] public static var maxHealth:Class;
 		[Embed(source="../assets/sound/gain_health.mp3")] public static var gainHealth:Class;
 		[Embed(source="../assets/sound/burn.mp3")] public static var burn:Class;
+		[Embed(source="../assets/sound/freeze.mp3")] public static var freeze:Class;
+		[Embed(source="../assets/sound/empty.mp3")] public static var empty:Class;
 		[Embed(source="../assets/sound/craft_weapon.mp3")] public static var craftWeapon:Class;
 		[Embed(source="../assets/sound/select.mp3")] public static var select:Class;
 		[Embed(source="../assets/sound/deselect.mp3")] public static var deselect:Class;

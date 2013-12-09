@@ -50,6 +50,8 @@ package {
 			var weapon:Weapon = player.data.currentWeapon();
 			
 			player.removeAllBuffs(); //this is suspect but will work as long as we don't add more weapons
+			player.removeAllFlags();
+			
 			if (weapon.buffs["equip"]) {
 				var i:int = weapon.buffs["equip"];
 				var b:Buff = Weapon.BUFF_LIST[i];
@@ -77,8 +79,10 @@ package {
 			
 			if (turn == ENEMY_TURN){
 				player.removeTempStats();
+				player.removeAllFlags();
 			} else { 
 				enemy.removeTempStats();
+				enemy.removeAllFlags();
 			}
 			
 			if (player.isDead) {

@@ -1,7 +1,11 @@
 package
 {
-	import flash.geom.*;
-	import org.flixel.*;
+	import flash.geom.Point;
+	
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	
 	public class ExploreEnemy extends FlxSprite
 	{
@@ -16,6 +20,7 @@ package
 		private const chestWiggleDistance:Number = 20;
 		private const chestAggroSpeed:Number = 30;
 		private const chestBufferDistance:Number = 100;
+		private var boundingBoxReduction:int = 16; 
 		
 		public var enemyData:BattleEnemy;
 		
@@ -34,6 +39,10 @@ package
 			velocity.y = FlxG.random()*2*ambleSpeed - ambleSpeed;
 			velocity.x = FlxG.random()*2*ambleSpeed - ambleSpeed;
 			maxVelocity = new FlxPoint(200, 200);
+			height -= boundingBoxReduction;
+			width -= boundingBoxReduction;
+			offset.x = boundingBoxReduction/2.0; 
+			offset.y = boundingBoxReduction/2.0;
 		}
 		
 		override public function update():void {

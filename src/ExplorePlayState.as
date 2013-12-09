@@ -19,16 +19,18 @@ package
 		
 		// syntax: FlxPoint 
 		private const spawnerLocations:Array = [
-			[new FlxPoint(10,10)],
-			[new FlxPoint(620,10)], //1100,10
-			[new FlxPoint(10,360)], //10, 700
-			[new FlxPoint(620,360)] //1100, 700
+			[new FlxPoint(10,5)],
+			[new FlxPoint(640,5)],
+			[new FlxPoint(10,365)],
+			[new FlxPoint(640,365)]
 		];
 		
 		private const craftHouseLocation:FlxPoint = new FlxPoint(FlxG.width/2.0, FlxG.height/2.0-60); 
+		private var craftButton:FlxSprite; 
 		protected var craftHouse:FlxSprite;
 		protected var _enemies:FlxGroup;
 		protected var _spawners:FlxGroup;
+		protected var _portals:FlxGroup;
 		protected var portal:FlxSprite;
 		protected var _player:ExplorePlayer;
 		protected var _chests:ExploreChestManager;
@@ -52,7 +54,9 @@ package
 		private var oldMap:FlxSprite;
 		private var oldMapIndex:int=4; //starts at last map out of 5 (4 since index starts at 0)
 		private var currentMap:FlxSprite;
+		private var clouds:FlxSprite=new FlxSprite(0,0,Sources.mapClouds);
 		private var fader:SpriteFader;
+		private var cameraPanObject:FlxSprite; 
 		
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		
@@ -75,9 +79,10 @@ package
 			
 			_spawners = new FlxGroup();
 			_enemies = new FlxGroup();
-			inGameMessage = new FlxText(FlxG.width/2.0, 0, 300, "test");
-			inGameMessage.setFormat("COOKIES",20);
-			inGameMessage.color = 0xff000000;
+			_portals = new FlxGroup();
+			inGameMessage = new FlxText(10, FlxG.height/2-50, FlxG.width-10, "test");
+			inGameMessage.setFormat("COOKIES",20,0xff000000,"center",0xffffffff);
+			inGameMessage.scrollFactor.x=inGameMessage.scrollFactor.y=0;
 			inGameMessage.visible = false;
 			_chests = new ExploreChestManager(_enemies, inGameMessage);
 			_player = new ExplorePlayer(FlxG.width/2, FlxG.height/2);
@@ -90,12 +95,14 @@ package
 				portal = new FlxSprite(spawnPoint.x, spawnPoint.y, Sources.Portal);
 				//add to State
 				_spawners.add(spawner);
-				add(portal);
+				_portals.add(portal);
 			}
 			
 			craftHouse = new FlxSprite(craftHouseLocation.x, craftHouseLocation.y, Sources.CraftHouse); 
 			craftHouse.height -= 20; 
 			craftHouse.width -= 20;
+			craftButton = new FlxSprite(craftHouseLocation.x + 15, craftHouseLocation.y - 40, Sources.CraftButton);
+			craftButton.visible = false;
 			
 			pause = new PauseState();
 			
@@ -112,24 +119,33 @@ package
 			_healthLabel.scrollFactor.x = _healthLabel.scrollFactor.y = 0;
 			_healthLabel.setFormat("COOKIES",15,0xff000000);
 			
-			
+			cameraPanObject = new FlxSprite(0,0); 
+			cameraPanObject.makeGraphic(10, 10, 0xffffffff);
+			cameraPanObject.visible = false; 
 			//very specific code for putting the instruction signboard in the game
-			temporaryInstructions = new FlxSprite(FlxG.width/2.0-100,40);
+			temporaryInstructions = new FlxSprite(FlxG.width/2.0-160,40);
+			temporaryInstructions.alpha = 0.5;
 			temporaryInstructions.loadGraphic(Sources.InstructionsSmall);
+			temporaryInstructions.scrollFactor.x=temporaryInstructions.scrollFactor.y=0;
 			
-			add(temporaryInstructions);
-			add(_killCount);
-			add(_healthLabel);
+			
 			add(craftHouse);
+			add(craftButton);
 			add(_spawners);
+			add(_portals);
 			add(_chests);
 			add(_enemies);
 			add(_player);
+			add(clouds);
 			HUD = new ExploreHUD();
 			add(inGameMessage);
 			add(HUD);
+			add(_killCount);
+			add(_healthLabel);
+			add(cameraPanObject);
 			
 			add(pauseInstruction); 
+			add(temporaryInstructions);
 			
 			HUD.eatFunction = function(color:int, healAmount:Number):void{};
 		}
@@ -147,6 +163,11 @@ package
 		
 		override public function create(): void
 		{ 
+//			FlxG.visualDebug = true; 
+//			var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
+//			FlxG.resetCameras( zoomCam );
+//			zoomCam.targetZoom = 2;
+
 			FlxG.camera.setBounds(0, 0, levelX, levelY);
 
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
@@ -161,7 +182,8 @@ package
 		override public function update():void
 		{
 			if (!pause.showing){
-
+//				trace("x: " + String(FlxG.mouse.getScreenPosition().x) + // used for finding positions on screen
+//					" y: " + String(FlxG.mouse.getScreenPosition().y));
 				super.update();
 				
 				_timer += FlxG.elapsed;
@@ -175,6 +197,14 @@ package
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					FlxG.switchState(new WinState());
 				}
+				if(PlayerData.instance.killCount % _spawners.members[0].totalEnemies == 0 && PlayerData.instance.killCount != 0) 
+				{
+					var portal:FlxSprite = _portals.members[0];
+					cameraFocus(portal, 100, 100); 
+					//cameraFocus(_player, levelX, levelY);
+					//(new FlxTimer()).start(3,1, FlxG.camera.follow(_player));
+					
+				}
 				
 				_killCount.text = "Kills: " + PlayerData.instance.killCount;
 				_healthLabel.text = "Health: " + PlayerData.instance.currentHealth;
@@ -183,10 +213,12 @@ package
 				var currentMapIndex:int = getCurrentMap();
 				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
 				if (currentMapIndex!=oldMapIndex){ //if the map changed
+					FlxG.play(Sources.explosion);
 					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
 					oldMapIndex=currentMapIndex;
 					fader.replaceImages(oldMap,currentMap);
 					fader.animate(4.0);
+					clouds.alpha=currentMapIndex/4;
 				}
 				
 				if (_player.invincibilityTime > 0) {
@@ -214,10 +246,16 @@ package
 				FlxG.overlap(_player, _chests, triggerCandyChest);
 				if (FlxG.overlap(_player, craftHouse)) 
 				{
-					triggerCraftingState();
-					_player.x = FlxG.width/2.0; 
-					_player.y = FlxG.height/2.0;
+					craftButton.visible = true; 
+					if (FlxG.keys.E) 
+					{
+						triggerCraftingState();
+					}
 				} 
+				else 
+				{
+					craftButton.visible = false;
+				}
 				FlxG.overlap(_enemies, _chests);
 				
 				if (FlxG.keys.P){
@@ -227,7 +265,7 @@ package
 				} else if (FlxG.keys.B){ // for debugging help
 					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
 					FlxG.switchState(battle);
-				} else if (FlxG.keys.A){ // cheathax
+				} else if (FlxG.keys.V){ // cheathax
 					Inventory.addCandy((int)(3 * Math.random()));
 				}else if (FlxG.keys.K){ //killcount cheathax
 					PlayerData.instance.killCount++;
@@ -236,6 +274,15 @@ package
 				_player.flicker(0);
 				pause.update();
 			}
+		}
+		
+		//focuses camera on that object, where width and height are the w and h of the camera
+		private function cameraFocus(object:FlxSprite, width:int, height:int):void
+		{
+//			FlxG.camera.zoom = 2;
+//			FlxG.camera.follow(object);
+			
+			//FlxG.camera.setBounds(0, 0, width, height); 
 		}
 		
 		public function setInvincibility(duration:Number):void {

@@ -49,6 +49,9 @@ package {
 		public function removeTempStats():void {
 			this.tempAttackStat = this.tempDefenseStat = 0;
 		}
+		public function removeAllFlags():void {
+			this.flags = [];
+		}
 		
 		//buff-related functions
 		public function applyBuff(s:String, id:Number, turns:Number):void {
@@ -96,8 +99,14 @@ package {
 				output += buffName;
 			}
 			
-			FlxG.play(buff.sound);
 			return output;
+		}
+		
+		public function playBuffSound(): void {
+			if (this.buffs.length > 0) {
+				var buff:Object = Weapon.BUFF_LIST[this.buffs[0]["id"]];
+				FlxG.play(buff.sound);
+			}
 		}
 		
 		public function tickBuffs():void {
@@ -118,10 +127,10 @@ package {
 				var b:Buff = Weapon.BUFF_LIST[this.buffs[i]["id"]];
 				b.effect(this, opponent);
 			}
-			var opponentDefense:int = opponent.getDefenseStat();
+			//var opponentDefense:int = opponent.getDefenseStat();
 			
 			var damageAmount:Number = Math.max(1, (Math.floor(Math.random()*3*this.getAttackStat() + 1) - 
-				Math.floor(Math.random()*2*opponentDefense)));
+				Math.floor(Math.random()*2)));
 			
 			if (this.getAttackStat() == 0)
 				damageAmount = 0;
