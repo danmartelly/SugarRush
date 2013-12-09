@@ -200,13 +200,11 @@ package
 		public function useCandyFn(self:BattlePlayState):Function {
 			return function(candy:int, healAmount:Number):void {
 				self.playerSprite.loadGraphic(Sources.battlePlayerEat);
-				self.eatObject.loadGraphic(Sources.candies[candy]);
 
 				if(candy != -1){
 					self.eatObject.loadGraphic(Sources.candies[candy]);		
 				}
-				eatObject.visible = true;
-
+				self.eatObject.visible = true;
 				self.logic.useCandy(healAmount);
 			};
 		}
@@ -286,15 +284,24 @@ package
 					enemySprite.play("attacked");
 				}
 				(new FlxTimer()).start(1, 1, updateBuff(this));
+				
 				if (logic.player.currentHealth != oldHp) {
-					(new FlxTimer()).start(1, 1, showHeal(this));
+					var delta = logic.player.currentHealth - oldHp;
+					logic.player.currentHealth = oldHp;
+					drawHealthBar();
+					
+					(new FlxTimer()).start(1, 1, showHeal(this, delta));
 				}
 			}
 		}
 		
-		public function showHeal(self:BattlePlayState):Function {
+		public function showHeal(self:BattlePlayState, delta:int):Function {
 			return function(): void {
+				logic.player.currentHealth += delta;
+				drawHealthBar();
+				
 				self.playerSprite.loadGraphic(Sources.battlePlayerHeal);
+				dmgInfo.text = "Drained " + delta + " health!";
 			};
 		}
 		
@@ -315,6 +322,7 @@ package
 		
 		public function openCandyTab():void{
 			add(eatBtnCandy);
+			
 			inventoryHUD.openEat();
 			inventoryHUD.update();
 		}
