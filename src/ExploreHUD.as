@@ -208,6 +208,7 @@ package {
 				this.openEat();
 			} else {
 				this.closeTab();
+				remove(eatGroup);
 			}
 		}
 		
