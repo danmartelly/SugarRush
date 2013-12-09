@@ -21,11 +21,11 @@ package
 			var encode:String = '' + cauldron[0] + ',' + cauldron[1] + ',' + cauldron[2];
 			var w:Weapon;
 			
-			if (PlayerData.weaponList[encode]) {
+			/*if (PlayerData.weaponList[encode]) {
 				var weaponInfo:Array = PlayerData.weaponList[encode];
 				w = new Weapon(weaponInfo[0], weaponInfo[1], weaponInfo[2], weaponInfo[3], weaponInfo[4]);
 			}
-			else {
+			else*/ {
 				w = craftGenerate(cauldron);
 				PlayerData.recordCraftedWeapon(encode, w);
 			}
