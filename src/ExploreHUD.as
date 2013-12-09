@@ -230,7 +230,7 @@ package {
 				if (!PlayerData.instance.hasFullHealth() && Inventory.candyCount(color) > 0 ){
 					FlxG.play(Sources.gainHealth);
 					Inventory.removeCandy(color);
-					var healAmount:Number = 4;
+					var healAmount:Number = BalanceHooks.healAmount;
 					PlayerData.instance.heal(healAmount);
 					// here, call battle / overworld specific callback (eg: to change turn, etc)
 					that.eatFunction(color, healAmount);

@@ -26,7 +26,7 @@ package
 			return _instance;
 		}
 		
-		public function initialize(initialWeapons:Array = null, initialHealth:Number = 7):void {
+		public function initialize(initialWeapons:Array = null, initialHealth:Number = BalanceHooks.playerStartHealth):void {
 			if (initialWeapons == null) {
 				//addWeapon(new Weapon("fire", 1, 0, {"hit": 1}));
 				Inventory.addWeapon(startingWeapon);
