@@ -439,6 +439,7 @@ package
 				
 				case BattleLogic.PLAYER_WON: 
 					isEndBattle = true;
+					inventoryHUD.disable();
 					var candyColor:int = Math.floor(Math.random() * 3);
 					
 					var back:FlxSprite = new FlxSprite(0, 0);
