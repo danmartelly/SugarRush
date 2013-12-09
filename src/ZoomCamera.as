@@ -26,13 +26,13 @@ package
 		/**
 		 * This number is pretty arbitrary, make sure it's greater than zero!
 		 */
-		protected var zoomSpeed:Number = 25;
+		protected var zoomSpeed:Number = 0;
 		
 		/**
 		 * Determines how far to "look ahead" when the target is near the edge of the camera's bounds
 		 * 0 = no effect, 1 = huge effect
 		 */
-		protected var zoomMargin:Number = 0.25;
+		protected var zoomMargin:Number = 0;
 		
 		
 		public function ZoomCamera(X:int, Y:int, Width:int, Height:int, Zoom:Number=0)

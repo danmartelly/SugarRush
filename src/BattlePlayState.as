@@ -60,7 +60,7 @@ package
 		private var turnText:FlxText = new FlxText(250,30,200,"Player's turn!");	
 		private var dmgInfo:FlxText = new FlxText(120, FlxG.height - 400, 400, "");
 		
-		private var invulnTime:Number = 2.0;
+		private static var invulnTime:Number = 2.0;
 		private var background:FlxBackdrop;
 		private var buttonGroup:FlxGroup = new FlxGroup();
 		private var inventoryHUD:ExploreHUD = new ExploreHUD();
@@ -465,7 +465,7 @@ package
 			}
 		}
 		
-		private function switchToExplore():void {
+		public static function switchToExplore():void {
 			var newExploreState:ExplorePlayState = ExplorePlayState.instance;
 			newExploreState.setInvincibility(invulnTime);
 			FlxG.switchState(newExploreState);

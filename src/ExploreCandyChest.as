@@ -49,7 +49,7 @@ package
 				var rewardFunctions:Array = [giveCandy, giveMaxHealth];
 				var choice:Function = FlxG.getRandom(rewardFunctions) as Function;
 				choice.call();
-				
+				play("open");
 				FlxG.play(Sources.treasure);
 				isEnabled = false;
 				var timer:FlxTimer = new FlxTimer(); 

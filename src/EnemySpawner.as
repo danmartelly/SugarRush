@@ -24,7 +24,8 @@ package
 			_timer = Math.random()*spawnRate;
 			_player = player;
 			super(X, Y);
-			loadGraphic(Sources.Portal, false, false);
+			loadGraphic(Sources.PortalSheet, true, false, 70, 35);
+			addAnimation("explode", [0,1,2,3], 1, false);
 		}
 		
 		override public function update():void {
