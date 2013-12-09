@@ -439,7 +439,7 @@ package
 					back.makeGraphic(FlxG.width, FlxG.height, 0x77000000);
 					add(back);
 					//var candyDrop:Candy = new Candy(candyColor);
-					this.logic.player.heal(1);
+					//this.logic.player.heal(1);
 					Inventory.addCandy(candyColor);
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, "You win!\n" + "You have earned " + Helper.getCandyName(candyColor) + " candy!");
 					earningsText.setFormat("COOKIES", 20, 0xffffffff, "center");

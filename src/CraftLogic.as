@@ -57,13 +57,7 @@ package
 			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
 			var weaponMod:String = weaponMods[(int)(weaponMods.length * Math.random())];
 			
-			var attack:int = .2 / Math.random() + 1;
-			var defense:int = .2 / Math.random();
-			
-			if (attack > 3) attack = 3;
-			if (defense > 2) defense = 2;
-			
-			return new Weapon(weaponType, weaponMod, attack, defense, buff);
+			return new Weapon(weaponType, weaponMod, 1, 0, buff);
 		}
 		public static function generateBasicWeapon():Weapon {
 			var weaponType:String = weaponTypes[(int)(weaponTypes.length * Math.random())];
