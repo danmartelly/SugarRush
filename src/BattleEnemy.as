@@ -58,7 +58,7 @@ package {
 				defensePower:Number = difficulty * (d2 - d1),
 				healthPower:Number = difficulty * (1. - d2);
 			
-			var attackValue:Number = Math.round(sampleFromNormal(attackPower * 0.7, 0.4));
+			var attackValue:Number = Math.round(sampleFromNormal(attackPower * 0.7, 0.33));
 			var defenseValue:Number = Math.round(sampleFromNormal(defensePower * 0.5, 0.4));
 			var healthValue:Number = Math.round(sampleFromNormal(3 + 5 * healthPower, 0.3));
 			
