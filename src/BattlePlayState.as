@@ -463,11 +463,11 @@ package
 					//this.logic.player.heal(1);
 					var earnText:String = "You win!\n" + "You have earned ";
 					Inventory.addCandy(candyColor);
-					if (PlayerData.instance.difficulty < 3) {
+					if (PlayerData.instance.difficulty < 3.5 + Math.random() ) {
 						earnText += "a " + Helper.getCandyName(candyColor) + " candy!";
 					} else {
 						Inventory.addCandy(candyColor);
-						earnText = "2 " + Helper.getCandyName(candyColor) + " candies!";
+						earnText += "2 " + Helper.getCandyName(candyColor) + " candies!";
 					}
 					var earningsText:FlxText = new FlxText(0, 180, FlxG.width, earnText);
 					earningsText.setFormat("COOKIES", 20, 0xffffffff, "center");
