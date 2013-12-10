@@ -106,8 +106,8 @@ package
 		
 		//music and sound effects
 		[Embed(source="../assets/sound/player_hurt.mp3")] public static var playerHurt:Class;
-		[Embed(source="../assets/sound/vegetable_hurt1.mp3")] public static var vegetableHurt1:Class;
-		[Embed(source="../assets/sound/vegetable_hurt2.mp3")] public static var vegetableHurt2:Class;
+		[Embed(source="../assets/sound/squish.mp3")] public static var squish:Class;
+		[Embed(source="../assets/sound/criticalSquish.mp3")] public static var criticalSquish:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
 		[Embed(source="../assets/sound/explosion.mp3")] public static var explosion:Class;
 		[Embed(source="../assets/sound/death.mp3")] public static var death:Class;
