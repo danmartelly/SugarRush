@@ -274,7 +274,9 @@ package
 					var spawner:EnemySpawner = EnemySpawner(_spawners.getFirstAlive());
 					var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
 					FlxG.resetCameras( zoomCam );
-					FlxG.camera.follow(spawner);
+					var pannerHelp:CameraPannerHelper = new CameraPannerHelper(_player.getMidpoint(), spawner.getMidpoint());
+					add(pannerHelp); // currently not removed from anywhere
+					FlxG.camera.follow(pannerHelp);
 					zoomCam.targetZoom = 4;
 					spawner.play("explode");
 					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
