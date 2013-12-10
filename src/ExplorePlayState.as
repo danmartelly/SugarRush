@@ -87,7 +87,7 @@ package
 //			add(background);
 //			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
 //			add(background);
-			FlxG.playMusic(Sources.Bgmusic1, 0.1);
+			//FlxG.playMusic(Sources.Bgmusic1, 0.6);
 			
 			FlxG.mouse.load(Sources.cursor);
 			portalShouldExplode = true;
@@ -188,7 +188,7 @@ package
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			if (portalsDestroyed == 0)
 			{
-				FlxG.playMusic(Sources.Bgmusic1, 0.1);
+				FlxG.playMusic(Sources.Bgmusic1, 0.3);
 			}
 			
 			FlxG.camera.follow(_player);
@@ -288,7 +288,7 @@ package
 					portalsDestroyed++;
 					if (portalsDestroyed != 4) //hax don't worry
 					{
-						FlxG.playMusic(backgroundMusic[portalsDestroyed], 0.1);
+						FlxG.playMusic(backgroundMusic[portalsDestroyed], 0.3);
 					}
 					
 					portalShouldExplode = false;
