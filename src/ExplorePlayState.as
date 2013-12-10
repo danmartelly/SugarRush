@@ -152,7 +152,7 @@ package
 			add(_chests);
 			add(_enemies);
 			add(_player);
-			//add(clouds);
+			add(clouds);
 			HUD = new ExploreHUD();
 			add(inGameMessage);
 			add(HUD);
