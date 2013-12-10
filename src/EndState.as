@@ -11,6 +11,7 @@ package
 		public var background:FlxSprite;
 		override public function create(): void
 		{
+			FlxG.music.stop();
 			FlxG.play(Sources.death, 1.0, true);
 			background = new FlxSprite(0,0);
 			background.loadGraphic(Sources.LoseBackground);
