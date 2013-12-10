@@ -87,7 +87,7 @@ package {
 		public function endTurn():void {
 			turn = (turn + 1) % 2;
 			
-			if (turn == ENEMY_TURN){
+			if (turn != ENEMY_TURN){
 				player.removeTempStats();
 				player.removeAllFlags();
 			} else { 
