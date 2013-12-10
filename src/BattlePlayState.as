@@ -445,6 +445,7 @@ package
 				case BattleLogic.ENEMY_WON:
 					
 					FlxG.fade(0x00000000, 5, function():void {
+						FlxG.music.stop();
 						FlxG.switchState(new EndState());
 					});
 					break;
