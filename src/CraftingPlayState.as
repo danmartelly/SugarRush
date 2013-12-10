@@ -118,6 +118,8 @@ package
 		}
 		
 		private function combineCandy():void {
+			craftedWeapon.visible=false;
+			bannerLabel.visible=false;
 			if (cauldron.indexOf(-1) > -1) {
 				FlxG.play(Sources.error);
 				banner.text = "You have to put 3 candies in the cauldron first!";
