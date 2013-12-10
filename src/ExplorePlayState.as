@@ -152,7 +152,7 @@ package
 			add(_chests);
 			add(_enemies);
 			add(_player);
-			add(clouds);
+			//add(clouds);
 			HUD = new ExploreHUD();
 			add(inGameMessage);
 			add(HUD);
@@ -263,7 +263,7 @@ package
 				}
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					(new FlxTimer()).start(portalExplosionDuration, 1, function():void {
-						return (FlxG.fade(0x00ffffff, 5, function():void {
+						return (FlxG.fade(0x00ffffff, 10, function():void {
 							FlxG.switchState(new WinState());
 						}))
 					})
@@ -277,6 +277,7 @@ package
 					FlxG.resetCameras( zoomCam );
 					FlxG.camera.follow(spawner);
 					zoomCam.targetZoom = 4;
+					FlxG.play(Sources.explosion);
 					spawner.play("explode");
 					FlxG.bgColor = backgroundColors[portalsDestroyed]; 
 					
@@ -302,12 +303,11 @@ package
 				var currentMapIndex:int = getCurrentMap();
 				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
 				if (currentMapIndex!=oldMapIndex){ //if the map changed
-					FlxG.play(Sources.explosion);
 					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
 					oldMapIndex=currentMapIndex;
+					clouds.alpha=currentMapIndex/4;
 					fader.replaceImages(oldMap,currentMap);
 					fader.animate(4.0);
-					clouds.alpha=currentMapIndex/4;
 					PlayerData.instance.difficulty++;
 					for (var i:int = 0; i < _enemies.length; i++) {
 						var enemyData:BattleEnemy = _enemies.members[i].enemyData;
