@@ -34,7 +34,7 @@ package
 			width -= boundingBoxReduction;
 			offset.x = boundingBoxReduction/2.0;
 			offset.y = boundingBoxReduction/2.0;
-			FlxG.visualDebug = true;
+			//FlxG.visualDebug = true;
 			addAnimation("open", [1]); 
 			immovable = true;
 		}
