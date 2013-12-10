@@ -361,14 +361,17 @@ package
 					pause = new PauseState;
 					pause.showPaused();
 					add(pause);
-				} else if (FlxG.keys.B){ // for debugging help
-					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
-					FlxG.switchState(battle);
-				} else if (FlxG.keys.V){ // cheathax
-					Inventory.addCandy((int)(3 * Math.random()));
-				}else if (FlxG.keys.justPressed("K")){ //killcount cheathax
-					PlayerData.instance.killCount++;
-				}
+				} 
+//					else if (FlxG.keys.B){ // for debugging help
+//					battle = new BattlePlayState(new ExploreEnemy(0, 0, BattleEnemy.randomBattleEnemy(1), _chests, _enemies, _player), BattleEnemy.randomBattleEnemy(1));
+//					FlxG.switchState(battle);
+//				} 
+//				else if (FlxG.keys.V){ // cheathax
+//					Inventory.addCandy((int)(3 * Math.random()));
+//				}
+//				else if (FlxG.keys.justPressed("K")){ //killcount cheathax
+//					PlayerData.instance.killCount++;
+//				}
 			} else {
 				_player.flicker(0);
 				pause.update();

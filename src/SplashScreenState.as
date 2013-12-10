@@ -55,9 +55,10 @@ package
 		}
 		
 		override public function update():void {
-			if (FlxG.keys.justPressed("S")) { //this is for the developers playing the game that want to avoid intro screens
-				FlxG.fade(0x00000000, 1, startGame);
-			} else if (FlxG.mouse.justReleased() && currentScreen==4){
+//			if (FlxG.keys.justPressed("S")) { //this is for the developers playing the game that want to avoid intro screens
+//				FlxG.fade(0x00000000, 1, startGame);
+//			} 
+			if (FlxG.mouse.justReleased() && currentScreen==4){
 				FlxG.fade(0x00000000, 1, startGame);
 			} else if (FlxG.keys.C) {
 				creditsScreen();
