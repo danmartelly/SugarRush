@@ -271,15 +271,16 @@ package
 				var dmg:Number=logic.useAttack();
 				var playerFlags:Array = logic.getPlayerFlags();
 				playerSprite.loadGraphic(Sources.battlePlayerAttack);
-				FlxG.play(Sources.vegetableHurt1);
 				attackObject.loadGraphic(logic.player.data.currentWeapon().image);
 				attackObject.visible=true;
 				enemyLifeBar.flicker(dmgFlickerTime);
 				if (playerFlags && playerFlags[0] == 'crit') {
+					FlxG.play(Sources.criticalSquish);
 					dmgInfo.text = "CRITICAL HIT for " + dmg + " damage!";
 					enemySprite.play("crit");
 				}
 				else {
+					FlxG.play(Sources.squish);
 					dmgInfo.text = "You did " + dmg + " damage!";
 					enemySprite.play("attacked");
 				}

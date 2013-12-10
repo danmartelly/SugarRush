@@ -217,6 +217,7 @@ package {
 			return function():void {
 				if (that._isEat){
 					if (Inventory.weaponCount() > 1){
+						FlxG.play(Sources.gainHealth);
 						PlayerData.instance.changeWeapon(0);
 						Inventory.removeWeaponAt(i);
 						//hard coded

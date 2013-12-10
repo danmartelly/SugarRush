@@ -87,7 +87,7 @@ package
 //			add(background);
 //			background = new FlxBackdrop(Sources.maps[getCurrentMap()], 0.8, 0.6, true, true);
 //			add(background);
-			FlxG.playMusic(Sources.Bgmusic1);
+			FlxG.playMusic(Sources.Bgmusic1, 0.1);
 			
 			FlxG.mouse.load(Sources.cursor);
 			portalShouldExplode = true;
@@ -188,7 +188,7 @@ package
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			if (portalsDestroyed == 0)
 			{
-				FlxG.playMusic(Sources.Bgmusic1);
+				FlxG.playMusic(Sources.Bgmusic1, 0.1);
 			}
 			
 			FlxG.camera.follow(_player);
@@ -285,7 +285,7 @@ package
 					portalsDestroyed++;
 					if (portalsDestroyed != 4) //hax don't worry
 					{
-						FlxG.playMusic(backgroundMusic[portalsDestroyed]);
+						FlxG.playMusic(backgroundMusic[portalsDestroyed], 0.1);
 					}
 					
 					portalShouldExplode = false;
@@ -293,6 +293,7 @@ package
 					_player.active = false;
 					FlxG.play(Sources.explosion);
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
+					(new FlxTimer()).start(portalExplosionDuration,1,function():void {FlxG.play(Sources.restoration)});
 				}
 				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 
 				{
