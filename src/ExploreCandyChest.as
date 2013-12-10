@@ -1,8 +1,13 @@
 package
 {
-	import flash.geom.*;
+	import flash.geom.Point;
 	
-	import org.flixel.*;
+	import org.flixel.FlxBasic;
+	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	
 	public class ExploreCandyChest extends FlxSprite
 	{
@@ -17,6 +22,7 @@ package
 		private var _enemies:FlxGroup;
 		private var _chests:FlxGroup;
 		private var _inGameMessage:FlxText;
+		private var boundingBoxReduction:Number = 18;
 		
 		public function ExploreCandyChest(X:Number, Y:Number, chests:FlxGroup, enemies:FlxGroup, inGameMessage:FlxText) {
 			super(X, Y, null);
@@ -24,6 +30,11 @@ package
 			_chests = chests;
 			_inGameMessage = inGameMessage;
 			loadGraphic(Sources.TreasureChest, true, false, 40, 40);
+			height -= boundingBoxReduction; 
+			width -= boundingBoxReduction;
+			offset.x = boundingBoxReduction/2.0;
+			offset.y = boundingBoxReduction/2.0;
+			FlxG.visualDebug = true;
 			addAnimation("open", [1]); 
 			immovable = true;
 		}

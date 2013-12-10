@@ -189,7 +189,6 @@ package
 			if (portalsDestroyed == 0)
 			{
 				FlxG.playMusic(Sources.Bgmusic1);
-				trace("music playing");
 			}
 			
 			FlxG.camera.follow(_player);
@@ -289,6 +288,7 @@ package
 					portalShouldExplode = false;
 					_enemies.active = false; 
 					_player.active = false;
+					FlxG.play(Sources.explosion);
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
 				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 
@@ -302,7 +302,6 @@ package
 				var currentMapIndex:int = getCurrentMap();
 				currentMap.loadGraphic(Sources.maps[currentMapIndex]);
 				if (currentMapIndex!=oldMapIndex){ //if the map changed
-					FlxG.play(Sources.explosion);
 					oldMap.loadGraphic(Sources.maps[oldMapIndex]);
 					oldMapIndex=currentMapIndex;
 					fader.replaceImages(oldMap,currentMap);

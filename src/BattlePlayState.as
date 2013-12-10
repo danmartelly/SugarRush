@@ -120,7 +120,7 @@ package
 			enemyHealthText.setFormat("COOKIES", 14, 0xff000000);
 			
 			var attackLabel:FlxText=new FlxText(0,0,buttonWidth,"ATTACK");
-			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN");
+			var runLabel:FlxText=new FlxText(0,0,buttonWidth,"RUN (-1 HP)");
 			attackLabel.setFormat("COOKIES", 17, 0xffffffff);
 			runLabel.setFormat("COOKIES", 17, 0xffffffff);
 			attackLabel.alignment = "center";
@@ -497,9 +497,8 @@ package
 					break;
 				
 				case BattleLogic.RAN_AWAY: 
-					//player doens't lose health with running away anymore
-					//logic.player.currentHealth -= 1;
-					//logic.player.updatePlayerData();
+					logic.player.currentHealth -= 1;
+					logic.player.updatePlayerData();
 					switchToExplore();
 					break;
 			}
