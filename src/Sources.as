@@ -110,6 +110,7 @@ package
 		[Embed(source="../assets/sound/criticalSquish.mp3")] public static var criticalSquish:Class;
 		[Embed(source="../assets/sound/battle_start.mp3")] public static var battleStart:Class;
 		[Embed(source="../assets/sound/explosion.mp3")] public static var explosion:Class;
+		[Embed(source="../assets/sound/restoration.mp3")] public static var restoration:Class;
 		[Embed(source="../assets/sound/death.mp3")] public static var death:Class;
 		[Embed(source="../assets/sound/treasure.mp3")] public static var treasure:Class;
 		[Embed(source="../assets/sound/max_health.mp3")] public static var maxHealth:Class;
