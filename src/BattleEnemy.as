@@ -63,36 +63,13 @@ package {
 			var healthValue:Number = Math.round(sampleFromNormal(3 + 5 * healthPower, 0.3));
 			
 			var lowerlimit:int = difficulty + 2;
-			var upperlimit:int = difficulty + 11;
+			var upperlimit:int = 3*difficulty + 1;
 			
 			if (attackValue < 1) attackValue = 1;
-			if (defenseValue < 0) defenseValue = 0;
-			if (healthValue < 3) healthValue = 3;
-			if (difficulty == 1)
-			{
-				if (healthValue < 3) healthValue = 3; 
-				if (healthValue > 4) healthValue = 4; 
-			}
-			else if (difficulty == 2) 
-			{
-				if (healthValue < 4) healthValue = 4; 
-				if (healthValue > 9) healthValue = 9; 
-			}
-			else if (difficulty == 3)
-			{
-				if (healthValue < 5) healthValue = 5; 
-				if (healthValue > 10) healthValue = 10; 
-				if (attackPower > 5) attackPower = 5; 
-			}
-			else if (difficulty == 4) 
-			{
-				if (healthValue < 6) healthValue = 6; 
-				if (healthValue > 13) healthValue = 13; 
-				if (attackPower > 5) attackPower = 5;
-			}
-			//if (healthValue > 14) healthValue = 14; 
-//			if (healthValue < lowerlimit) healthValue = lowerlimit;
-//			if (healthValue > upperlimit) healthValue = upperlimit; 
+			if (attackValue > 6) attackValue = 6;
+
+			if (healthValue < lowerlimit) healthValue = lowerlimit;
+			if (healthValue > upperlimit) healthValue = upperlimit; 
 
 			
 			return {"attack": attackValue, "defense": defenseValue, "health": healthValue};
