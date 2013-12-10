@@ -446,7 +446,7 @@ package
 				case BattleLogic.ENEMY_WON:
 					
 					FlxG.fade(0x00000000, 5, function():void {
-						FlxG.music.stop();
+						
 						FlxG.switchState(new EndState());
 					});
 					break;
@@ -501,7 +501,15 @@ package
 				case BattleLogic.RAN_AWAY: 
 					logic.player.currentHealth -= 1;
 					logic.player.updatePlayerData();
-					switchToExplore();
+					if (logic.player.currentHealth <= 0) 
+					{
+						FlxG.fade(0x00000000, 5, function():void {
+							FlxG.switchState(new EndState());
+						});
+					} else
+					{
+						switchToExplore();
+					}
 					break;
 			}
 		}

@@ -258,8 +258,11 @@ package
 				}
 				
 				if (PlayerData.instance.currentHealth <= 0){
-					FlxG.switchState(new EndState());
+					FlxG.fade(0x00000000, 5, function():void {
+						FlxG.switchState(new EndState());
+					});
 				}
+				
 				if(PlayerData.instance.killCount>=KILLGOAL){
 					(new FlxTimer()).start(portalExplosionDuration, 1, function():void {
 						return (FlxG.fade(0x00ffffff, 10, function():void {
@@ -370,9 +373,9 @@ package
 //				else if (FlxG.keys.V){ // cheathax
 //					Inventory.addCandy((int)(3 * Math.random()));
 //				}
-//				else if (FlxG.keys.justPressed("K")){ //killcount cheathax
-//					PlayerData.instance.killCount++;
-//				}
+				else if (FlxG.keys.justPressed("K")){ //killcount cheathax
+					PlayerData.instance.killCount++;
+				}
 			} else {
 				_player.flicker(0);
 				pause.update();
