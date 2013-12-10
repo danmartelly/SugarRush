@@ -75,7 +75,7 @@ package
 		public static const KILLGOAL:int=3*4; //3 enemies per 4 spawners
 		private var portalExplosionDuration:Number = 4.0;
 		
-		private var backgroundColors:Array = [0xff805a3f, 0xffa86d46, 0xffffc662, 0xffffc662];
+		private var backgroundColors:Array = [0xffB38B75, 0xffD0AF9C, 0xffE8D4C2, 0xffFFE5C0];
 		private var backgroundMusic:Array = [Sources.Bgmusic1, Sources.Bgmusic2, Sources.Bgmusic3, Sources.Bgmusic4];
 		
 		Sources.fontCookies;
