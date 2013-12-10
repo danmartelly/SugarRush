@@ -189,7 +189,6 @@ package
 			if (portalsDestroyed == 0)
 			{
 				FlxG.playMusic(Sources.Bgmusic1);
-				trace("music playing");
 			}
 			
 			FlxG.camera.follow(_player);
@@ -275,7 +274,9 @@ package
 					var spawner:EnemySpawner = EnemySpawner(_spawners.getFirstAlive());
 					var zoomCam:ZoomCamera = new ZoomCamera(FlxG.width, 0, levelX, levelY);
 					FlxG.resetCameras( zoomCam );
-					FlxG.camera.follow(spawner);
+					var pannerHelp:CameraPannerHelper = new CameraPannerHelper(_player.getMidpoint(), spawner.getMidpoint());
+					add(pannerHelp); // currently not removed from anywhere
+					FlxG.camera.follow(pannerHelp);
 					zoomCam.targetZoom = 4;
 					FlxG.play(Sources.explosion);
 					spawner.play("explode");
@@ -290,6 +291,7 @@ package
 					portalShouldExplode = false;
 					_enemies.active = false; 
 					_player.active = false;
+					FlxG.play(Sources.explosion);
 					(new FlxTimer()).start(portalExplosionDuration,1,resetCamera(_player,0, spawner));
 				}
 				if (PlayerData.instance.killCount % _spawners.members[0].totalEnemies != 0) 

@@ -38,13 +38,13 @@ package
 			musicText.setFormat("COOKIES",15,0xffffffff,"left");
 			add(musicText);
 			
-			returnSplashText = new FlxText(10, (FlxG.height)-40, FlxG.width-10, "press ENTER to return");
+			returnSplashText = new FlxText(10, (FlxG.height)-40, FlxG.width-10, "CLICK to return");
 			returnSplashText.setFormat("COOKIES", 20,0xffffffff,"center");
 			add(returnSplashText);
 		}
 		
 		override public function update():void {
-			if (FlxG.keys.ENTER) 
+			if (FlxG.mouse.justReleased()) 
 			{
 				FlxG.switchState(new SplashScreenState());
 			}
