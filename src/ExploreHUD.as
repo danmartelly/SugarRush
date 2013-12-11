@@ -7,6 +7,8 @@ package {
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
 	
+	import flash.utils.*;
+	
 	public class ExploreHUD extends FlxGroup
 	{		
 
@@ -52,10 +54,15 @@ package {
 		
 		private var weaponDescription:WeaponDescriptorUI;
 		
+		private var _timer:Number;
+		private var _lastTimeEat:Number;
+		
 		[Embed(source="../assets/Cookies.ttf", fontName="COOKIES", embedAsCFF="false")] protected var fontCookies:Class;
 		
 		public function ExploreHUD(hasEat:Boolean = true)
 		{	
+			_timer = 0;
+			_lastTimeEat = 0;
 			_inventoryBox = new FlxSprite(0, FlxG.height * 0.90).makeGraphic(FlxG.width, FlxG.height * 0.10, 0xFF7b421c);
 			_inventoryBox.scrollFactor.x = _inventoryBox.scrollFactor.y = 0;
 			_buttonBar = new FlxSprite(0, FlxG.height-FlxG.height * 0.10-25).makeGraphic(FlxG.width, 25, 0xffa86d46);
@@ -215,8 +222,10 @@ package {
 		private function weaponCallbackFn(i:int, that:ExploreHUD): Function
 		{
 			return function():void {
+				if (_lastTimeEat + 1 > _timer) {return;}
+				_lastTimeEat = _timer;
 				if (that._isEat){
-					if (Inventory.weaponCount() > 1 && !PlayerData.instance.hasFullHealth()){
+					if (Inventory.weaponCount() > 1) {// && !PlayerData.instance.hasFullHealth()){
 						FlxG.play(Sources.gainHealth);
 						PlayerData.instance.changeWeapon(0);
 						Inventory.removeWeaponAt(i);
@@ -277,6 +286,7 @@ package {
 		}
 		
 		override public function update():void {
+			_timer += FlxG.elapsed;
 			_redCount.text = "x" + Inventory.candyCount(0);
 			_blueCount.text = "x" + Inventory.candyCount(1);
 			_whiteCount.text = "x" + Inventory.candyCount(2);
