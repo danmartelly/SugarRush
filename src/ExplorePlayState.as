@@ -188,7 +188,7 @@ package
 			FlxG.worldBounds = new FlxRect(0, 0, levelX, levelY);
 			if (portalsDestroyed == 0)
 			{
-				FlxG.playMusic(Sources.Bgmusic1, 0.3);
+				FlxG.playMusic(Sources.Bgmusic1, 0.6);
 			}
 			
 			FlxG.camera.follow(_player);
@@ -288,7 +288,7 @@ package
 					portalsDestroyed++;
 					if (portalsDestroyed != 4) //hax don't worry
 					{
-						FlxG.playMusic(backgroundMusic[portalsDestroyed], 0.3);
+						FlxG.playMusic(backgroundMusic[portalsDestroyed], 0.6);
 					}
 					
 					portalShouldExplode = false;
