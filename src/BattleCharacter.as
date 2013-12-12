@@ -131,7 +131,7 @@ package {
 			
 			var damageAmount:int = Math.ceil(Math.random() * 3 * this.getAttackStat());
 			
-			if (this.getAttackStat() == 0)
+			if (this.getAttackStat() == 0 || this.currentHealth <= 0)
 				damageAmount = 0;
 			if (this.flags[0] == 'crit')
 				damageAmount *= 2;

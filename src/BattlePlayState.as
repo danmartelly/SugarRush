@@ -348,6 +348,9 @@ package
 		}	
 		
 		public function enemyAttackCallback(damage:Number):void {
+			var enemyFlags:Array = logic.getEnemyFlags();
+			if (damage == 0 && !enemyFlags.length) return;
+			
 			switch(logic.enemy.name){
 				case "broccoli":
 					dmgInfo.text = "The broccoli used arm thrust! \n You took " + damage + " damage!";
@@ -369,7 +372,6 @@ package
 					break;
 			}
 			
-			var enemyFlags:Array = logic.getEnemyFlags();
 			if (enemyFlags[0] && enemyFlags[0] == 'frozen') {
 				dmgInfo.text = "The " + logic.enemy.name + " is frozen!";
 				enemySprite.play("freeze");
@@ -424,13 +426,21 @@ package
 		
 		public function updateBuffText():String
 		{
+			var delta = 0;
+			if (enemyData.getBuffText() == "Ignite") delta = 2;
 			switch(enemyData.getBuffText()) {
 				case "Burn":
 					/*buffText.text = "Burnt! 1 damage";
 					return "burn";*/
+					delta = 1;
 				case "Ignite":
 					//buffText.text = "Burnt! 2 damage";
 					FlxG.play(Sources.burn);
+					trace(delta);
+					logic.enemy.currentHealth -= delta;
+					if (logic.enemy.currentHealth < 0) logic.enemy.currentHealth = 0;
+					drawHealthBar();
+					logic.enemy.currentHealth += delta; //huge hack i'm sorry
 					return "burn";
 				case "Freeze":
 				case "Deep Freeze":

@@ -12,7 +12,7 @@ package
 		public var hasUpdatedWeapon:Boolean = true;
 		
 		public var startingWeapon:Weapon = CraftLogic.generateBasicWeapon();
-		//public var hax0rWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, 7);
+		//public var hax0rWeapon:Weapon = new Weapon("Scythe", "Marsh", 1, 0, 4);
 		
 		public static var weaponList:Object = { };
 		
